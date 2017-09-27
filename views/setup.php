@@ -1,7 +1,7 @@
 <div class="wrap">
 	<h1>Mailtarget Form Setting</h1>
 	<p>Please set your setting in this form</p>
-	<form method="post" action="options.php">
+	<form method="post" action="options-general.php?page=mailtarget-form-plugin--admin-menu">
 		<?php settings_fields( $this->option_group ); ?>
 		<?php do_settings_sections( $this->option_group ); ?>
 		<table class="form-table">

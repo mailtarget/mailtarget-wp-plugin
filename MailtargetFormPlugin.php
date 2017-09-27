@@ -10,6 +10,9 @@
   License: GPL V3
  */
 
+define('MAILTARGET_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('MAILTARGET_PLUGIN_URL', plugins_url('', __FILE__));
+
 if (!class_exists('MailtargetApi')) {
 	$path = plugin_dir_path(__FILE__);
 	require_once($path . 'lib/MailtargetApi.php');
@@ -56,19 +59,8 @@ class MailtargetFormPlugin {
         add_action( 'admin_menu', array( $this, 'set_admin_menu' ) );
         add_action( 'admin_init', array( $this, 'register_setting') );
         add_action( 'admin_init', array( $this, 'handling_admin_post') );
+
 	}
-
-	public function process_form ($atts) {
-		$a = shortcode_atts( array(
-			'form-id' => ''
-		), $atts );
-
-		$formId = $a["form-id"];
-		$json = wp_remote_get('https://api.mailtarget.co/form/public/'.$formId);
-        print_r($json);
-		return 'ok';
-//		return $json;
-    }
 
 	public function get_plugin_url() {
 		return $this->plugin_url;
@@ -92,6 +84,7 @@ class MailtargetFormPlugin {
               id mediumint(9) NOT NULL AUTO_INCREMENT,
               time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
               form_id tinytext NOT NULL,
+              name tinytext NOT NULL,
               type tinyint(1) default '1' NOT NULL,
               data text NOT NULL,
               PRIMARY KEY (id)
@@ -128,13 +121,15 @@ class MailtargetFormPlugin {
     function handling_admin_post () {
         if(!isset($_POST['mailtarget_form_action'])) return false;
         $action = $_POST['mailtarget_form_action'];
-        $api = $this->get_api();
 
         switch ($action) {
             case 'setup_setting':
                 $key = $_POST['mtg_api_token'];
+	            $api = $this->get_api($key);
+	            if (!$api) return;
                 $team = $api->getTeam();
                 error_log(json_encode($team));
+	            update_option('mtg_api_token', $key);
                 break;
             case 'create_widget':
 	            global $wpdb;
@@ -143,6 +138,7 @@ class MailtargetFormPlugin {
 	            $input = array(
                     'time' => current_time('mysql'),
                     'form_id' => $_POST['form_id'],
+                    'name' => $_POST['widget_name'],
                     'type' => 1,
                     'data' => json_encode(array(
                         'widget_title' => $_POST['widget_title'],
@@ -150,7 +146,7 @@ class MailtargetFormPlugin {
                         'widget_submit_desc' => $_POST['widget_submit_desc'],
                     ))
                 );
-	            if ($_POST['widget_title'] != '') {
+	            if ($_POST['widget_name'] != '') {
 		            $wpdb->insert($table_name, $input);
                 }
                 break;
@@ -184,13 +180,13 @@ class MailtargetFormPlugin {
         } else if ($valid === null) {
 	        require_once($path.'/views/setup.php');
         } else {
-            ?><p>Problem connecting to mailtarget server</p><?php
+            ?><p>Problem connecting to mailtarget server e</p><?php
         }
     }
 
     function is_key_valid () {
         $api = $this->get_api();
-        if (!$api) return false;
+        if (!$api) return null;
 	    $valid = $api->ping();
 	    if (is_wp_error($valid)) {
 	        if ($this->get_code_from_error($valid) == 32) return null;
@@ -212,10 +208,10 @@ class MailtargetFormPlugin {
         return true;
     }
 
-    function get_api () {
-        $key = $this->get_key();
-        $companyId = $this->get_company_id();
+    function get_api ($key = false) {
+        if (!$key) $key = $this->get_key();
         if (!$key) return false;
+	    $companyId = $this->get_company_id();
         return new MailtargetApi($key, $companyId);
     }
 
@@ -231,7 +227,17 @@ class MailtargetFormPlugin {
         if (!isset($err->errors['mailtarget-error-get'][0]['code'])) return false;
         return $err->errors['mailtarget-error-get'][0]['code'];
     }
-}
 
-add_shortcode( 'mailtarget_form', array( 'MailtargetFormPlugin', 'process_form' ) );
+	public function process_form ($atts) {
+		$a = shortcode_atts( array(
+			'form-id' => ''
+		), $atts );
+
+		$formId = $a["form-id"];
+		$json = wp_remote_get('https://api.mailtarget.co/form/public/'.$formId);
+		print_r($json);
+		return 'ok';
+	}
+}
+require_once(MAILTARGET_PLUGIN_DIR . 'include/mailtarget_shortcode.php');
 MailtargetFormPlugin::get_instance();

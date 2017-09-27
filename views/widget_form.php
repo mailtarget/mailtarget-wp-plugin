@@ -1,7 +1,7 @@
 <div class="wrap">
 	<h1>Mailtarget Form Setting</h1>
 	<p>Create your widget</p>
-	<form method="post" action="options.php">
+	<form method="post" action="options-general.php?page=mailtarget-form-plugin--admin-menu">
 		<?php settings_fields( $this->option_group ); ?>
 		<?php do_settings_sections( $this->option_group ); ?>
 		<table class="form-table">
@@ -16,6 +16,12 @@
                         }
                         ?>
                     </select>
+                </td>
+			</tr>
+			<tr class="user-rich-editing-wrap">
+				<th>Name</th>
+				<td>
+                    <input type="text" class="regular-text" name="widget_name">
                 </td>
 			</tr>
 			<tr class="user-rich-editing-wrap">
