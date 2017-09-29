@@ -29,7 +29,11 @@ class MailtargetApi {
 		return $this->get('/form', [ 'accessToken' => $this->apiKey, 'companyId' => $this->companyId ]);
 	}
 
-	private function get ($path, $params) {
+	public function getFormDetail ($formId) {
+		return $this->get('/form/' . $formId, [ 'accessToken' => $this->apiKey, 'companyId' => $this->companyId ]);
+	}
+
+	private function get ($path, $params = array()) {
 		$paramsString = '';
 		if (!empty($params)) {
 			foreach ($params as $key => $value) {
