@@ -29,8 +29,16 @@ class MailtargetApi {
 		return $this->get('/form', [ 'accessToken' => $this->apiKey, 'companyId' => $this->companyId ]);
 	}
 
+	public function getCity ($country = 'indonesia') {
+		return $this->get('/city', [ 'accessToken' => $country ]);
+	}
+
+	public function getCountry () {
+		return $this->get('/country');
+	}
+
 	public function getFormDetail ($formId) {
-		return $this->get('/form/' . $formId, [ 'accessToken' => $this->apiKey, 'companyId' => $this->companyId ]);
+		return $this->get('/form/public/' . $formId);
 	}
 
 	private function get ($path, $params = array()) {
