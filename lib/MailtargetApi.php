@@ -41,6 +41,10 @@ class MailtargetApi {
 		return $this->get('/form/public/' . $formId);
 	}
 
+	public function submit ($input, $url) {
+		return $this->post($url, $input);
+	}
+
 	private function get ($path, $params = array()) {
 		$paramsString = '';
 		if (!empty($params)) {
@@ -84,7 +88,8 @@ class MailtargetApi {
 			'body' => json_encode($data)
 		);
 
-		$url = $this->apiUrl . $path;
+        $url = $this->apiUrl . $path;
+		if (count(explode('://', $url)) > 1) $url = $path;
 
 		$request = wp_remote_post($url, $args);
 
