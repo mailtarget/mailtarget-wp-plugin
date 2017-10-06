@@ -120,6 +120,18 @@ class MailtargetFormPlugin {
     }
 
     function handling_admin_post () {
+
+        if (isset($_GET['action'])) {
+            $action = $_GET['action'];
+            if ($action === 'delete') {
+                if(!isset($_GET['id'])) return false;
+                $id = $_GET['id'];
+                global $wpdb;
+                $wpdb->delete($wpdb->base_prefix . "mailtarget_forms", array('id' => $id));
+                return wp_redirect('admin.php?page=mailtarget-form-plugin--admin-menu');
+            }
+        }
+
         if(!isset($_POST['mailtarget_form_action'])) return false;
         $action = $_POST['mailtarget_form_action'];
 
@@ -130,9 +142,6 @@ class MailtargetFormPlugin {
 	            if (!$api) return;
                 $team = $api->getTeam();
 	            update_option('mtg_api_token', $key);
-                break;
-            case 'submit_form':
-                error_log('submit form');
                 break;
             case 'create_widget':
 	            global $wpdb;
@@ -151,6 +160,24 @@ class MailtargetFormPlugin {
                 );
 	            if ($_POST['widget_name'] != '') {
 		            $wpdb->insert($table_name, $input);
+                }
+                break;
+            case 'edit_widget':
+	            global $wpdb;
+	            $table_name = $wpdb->base_prefix . "mailtarget_forms";
+	            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	            $input = array(
+                    'time' => current_time('mysql'),
+                    'name' => $_POST['widget_name'],
+                    'type' => 1,
+                    'data' => json_encode(array(
+                        'widget_title' => $_POST['widget_title'],
+                        'widget_description' => $_POST['widget_description'],
+                        'widget_submit_desc' => $_POST['widget_submit_desc'],
+                    ))
+                );
+	            if ($_POST['widget_name'] != '') {
+		            $wpdb->update($table_name, $input, array('id' => $_POST['widget_id']));
                 }
                 break;
             default:
@@ -182,7 +209,6 @@ class MailtargetFormPlugin {
             default:
                 break;
         }
-
     }
 
 	function set_admin_menu () {
@@ -217,6 +243,14 @@ class MailtargetFormPlugin {
             'mailtarget-form-plugin--admin-menu-config',
             array($this, 'admin_config_view')
         );
+        add_submenu_page(
+            null,
+            'Edit Widget',
+            'Edit Widget',
+            'manage_options',
+            'mailtarget-form-plugin--admin-menu-widget-edit',
+            array($this, 'edit_widget_view')
+        );
     }
 
     function list_widget_view () {
@@ -230,7 +264,7 @@ class MailtargetFormPlugin {
             global $wpdb, $forms;
 
             if (!current_user_can('edit_posts')) {
-                return;
+                return false;
             }
 
             $widgets = $wpdb->get_results("SELECT * FROM " . $wpdb->base_prefix . "mailtarget_forms");
@@ -246,7 +280,38 @@ class MailtargetFormPlugin {
         if ($valid === false) {
             ?><p>Problem connecting to mailtarget server e</p><?php
         } else {
+            $api = $this->get_api();
+            if (!$api) return null;
+            $form = $api->getFormList();
+            if (is_wp_error($valid)) {
+                return false;
+            }
             require_once(MAILTARGET_PLUGIN_DIR.'/views/widget_add.php');
+        }
+    }
+
+    function edit_widget_view () {
+        if ( !current_user_can( 'manage_options' ) )  {
+            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+        }
+        $valid = $this->is_key_valid();
+        if ($valid === false) {
+            ?><p>Problem connecting to mailtarget server e</p><?php
+        } else {
+            global $wpdb;
+            $widgetId = sanitize_key($_GET['id']);
+            $widget = $wpdb->get_row("SELECT * FROM " . $wpdb->base_prefix . "mailtarget_forms where id = $widgetId");
+            if (!isset($widget->form_id)) {
+                wp_redirect('admin.php?page=mailtarget-form-plugin--admin-menu');
+                return false;
+            }
+            $api = $this->get_api();
+            if (!$api) return null;
+            $form = $api->getFormDetail($widget->form_id);
+            if (is_wp_error($valid)) {
+                return false;
+            }
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/widget_edit.php');
         }
     }
 
