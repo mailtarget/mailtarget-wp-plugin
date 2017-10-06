@@ -232,8 +232,8 @@ class MailtargetFormPlugin {
             'New Form',
             'Add New',
             'manage_options',
-            'mailtarget-form-plugin--admin-menu-widget-add',
-            array($this, 'add_widget_view')
+            'mailtarget-form-plugin--admin-menu-widget-form',
+            array($this, 'add_widget_view_form')
         );
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',
@@ -250,6 +250,14 @@ class MailtargetFormPlugin {
             'manage_options',
             'mailtarget-form-plugin--admin-menu-widget-edit',
             array($this, 'edit_widget_view')
+        );
+        add_submenu_page(
+            null,
+            'New Form',
+            'Add New',
+            'manage_options',
+            'mailtarget-form-plugin--admin-menu-widget-add',
+            array($this, 'add_widget_view')
         );
     }
 
@@ -272,7 +280,7 @@ class MailtargetFormPlugin {
         }
     }
 
-    function add_widget_view () {
+    function add_widget_view_form () {
         if ( !current_user_can( 'manage_options' ) )  {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
         }
@@ -282,8 +290,28 @@ class MailtargetFormPlugin {
         } else {
             $api = $this->get_api();
             if (!$api) return null;
-            $form = $api->getFormList();
-            if (is_wp_error($valid)) {
+            $forms = $api->getFormList();
+            if (is_wp_error($forms)) {
+                return false;
+            }
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/form_list.php');
+        }
+    }
+
+    function add_widget_view () {
+        if ( !current_user_can( 'manage_options' ) )  {
+            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+        }
+        $valid = $this->is_key_valid();
+        if ($valid === false) {
+            ?><p>Problem connecting to mailtarget server e</p><?php
+        } else {
+            if (!isset($_GET['form_id'])) return false;
+            $formId = $_GET['form_id'];
+            $api = $this->get_api();
+            if (!$api) return null;
+            $form = $api->getFormDetail($formId);
+            if (is_wp_error($form)) {
                 return false;
             }
             require_once(MAILTARGET_PLUGIN_DIR.'/views/widget_add.php');
@@ -308,7 +336,7 @@ class MailtargetFormPlugin {
             $api = $this->get_api();
             if (!$api) return null;
             $form = $api->getFormDetail($widget->form_id);
-            if (is_wp_error($valid)) {
+            if (is_wp_error($form)) {
                 return false;
             }
             require_once(MAILTARGET_PLUGIN_DIR.'/views/widget_edit.php');
