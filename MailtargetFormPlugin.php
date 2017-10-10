@@ -276,7 +276,7 @@ class MailtargetFormPlugin {
             }
 
             $widgets = $wpdb->get_results("SELECT * FROM " . $wpdb->base_prefix . "mailtarget_forms");
-            require_once(MAILTARGET_PLUGIN_DIR.'/views/widget_list.php');
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/widget_list.php');
         }
     }
 
@@ -292,9 +292,9 @@ class MailtargetFormPlugin {
             if (!$api) return null;
             $forms = $api->getFormList();
             if (is_wp_error($forms)) {
-                return false;
+                $forms = array();
             }
-            require_once(MAILTARGET_PLUGIN_DIR.'/views/form_list.php');
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/form_list.php');
         }
     }
 
@@ -314,7 +314,7 @@ class MailtargetFormPlugin {
             if (is_wp_error($form)) {
                 return false;
             }
-            require_once(MAILTARGET_PLUGIN_DIR.'/views/widget_add.php');
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/widget_add.php');
         }
     }
 
@@ -339,7 +339,7 @@ class MailtargetFormPlugin {
             if (is_wp_error($form)) {
                 return false;
             }
-            require_once(MAILTARGET_PLUGIN_DIR.'/views/widget_edit.php');
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/widget_edit.php');
         }
     }
 
@@ -352,7 +352,7 @@ class MailtargetFormPlugin {
         if ($valid === false) {
             ?><p>Problem connecting to mailtarget server e</p><?php
         } else {
-            require_once(MAILTARGET_PLUGIN_DIR.'/views/setup.php');
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/setup.php');
         }
     }
 

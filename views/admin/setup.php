@@ -1,7 +1,12 @@
-<div class="wrap">
-	<h1>Mailtarget Form Setting</h1>
+<div class="wrap mtg-form-plugin">
+    <?php include MAILTARGET_PLUGIN_DIR . '/views/admin/style.php' ?>
+    <div class="mtg-banner">
+        <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
+    </div>
+    <h1 class="wp-heading-inline">Setup - Mailtarget Form</h1>
+	<br>
 	<p>Please set your setting in this form</p>
-	<form method="post" action="options-general.php?page=mailtarget-form-plugin--admin-menu">
+	<form method="post" action="admin.php?page=mailtarget-form-plugin--admin-menu">
 		<?php settings_fields( $this->option_group ); ?>
 		<?php do_settings_sections( $this->option_group ); ?>
 		<table class="form-table">

@@ -1,6 +1,11 @@
-<div class="wrap">
-    <h1>Widget List - Mailtarget Form</h1>
+<div class="wrap mtg-form-plugin">
+    <?php include MAILTARGET_PLUGIN_DIR . '/views/admin/style.php' ?>
+    <div class="mtg-banner">
+        <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
+    </div>
+    <h1 class="wp-heading-inline">Select Form - Mailtarget Form</h1>
     <?php if ($valid === null) { ?>
+        <br>
         <div class="update-nag">Token not correctly set / empty, please update
             <a href="admin.php?page=mailtarget-form-plugin--admin-menu-config">config</a></div><?php
     } else { ?><p>List widget page</p><?php }?>
@@ -12,7 +17,7 @@
         } else {
             ?>
             <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-add">new widget</a>
-            <table>
+            <table class="wp-list-table widefat fixed striped pages">
             <thead>
             <tr>
                 <th>No</th>

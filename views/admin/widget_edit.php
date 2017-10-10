@@ -9,7 +9,11 @@ if (isset($data->widget_description)) $widget_description = $data->widget_descri
 if (isset($data->widget_submit_desc)) $widget_submit_desc = $data->widget_submit_desc;
 ?>
 <div class="wrap">
-    <h1>Mailtarget Form - Edit Widget</h1>
+    <?php include MAILTARGET_PLUGIN_DIR . '/views/admin/style.php' ?>
+    <div class="mtg-banner">
+        <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
+    </div>
+    <h1 class="wp-heading-inline">Edit Form - Mailtarget Form</h1>
     <form method="post" action="options-general.php?page=mailtarget-form-plugin--admin-menu">
         <?php settings_fields( $this->option_group ); ?>
         <?php do_settings_sections( $this->option_group ); ?>

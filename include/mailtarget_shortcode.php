@@ -65,7 +65,7 @@ class MailTarget_Shortcode {
 		}
 
 		$forms = $wpdb->get_results("SELECT * FROM " . $wpdb->base_prefix . "mailtarget_forms");
-		include(MAILTARGET_PLUGIN_DIR  . 'views/tiny_mce.php');
+		include(MAILTARGET_PLUGIN_DIR  . 'views/admin/tiny_mce.php');
 		exit;
 	}
 
