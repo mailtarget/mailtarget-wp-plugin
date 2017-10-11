@@ -8,7 +8,7 @@
         <br>
         <div class="update-nag">Token not correctly set / empty, please update
             <a href="admin.php?page=mailtarget-form-plugin--admin-menu-config">config</a></div><?php
-    } else { ?><p>List widget page</p><?php }?>
+    } else { ?><p>Select MailTarget Form to setup</p><?php }?>
 
     <?php if ($valid) {
         if (count($forms) < 1) {?>
@@ -16,7 +16,6 @@
                 <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-add">creating one</a></div><?php
         } else {
             ?>
-            <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-add">new widget</a>
             <table class="wp-list-table widefat fixed striped pages">
             <thead>
             <tr>
