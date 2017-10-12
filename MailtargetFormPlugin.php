@@ -143,6 +143,21 @@ class MailtargetFormPlugin {
                 $team = $api->getTeam();
 	            update_option('mtg_api_token', $key);
                 break;
+            case 'popup_config':
+                $data = array(
+                    'mtg_popup_form_id' => $_POST['popup_form_id'],
+                    'mtg_popup_form_name' => $_POST['popup_form_name'],
+                    'mtg_popup_width' => $_POST['popup_width'],
+                    'mtg_popup_height' => $_POST['popup_height'],
+                    'mtg_popup_delay' => $_POST['popup_delay'],
+                );
+	            update_option('mtg_popup_form_id', $data['mtg_popup_form_id']);
+	            update_option('mtg_popup_form_name', $data['mtg_popup_form_name']);
+	            update_option('mtg_popup_width', $data['mtg_popup_width']);
+	            update_option('mtg_popup_height', $data['mtg_popup_height']);
+	            update_option('mtg_popup_delay', $data['mtg_popup_delay']);
+	            wp_redirect('admin.php?page=mailtarget-form-plugin--admin-menu-popup-main');
+                break;
             case 'create_widget':
 	            global $wpdb;
 	            $table_name = $wpdb->base_prefix . "mailtarget_forms";
@@ -371,6 +386,19 @@ class MailtargetFormPlugin {
         if ($valid === false) {
             ?><p>Problem connecting to mailtarget server e</p><?php
         } else {
+            $formId = '';
+            $formName = '';
+            if (isset($_GET['form_id'])) {
+                $getFormId = $_GET['form_id'];
+                $api = $this->get_api();
+                if (!$api) return;
+                $form = $api->getFormDetail($getFormId);
+                if (!is_wp_error($form)) {
+                    $formId = $form['formId'];
+                    $formName = $form['name'];
+                }
+                error_log(json_encode($form));
+            }
             require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/form_popup.php');
         }
     }

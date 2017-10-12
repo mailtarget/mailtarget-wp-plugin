@@ -13,7 +13,7 @@
 			<tr class="user-rich-editing-wrap">
 				<th>API Token</th>
 				<td><textarea class="regular-text" name="mtg_api_token"
-					><?php echo esc_attr( get_option( 'mtg_api_token' ) ); ?></textarea></td>
+					><?php echo esc_attr(get_option('mtg_api_token')); ?></textarea></td>
 			</tr>
 
 			<tr>

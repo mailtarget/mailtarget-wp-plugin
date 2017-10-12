@@ -1,6 +1,8 @@
 <?php
-$formId = esc_attr(get_option('mtg_popup_form_id'));
-$formName = esc_attr(get_option('mtg_popup_form_name'));
+if ($formId == '') {
+    $formId = esc_attr(get_option('mtg_popup_form_id'));
+    $formName = esc_attr(get_option('mtg_popup_form_name'));
+}
 ?>
 <div class="wrap mtg-form-plugin">
     <?php include MAILTARGET_PLUGIN_DIR . '/views/admin/style.php' ?>
@@ -24,46 +26,46 @@ $formName = esc_attr(get_option('mtg_popup_form_name'));
                     <tr class="user-rich-editing-wrap">
                         <th>MailTarget Form Name</th>
                         <td>
-                            <strong><?php echo $form['name'] ?></strong>
-                            <input type="hidden" name="form_id" value="<?php echo $formId ?>">
+                            <strong><?php echo $formName ?></strong>
+                            <input type="hidden" name="popup_form_id" value="<?php echo $formId ?>">
+                            <input type="hidden" name="popup_form_name" value="<?php echo $formName ?>">
                         </td>
                     </tr>
                     <tr class="user-rich-editing-wrap">
-                        <th>Name</th>
+                        <th>Width</th>
                         <td>
-                            <input type="text" class="regular-text" name="widget_name">
+                            <input type="number" class="regular-text" name="popup_width" value="<?php echo esc_attr(get_option('mtg_popup_width')); ?>">
                         </td>
                     </tr>
                     <tr class="user-rich-editing-wrap">
-                        <th>Title</th>
+                        <th>Height</th>
                         <td>
-                            <input type="text" class="regular-text" name="widget_title">
+                            <input type="number" class="regular-text" name="popup_height" value="<?php echo esc_attr(get_option('mtg_popup_height')); ?>">
                         </td>
                     </tr>
                     <tr class="user-rich-editing-wrap">
-                        <th>Description</th>
+                        <th>Delay</th>
                         <td>
-                            <textarea class="regular-text" name="widget_description"></textarea>
-                        </td>
-                    </tr>
-                    <tr class="user-rich-editing-wrap">
-                        <th>Submit Title</th>
-                        <td>
-                            <input type="text" class="regular-text" name="widget_submit_desc">
+                            <input type="number" class="regular-text" name="popup_delay" value="<?php echo esc_attr(get_option('mtg_popup_delay')); ?>">
                         </td>
                     </tr>
 
                     <tr>
                         <td></td>
                         <td>
-                            <input type="hidden" value="create_widget" name="mailtarget_form_action">
-                            <?php submit_button('Create Form'); ?></td>
+                            <input type="hidden" value="popup_config" name="mailtarget_form_action">
+                            <?php submit_button('Setup Popup'); ?></td>
                     </tr>
                 </table>
             </form>
             <?php
         } else {
-            ?><a href="#">select form</a><?php
+            ?>
+            <br>
+            <br>
+            <br>
+            <a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form&for=popup">select form</a>
+            <?php
         }
     } ?>
 
