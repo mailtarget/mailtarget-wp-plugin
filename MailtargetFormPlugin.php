@@ -125,6 +125,7 @@ class MailtargetFormPlugin {
         register_setting($this->option_group, 'mtg_popup_title');
         register_setting($this->option_group, 'mtg_popup_description');
         register_setting($this->option_group, 'mtg_popup_submit');
+        register_setting($this->option_group, 'mtg_popup_redirect');
     }
 
     function handling_admin_post () {
@@ -158,12 +159,18 @@ class MailtargetFormPlugin {
                     'mtg_popup_width' => $_POST['popup_width'],
                     'mtg_popup_height' => $_POST['popup_height'],
                     'mtg_popup_delay' => $_POST['popup_delay'],
+                    'mtg_popup_title' => $_POST['popup_title'],
+                    'mtg_popup_description' => $_POST['popup_description'],
+                    'mtg_popup_redirect' => $_POST['popup_redirect'],
                 );
 	            update_option('mtg_popup_form_id', $data['mtg_popup_form_id']);
 	            update_option('mtg_popup_form_name', $data['mtg_popup_form_name']);
 	            update_option('mtg_popup_width', $data['mtg_popup_width']);
 	            update_option('mtg_popup_height', $data['mtg_popup_height']);
 	            update_option('mtg_popup_delay', $data['mtg_popup_delay']);
+	            update_option('mtg_popup_title', $data['mtg_popup_title']);
+	            update_option('mtg_popup_description', $data['mtg_popup_description']);
+	            update_option('mtg_popup_redirect', $data['mtg_popup_redirect']);
 	            wp_redirect('admin.php?page=mailtarget-form-plugin--admin-menu-popup-main');
                 break;
             case 'create_widget':
@@ -179,6 +186,7 @@ class MailtargetFormPlugin {
                         'widget_title' => $_POST['widget_title'],
                         'widget_description' => $_POST['widget_description'],
                         'widget_submit_desc' => $_POST['widget_submit_desc'],
+                        'widget_redir' => $_POST['widget_redir'],
                     ))
                 );
 	            if ($_POST['widget_name'] != '') {
@@ -197,6 +205,7 @@ class MailtargetFormPlugin {
                         'widget_title' => $_POST['widget_title'],
                         'widget_description' => $_POST['widget_description'],
                         'widget_submit_desc' => $_POST['widget_submit_desc'],
+                        'widget_redir' => $_POST['widget_redir'],
                     ))
                 );
 	            if ($_POST['widget_name'] != '') {
@@ -225,7 +234,15 @@ class MailtargetFormPlugin {
                 }
                 $res = $api->submit($input, $form['url']);
 	            $res = json_encode($res);
-                if ($res === 'true') wp_redirect(wp_get_referer());
+	            $url = wp_get_referer();
+	            if (isset($_POST['mailtarget_form_mode'])) {
+	                $popupUrl =  esc_attr(get_option('mtg_popup_redirect'));
+	                if ($_POST['mailtarget_form_mode'] == 'popup' and $popupUrl != '') {
+	                    $url = $popupUrl;
+                    }
+                }
+                if (isset($_POST['mailtarget_form_redir'])) $url = $_POST['mailtarget_form_redir'];
+                if ($res === 'true') wp_redirect($url);
                 break;
             default:
                 break;
@@ -295,9 +312,7 @@ class MailtargetFormPlugin {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
         }
         $valid = $this->is_key_valid();
-        if ($valid === false) {
-            ?><p>Problem connecting to mailtarget server e</p><?php
-        } else {
+        if ($valid === true) {
             global $wpdb, $forms;
 
             if (!current_user_can('edit_posts')) {
@@ -314,9 +329,7 @@ class MailtargetFormPlugin {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
         }
         $valid = $this->is_key_valid();
-        if ($valid === false) {
-            ?><p>Problem connecting to mailtarget server e</p><?php
-        } else {
+        if ($valid === true) {
             $api = $this->get_api();
             if (!$api) return null;
             $forms = $api->getFormList();
@@ -334,9 +347,7 @@ class MailtargetFormPlugin {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
         }
         $valid = $this->is_key_valid();
-        if ($valid === false) {
-            ?><p>Problem connecting to mailtarget server e</p><?php
-        } else {
+        if ($valid === true) {
             if (!isset($_GET['form_id'])) return false;
             $formId = $_GET['form_id'];
             $api = $this->get_api();
@@ -356,9 +367,7 @@ class MailtargetFormPlugin {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
         }
         $valid = $this->is_key_valid();
-        if ($valid === false) {
-            ?><p>Problem connecting to mailtarget server e</p><?php
-        } else {
+        if ($valid === true) {
             global $wpdb;
             $widgetId = sanitize_key($_GET['id']);
             $widget = $wpdb->get_row("SELECT * FROM " . $wpdb->base_prefix . "mailtarget_forms where id = $widgetId");
@@ -384,9 +393,7 @@ class MailtargetFormPlugin {
         }
         $valid = $this->is_key_valid(true);
 
-        if ($valid === false) {
-            ?><p>Problem connecting to mailtarget server e</p><?php
-        } else {
+        if ($valid !== false) {
             require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/setup.php');
         }
     }
@@ -397,9 +404,7 @@ class MailtargetFormPlugin {
         }
         $valid = $this->is_key_valid();
 
-        if ($valid === false) {
-            ?><p>Problem connecting to mailtarget server e</p><?php
-        } else {
+        if ($valid === true) {
             $formId = '';
             $formName = '';
             if (isset($_GET['form_id'])) {

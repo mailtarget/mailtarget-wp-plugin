@@ -1,7 +1,15 @@
 <?php
-$title = $widget['data']['widget_title'];
-$description = $widget['data']['widget_description'];
-$submitTitle = $widget['data']['widget_submit_desc'];
+$title = '';
+$description = '';
+$submitTitle = '';
+$redirUlr = '';
+
+$data = $widget['data'];
+if (isset($data['widget_title'])) $title = $data['widget_title'];
+if (isset($data['widget_description'])) $description = $data['widget_description'];
+if (isset($data['widget_submit_desc'])) $submitTitle = $data['widget_submit_desc'];
+if (isset($data['widget_redir'])) $redirUlr = $data['widget_redir'];
+
 if ($submitTitle === '') $submitTitle = 'Submit';
 ?>
 <div>
@@ -35,6 +43,7 @@ if ($submitTitle === '') $submitTitle = 'Submit';
             <div class="mt-c-form__wrap">
                 <div class="mt-c-form__btn-action">
                     <input type="hidden" value="submit_form" name="mailtarget_form_action">
+                    <input type="hidden" value="<?php echo $redirUlr ?>" name="mailtarget_form_redir">
                     <input type="hidden" value="<?php echo $form['formId'] ?>" name="mailtarget_form_id">
                     <input type="submit" class="mt-o-btn mt-btn-submit" value="<?php echo $submitTitle ?>">
                 </div>

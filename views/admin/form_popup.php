@@ -24,6 +24,19 @@ if ($formId == '') {
                     </td>
                 </tr>
                 <tr class="user-rich-editing-wrap">
+                    <th>Title</th>
+                    <td>
+                        <input type="text" class="regular-text" name="popup_title" value="<?php echo esc_attr(get_option('mtg_popup_title')); ?>">
+                    </td>
+                </tr>
+                <tr class="user-rich-editing-wrap">
+                    <th>Description</th>
+                    <td>
+                        <textarea class="regular-text" name="popup_description"><?php echo esc_attr(get_option('mtg_popup_description')); ?></textarea>
+                        <p>* you may fill with plain text or html</p>
+                    </td>
+                </tr>
+                <tr class="user-rich-editing-wrap">
                     <th>Width</th>
                     <td>
                         <input type="number" class="regular-text" name="popup_width" value="<?php echo esc_attr(get_option('mtg_popup_width')); ?>">
@@ -39,6 +52,13 @@ if ($formId == '') {
                     <th>Delay</th>
                     <td>
                         <input type="number" class="regular-text" name="popup_delay" value="<?php echo esc_attr(get_option('mtg_popup_delay')); ?>">
+                    </td>
+                </tr>
+                <tr class="user-rich-editing-wrap">
+                    <th>Redirect Url</th>
+                    <td>
+                        <input type="text" class="regular-text" name="popup_redirect" value="<?php echo esc_attr(get_option('mtg_popup_redirect')); ?>">
+                        <p>* please fill with a valid url</p>
                     </td>
                 </tr>
 
