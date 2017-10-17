@@ -99,14 +99,19 @@ class MailtargetFormPlugin {
      * Enqueue and register JavaScript files here.
      */
     public function register_scripts() {
-        ?><?php
+        ?>
+        <script type="application/javascript" src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/js/tingle/tingle.min.js"></script>
+        <?php
 	}
 
     /**
      * Enqueue and register CSS files here.
      */
     public function register_styles() {
-        ?><link rel="stylesheet"  href="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/css/style.css" type="text/css" media="all" /><?php
+        ?>
+        <link rel="stylesheet"  href="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/css/style.css" type="text/css" media="all" />
+        <link rel="stylesheet"  href="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/js/tingle/tingle.min.css" type="text/css" media="all" />
+        <?php
 	}
 
 	function register_setting () {
@@ -117,6 +122,9 @@ class MailtargetFormPlugin {
         register_setting($this->option_group, 'mtg_popup_width');
         register_setting($this->option_group, 'mtg_popup_height');
         register_setting($this->option_group, 'mtg_popup_delay');
+        register_setting($this->option_group, 'mtg_popup_title');
+        register_setting($this->option_group, 'mtg_popup_description');
+        register_setting($this->option_group, 'mtg_popup_submit');
     }
 
     function handling_admin_post () {
@@ -448,4 +456,5 @@ class MailtargetFormPlugin {
 }
 require_once(MAILTARGET_PLUGIN_DIR . 'include/mailtarget_shortcode.php');
 require_once(MAILTARGET_PLUGIN_DIR . 'include/mailtarget_widget.php');
+require_once(MAILTARGET_PLUGIN_DIR . 'include/mailtarget_popup.php');
 MailtargetFormPlugin::get_instance();

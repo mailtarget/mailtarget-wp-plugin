@@ -5,8 +5,7 @@ class MailTarget_Shortcode {
 	/**
 	 * WordPress' init() hook
 	 */
-	public static function init()
-	{
+	public static function init() {
 
 		add_shortcode(
 			'mailtarget_form', array('MailTarget_Shortcode',
