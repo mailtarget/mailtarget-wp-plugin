@@ -243,7 +243,7 @@ class MailtargetFormPlugin {
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',
             'List Form',
-            'New Form',
+            'List Form',
             'manage_options',
             'mailtarget-form-plugin--admin-menu',
             array($this, 'list_widget_view')
@@ -321,7 +321,9 @@ class MailtargetFormPlugin {
             if (!$api) return null;
             $forms = $api->getFormList();
             if (is_wp_error($forms)) {
-                $forms = array();
+                $error = $forms;
+                require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/error.php');
+                return false;
             }
             require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/form_list.php');
         }
@@ -341,6 +343,8 @@ class MailtargetFormPlugin {
             if (!$api) return null;
             $form = $api->getFormDetail($formId);
             if (is_wp_error($form)) {
+                $error = $form;
+                require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/error.php');
                 return false;
             }
             require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/wp_form_add.php');
@@ -366,6 +370,8 @@ class MailtargetFormPlugin {
             if (!$api) return null;
             $form = $api->getFormDetail($widget->form_id);
             if (is_wp_error($form)) {
+                $error = $form;
+                require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/error.php');
                 return false;
             }
             require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/wp_form_edit.php');
@@ -376,7 +382,7 @@ class MailtargetFormPlugin {
         if ( !current_user_can( 'manage_options' ) )  {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
         }
-        $valid = $this->is_key_valid();
+        $valid = $this->is_key_valid(true);
 
         if ($valid === false) {
             ?><p>Problem connecting to mailtarget server e</p><?php
@@ -404,29 +410,36 @@ class MailtargetFormPlugin {
                 if (!is_wp_error($form)) {
                     $formId = $form['formId'];
                     $formName = $form['name'];
+                } else {
+                    $error = $form;
+                    require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/error.php');
+                    return false;
                 }
-                error_log(json_encode($form));
             }
             require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/form_popup.php');
         }
     }
 
-    function is_key_valid () {
+    function is_key_valid ($setup = false) {
         $api = $this->get_api();
         if (!$api) return null;
 	    $valid = $api->ping();
 	    if (is_wp_error($valid)) {
-	        if ($this->get_code_from_error($valid) == 32) return null;
-	        return false;
+	        if ($this->get_code_from_error($valid) == 32 and $setup) return null;
+            $error = $valid;
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/error.php');
+            return false;
 	    }
 	    $companyId = $this->get_company_id();
 	    if ($companyId === '') {
 	        $cek = $api->getTeam();
 		    if (is_wp_error($cek)) {
-			    if ($this->get_code_from_error($valid) == 32) {
+			    if ($this->get_code_from_error($valid) == 32 and $setup) {
 			        return null;
                 }
-			    return false;
+                $error = $cek;
+                require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/error.php');
+                return false;
 		    }
 		    update_option('mtg_company_id', $cek['companyId']);
         }
@@ -449,9 +462,15 @@ class MailtargetFormPlugin {
         return esc_attr(get_option('mtg_company_id'));
     }
 
-    function get_code_from_error ($err) {
-        if (!isset($err->errors['mailtarget-error-get'][0]['code'])) return false;
-        return $err->errors['mailtarget-error-get'][0]['code'];
+    function get_code_from_error ($error) {
+        $error = (array) $error;
+        if (isset($error['errors'])) $error = $error['errors'];
+        if (isset($error['mailtarget-error'])) $error = $error['mailtarget-error'];
+        if (isset($error[0])) $error = $error[0];
+        if (isset($error['data'])) $error = $error['data'];
+
+        if (isset($error['code'])) return $error['code'];
+        return false;
     }
 }
 require_once(MAILTARGET_PLUGIN_DIR . 'include/mailtarget_shortcode.php');
