@@ -3,7 +3,13 @@ if ($formId == '') {
     $formId = esc_attr(get_option('mtg_popup_form_id'));
     $formName = esc_attr(get_option('mtg_popup_form_name'));
 }
+$popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
 ?>
+
+<?php if (isset($_GET['success'])) {
+    ?><div class="update-nag">Mailtarget Form Popup configuration updated successfully !</div><?php
+} ?>
+
 <div class="wrap mtg-form-plugin">
     <?php include MAILTARGET_PLUGIN_DIR . '/views/admin/style.php' ?>
     <div class="mtg-banner">
@@ -47,6 +53,16 @@ if ($formId == '') {
                     <td>
                         <input type="text" class="regular-text" name="popup_redirect" value="<?php echo esc_attr(get_option('mtg_popup_redirect')); ?>">
                         <p>* please fill with a valid url</p>
+                    </td>
+                </tr>
+
+                <tr class="user-rich-editing-wrap">
+                    <th>Popup Status</th>
+                    <td>
+                        <select name="mtg_popup_enable">
+                            <option value="1" <?php if ($popupEnable) echo 'selected' ?>>Enable</option>
+                            <option value="0" <?php if (!$popupEnable) echo 'selected' ?>>Disable</option>
+                        </select>
                     </td>
                 </tr>
 

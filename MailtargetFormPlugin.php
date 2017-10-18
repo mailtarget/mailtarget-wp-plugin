@@ -117,6 +117,7 @@ class MailtargetFormPlugin {
 	function register_setting () {
         register_setting($this->option_group, 'mtg_api_token');
         register_setting($this->option_group, 'mtg_company_id');
+        register_setting($this->option_group, 'mtg_popup_enable');
         register_setting($this->option_group, 'mtg_popup_form_id');
         register_setting($this->option_group, 'mtg_popup_form_name');
         register_setting($this->option_group, 'mtg_popup_delay');
@@ -144,11 +145,16 @@ class MailtargetFormPlugin {
 
         switch ($action) {
             case 'setup_setting':
-                $key = $_POST['mtg_api_token'];
-	            $api = $this->get_api($key);
+                $data = array(
+                    'mtg_api_token' => $_POST['mtg_api_token'],
+                    'mtg_popup_enable' => $_POST['mtg_popup_enable'],
+                );
+	            $api = $this->get_api($data['mtg_api_token']);
 	            if (!$api) return false;
                 $team = $api->getTeam();
-	            update_option('mtg_api_token', $key);
+	            update_option('mtg_api_token', $data['mtg_api_token']);
+	            update_option('mtg_popup_enable', $data['mtg_popup_enable']);
+                wp_redirect('admin.php?page=mailtarget-form-plugin--admin-menu-config&success=1');
                 break;
             case 'popup_config':
                 $data = array(
@@ -158,6 +164,7 @@ class MailtargetFormPlugin {
                     'mtg_popup_title' => $_POST['popup_title'],
                     'mtg_popup_description' => $_POST['popup_description'],
                     'mtg_popup_redirect' => $_POST['popup_redirect'],
+                    'mtg_popup_enable' => $_POST['mtg_popup_enable'],
                 );
 	            update_option('mtg_popup_form_id', $data['mtg_popup_form_id']);
 	            update_option('mtg_popup_form_name', $data['mtg_popup_form_name']);
@@ -165,7 +172,8 @@ class MailtargetFormPlugin {
 	            update_option('mtg_popup_title', $data['mtg_popup_title']);
 	            update_option('mtg_popup_description', $data['mtg_popup_description']);
 	            update_option('mtg_popup_redirect', $data['mtg_popup_redirect']);
-	            wp_redirect('admin.php?page=mailtarget-form-plugin--admin-menu-popup-main');
+                update_option('mtg_popup_enable', $data['mtg_popup_enable']);
+	            wp_redirect('admin.php?page=mailtarget-form-plugin--admin-menu-popup-main&success=1');
                 break;
             case 'create_widget':
 	            global $wpdb;
