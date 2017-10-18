@@ -37,18 +37,6 @@ if ($formId == '') {
                     </td>
                 </tr>
                 <tr class="user-rich-editing-wrap">
-                    <th>Width</th>
-                    <td>
-                        <input type="number" class="regular-text" name="popup_width" value="<?php echo esc_attr(get_option('mtg_popup_width')); ?>">
-                    </td>
-                </tr>
-                <tr class="user-rich-editing-wrap">
-                    <th>Height</th>
-                    <td>
-                        <input type="number" class="regular-text" name="popup_height" value="<?php echo esc_attr(get_option('mtg_popup_height')); ?>">
-                    </td>
-                </tr>
-                <tr class="user-rich-editing-wrap">
                     <th>Delay</th>
                     <td>
                         <input type="number" class="regular-text" name="popup_delay" value="<?php echo esc_attr(get_option('mtg_popup_delay')); ?>">

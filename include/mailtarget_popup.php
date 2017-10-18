@@ -31,9 +31,37 @@ class MailTarget_Popup {
                 }
             });
             modal.setContent(document.querySelector('.mtg-popup-modal').innerHTML);
-            setTimeout(function () {
-                modal.open()
-            }, delay)
+
+            if (getCookie('mtg_popup_time') === '') {
+                setTimeout(function () {
+                    modal.open()
+                    setCookie('mtg_popup_time', 1, 20)
+                }, delay)
+            }
+
+            function setCookie(cname, cvalue, exmin) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exmin*60*1000));
+                var expires = "expires="+ d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+                console.log('cookie setted')
+            }
+
+            function getCookie(cname) {
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for(var i = 0; i <ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
         </script>
         <?php
     }

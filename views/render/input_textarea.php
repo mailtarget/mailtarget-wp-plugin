@@ -7,6 +7,9 @@ $setting = $row['setting'];
 		<?php if ($setting['showTitle']) { ?>
             <label class="mt-o-label" v-if="setting.showTitle"><?php echo $setting['title'] ?></label>
 		<?php } ?>
-        <textarea class="mt-o-textarea" :placeholder="<?php echo $setting['description']; ?>"></textarea>
+        <textarea class="mt-o-textarea"
+                  name="mtin__<?php echo $setting['name']; ?>"
+            <?php if ($setting['required']) { ?> required="required" <?php } ?>
+                  placeholder="<?php echo $setting['description']; ?>"></textarea>
     </div>
 </div>

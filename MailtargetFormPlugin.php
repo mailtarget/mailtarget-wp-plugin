@@ -119,8 +119,6 @@ class MailtargetFormPlugin {
         register_setting($this->option_group, 'mtg_company_id');
         register_setting($this->option_group, 'mtg_popup_form_id');
         register_setting($this->option_group, 'mtg_popup_form_name');
-        register_setting($this->option_group, 'mtg_popup_width');
-        register_setting($this->option_group, 'mtg_popup_height');
         register_setting($this->option_group, 'mtg_popup_delay');
         register_setting($this->option_group, 'mtg_popup_title');
         register_setting($this->option_group, 'mtg_popup_description');
@@ -156,8 +154,6 @@ class MailtargetFormPlugin {
                 $data = array(
                     'mtg_popup_form_id' => $_POST['popup_form_id'],
                     'mtg_popup_form_name' => $_POST['popup_form_name'],
-                    'mtg_popup_width' => $_POST['popup_width'],
-                    'mtg_popup_height' => $_POST['popup_height'],
                     'mtg_popup_delay' => $_POST['popup_delay'],
                     'mtg_popup_title' => $_POST['popup_title'],
                     'mtg_popup_description' => $_POST['popup_description'],
@@ -165,8 +161,6 @@ class MailtargetFormPlugin {
                 );
 	            update_option('mtg_popup_form_id', $data['mtg_popup_form_id']);
 	            update_option('mtg_popup_form_name', $data['mtg_popup_form_name']);
-	            update_option('mtg_popup_width', $data['mtg_popup_width']);
-	            update_option('mtg_popup_height', $data['mtg_popup_height']);
 	            update_option('mtg_popup_delay', $data['mtg_popup_delay']);
 	            update_option('mtg_popup_title', $data['mtg_popup_title']);
 	            update_option('mtg_popup_description', $data['mtg_popup_description']);
@@ -227,13 +221,21 @@ class MailtargetFormPlugin {
 	            $api = $this->get_api();
 	            if (!$api) return;
 	            $form = $api->getFormDetail($id);
+                if (is_wp_error($form)) {
+                    die('failed to get form data');
+                    break;
+                }
 	            $input = array();
+                if (!isset($form['component'])) die ('form data not valid');
 	            foreach ($form['component'] as $item) {
 	                $setting = $item['setting'];
 	                $input[$setting['name']] = $_POST['mtin__'.$setting['name']];
                 }
                 $res = $api->submit($input, $form['url']);
-	            $res = json_encode($res);
+                if (is_wp_error($form)) {
+                    die('failed to submit form');
+                    break;
+                }
 	            $url = wp_get_referer();
 	            if (isset($_POST['mailtarget_form_mode'])) {
 	                $popupUrl =  esc_attr(get_option('mtg_popup_redirect'));
@@ -242,7 +244,7 @@ class MailtargetFormPlugin {
                     }
                 }
                 if (isset($_POST['mailtarget_form_redir'])) $url = $_POST['mailtarget_form_redir'];
-                if ($res === 'true') wp_redirect($url);
+                wp_redirect($url);
                 break;
             default:
                 break;
@@ -332,7 +334,8 @@ class MailtargetFormPlugin {
         if ($valid === true) {
             $api = $this->get_api();
             if (!$api) return null;
-            $forms = $api->getFormList();
+            $pg = isset($_GET['pg']) ? $_GET['pg'] : 1;
+            $forms = $api->getFormList($pg);
             if (is_wp_error($forms)) {
                 $error = $forms;
                 require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/error.php');

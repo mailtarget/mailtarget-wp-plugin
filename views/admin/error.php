@@ -15,6 +15,7 @@ if (isset($error['data'])) $data = $error['data'];
 
 if ($code == 32) $errSlug = 'expired-token';
 if ($code == 410 and $data = 'form') $errSlug = 'form-not-found';
+if ($code == 413 and $data = 'invalid origin host') $errSlug = 'cap-domain-regist';
 
 ?>
 <div class="wrap mtg-form-plugin">
@@ -30,6 +31,9 @@ if ($code == 410 and $data = 'form') $errSlug = 'form-not-found';
             break;
         case 'form-not-found':
             ?><div class="update-nag">Form data not found, possible form not published yet</div><?php
+            break;
+        case 'cap-domain-regist':
+            ?><div class="update-nag">Form you are selecting is enabling captcha, for now this plugin not supporting captcha.</div><?php
             break;
         default:
             ?><div class="update-nag">Service from server currently unavailable right now</div><?php
