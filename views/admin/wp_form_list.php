@@ -4,13 +4,13 @@
         <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
     </div>
     <h1 class="wp-heading-inline">List - Mailtarget Form</h1>
-
     <?php if (count($widgets) < 1) {?>
             <div class="update-nag">List empty, start by
                 <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form">creating one</a></div><?php
     } else {
         ?>
         <a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form">new form</a>
+        <p>Use this form widget as embed to your post or as sidebar widget. Manage your widget so users easily access your form.</p>
         <hr class="wp-header-end">
         <table class="wp-list-table widefat fixed striped pages">
             <thead>
