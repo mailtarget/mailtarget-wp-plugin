@@ -14,15 +14,17 @@
 	<p><?php _e('Select form from list below, and hit "Add Shortcode" to add the shortcode to your post!', 'mailtarget'); ?></p>
 
 	<p>
-		<label for="mailtarget_form_id">Form</label><br/>
-		<select class="widefat" id="mailtarget_form_id" name="mailtarget_form_id">
+		<label for="mailtarget_form_id">Form :</label>
+		<select class="widefat" id="mailtarget_form_id" name="mailtarget_form_id" style="font-size: 14px;">
 			<?php foreach ($forms as $form): ?>
 				<option value="<?php echo $form->id; ?>"><?php echo $form->name; ?></option>
 			<?php endforeach; ?>
 		</select>
 	</p>
+    <p>
+        <input type="button" name="<?php _e('Add Shortcode', 'mailtarget'); ?>" value="Add Shortcode" style="font-size: 14px;">
+    </p>
 
-	<input type="button" name="<?php _e('Add Shortcode', 'mailtarget'); ?>" value="Add Shortcode">
 
 </form>
 <script type="text/javascript">

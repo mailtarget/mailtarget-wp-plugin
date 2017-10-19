@@ -22,21 +22,23 @@ if ($code == 413 and $data = 'invalid origin host') $errSlug = 'cap-domain-regis
     <div class="mtg-banner">
         <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
     </div>
-    <h1 class="">Error - Mailtarget Form</h1>
-    <?php switch ($errSlug) {
-        case 'expired-token':
-            ?><div class="update-nag">Apikey invalid or expired, please update your apikey at
-            <a href="admin.php?page=mailtarget-form-plugin--admin-menu-config">mailtarget form setting</a></div><?php
-            break;
-        case 'form-not-found':
-            ?><div class="update-nag">Form data not found, possible form not published yet</div><?php
-            break;
-        case 'cap-domain-regist':
-            ?><div class="update-nag">Form you are selecting is enabling captcha, for now this plugin not supporting captcha.</div><?php
-            break;
-        default:
-            ?><div class="update-nag">Service from server currently unavailable right now</div><?php
-            break;
-    }?>
-<!--    <textarea style="width: 100%; height: 400px;">--><?php //print_r($error) ?><!--</textarea>-->
+
+    <div class="wrap">
+        <h1 class="">Error - Mailtarget Form</h1>
+        <?php switch ($errSlug) {
+            case 'expired-token':
+                ?><div class="update-nag">Apikey invalid or expired, please update your apikey at
+                <a href="admin.php?page=mailtarget-form-plugin--admin-menu-config">mailtarget form setting</a></div><?php
+                break;
+            case 'form-not-found':
+                ?><div class="update-nag">Form data not found, possible form not published yet</div><?php
+                break;
+            case 'cap-domain-regist':
+                ?><div class="update-nag">Form you are selecting is enabling captcha, for now this plugin not supporting captcha.</div><?php
+                break;
+            default:
+                ?><div class="update-nag">Service from server currently unavailable right now</div><?php
+                break;
+        }?>
+    </div>
 </div>
