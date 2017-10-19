@@ -48,6 +48,8 @@ class MailtargetFormPlugin {
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_styles' ) );
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_styles' ) );
+
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
 
@@ -111,6 +113,12 @@ class MailtargetFormPlugin {
         ?>
         <link rel="stylesheet"  href="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/css/style.css" type="text/css" media="all" />
         <link rel="stylesheet"  href="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/js/tingle/tingle.min.css" type="text/css" media="all" />
+        <?php
+	}
+
+    public function register_admin_styles() {
+        ?>
+        <link rel="stylesheet"  href="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/css/mailtarget_admin.css" type="text/css" media="all" />
         <?php
 	}
 

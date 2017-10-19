@@ -1,0 +1,10 @@
+.mtg-form-plugin .mtg-banner img {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.mtg-form-plugin .mtg-banner {
+    height: 100px;
+    background-color: #ff9700;
+    margin: 0 0 20px -20px;
+}

@@ -10,8 +10,7 @@ if (isset($data->widget_description)) $widget_description = $data->widget_descri
 if (isset($data->widget_submit_desc)) $widget_submit_desc = $data->widget_submit_desc;
 if (isset($data->widget_redir)) $widget_redir = $data->widget_redir;
 ?>
-<div class="wrap">
-    <?php include MAILTARGET_PLUGIN_DIR . '/views/admin/style.php' ?>
+<div class="mtg-form-plugin">
     <div class="mtg-banner">
         <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
     </div>
