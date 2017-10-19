@@ -1,6 +1,5 @@
 <?php
 $setting = $row['setting'];
-//print_r($setting);
 ?>
 <div class="mt-c-form__wrap">
     <div div class="mt-c-form__checkbox">
@@ -9,7 +8,7 @@ $setting = $row['setting'];
 		<?php } ?>
         <?php
         foreach ($setting['options'] as $item) {
-            ?><input type="checkbox" class="mt-o-checkbox" :value="<?php echo $item['name'] ?>"><?php
+            ?><input type="checkbox" class="mt-o-checkbox" name="mtin__<?php echo $setting['name']; ?>" value="<?php echo $item['name'] ?>"><?php
             if ($setting['showImage'] === false) {
                 ?><div class="mt-c-checkbox__text"><p><?php echo $item['name'] ?></p></div><?php
             } else {

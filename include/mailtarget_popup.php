@@ -4,7 +4,6 @@ class MailTarget_Popup {
 
     public static function init () {
         $formId = esc_attr(get_option('mtg_popup_form_id'));
-        $formId = esc_attr(get_option('mtg_popup_form_id'));
         $delay = esc_attr(get_option('mtg_popup_delay')) * 1000;
         $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
         if ($formId == '') return false;

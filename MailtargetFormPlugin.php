@@ -239,7 +239,10 @@ class MailtargetFormPlugin {
 	                $setting = $item['setting'];
 	                $input[$setting['name']] = $_POST['mtin__'.$setting['name']];
                 }
-                $res = $api->submit($input, $form['url']);
+                error_log(json_encode($input));
+                $submitUrl = $form['url'];
+	            $submitUrl = str_replace('https', 'http', $submitUrl);
+                $res = $api->submit($input, $submitUrl);
                 if (is_wp_error($form)) {
                     die('failed to submit form');
                     break;
@@ -265,7 +268,8 @@ class MailtargetFormPlugin {
             'Mailtarget Form',
             'manage_options',
             'mailtarget-form-plugin--admin-menu',
-            null
+            null,
+            MAILTARGET_PLUGIN_URL . '/assets/image/wp-icon-compose.png'
         );
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',

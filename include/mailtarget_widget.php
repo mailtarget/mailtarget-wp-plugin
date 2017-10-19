@@ -12,8 +12,6 @@ class MailTarget_Widget extends WP_Widget {
     }
 
     public function widget ($args, $instance) {
-        error_log(json_encode($args));
-        error_log(json_encode($instance));
         if (!isset($instance['mailtarget_form_id'])) {
             echo 'id not recognize';
             return false;
@@ -21,9 +19,7 @@ class MailTarget_Widget extends WP_Widget {
         $widgetId = sanitize_key($instance['mailtarget_form_id']);
 
         require_once MAILTARGET_PLUGIN_DIR . '/include/mailtarget_form.php';
-//        ob_start();
         load_mailtarget_form($widgetId);
-//        return ob_get_clean();
     }
 
     public function form ($instance) {
