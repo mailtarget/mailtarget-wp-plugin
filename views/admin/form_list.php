@@ -1,6 +1,8 @@
 <?php
 $targetPage = 'mailtarget-form-plugin--admin-menu-widget-add';
+$for = '';
 if (isset($_GET['for'])) {
+    $for = '&for='.$_GET['for'];
     if ($_GET['for'] == 'popup') $targetPage = 'mailtarget-form-plugin--admin-menu-popup-main';
 }
 $pg = 1;
@@ -60,10 +62,10 @@ if (isset($_GET['pg'])) $pg = $_GET['pg'];
             <div class="nav" style="margin-top: 15px;">
             <?php
             if ($pg > 1) {
-                ?><a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form&pg=<?php echo ($pg - 1) ?>">previous</a> <?php
+                ?><a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form<?php echo $for ?>&pg=<?php echo ($pg - 1) ?>">previous</a> <?php
             }
             if (count($forms['data']) > 9) {
-                ?><a class="page-title-action" style="float: right" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form&pg=<?php echo ($pg + 1) ?>">next</a><?php
+                ?><a class="page-title-action" style="float: right" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form<?php echo $for ?>&pg=<?php echo ($pg + 1) ?>">next</a><?php
             }
             ?></div><?php
         }
