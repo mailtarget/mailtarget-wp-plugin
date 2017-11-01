@@ -101,7 +101,7 @@ class MailtargetFormPlugin {
      */
     public function register_scripts() {
         ?>
-        <script type="application/javascript" src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/js/tingle/tingle.min.js"></script>
+        <script type="application/javascript" src="<?php echo esc_url(MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.js') ?>"></script>
         <?php
 	}
 
@@ -110,14 +110,14 @@ class MailtargetFormPlugin {
      */
     public function register_styles() {
         ?>
-        <link rel="stylesheet"  href="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/css/style.css" type="text/css" media="all" />
-        <link rel="stylesheet"  href="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/js/tingle/tingle.min.css" type="text/css" media="all" />
+        <link rel="stylesheet"  href="<?php echo esc_url(MAILTARGET_PLUGIN_URL.'/assets/css/style.css') ?>" type="text/css" media="all" />
+        <link rel="stylesheet"  href="<?php echo esc_url(MAILTARGET_PLUGIN_URL.'/assets/js/tingle/tingle.min.css') ?>" type="text/css" media="all" />
         <?php
 	}
 
     public function register_admin_styles() {
         ?>
-        <link rel="stylesheet"  href="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/css/mailtarget_admin.css" type="text/css" media="all" />
+        <link rel="stylesheet"  href="<?php echo esc_url(MAILTARGET_PLUGIN_URL.'/assets/css/mailtarget_admin.css') ?>" type="text/css" media="all" />
         <?php
 	}
 

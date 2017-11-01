@@ -1,6 +1,6 @@
 <div class="mtg-form-plugin">
     <div class="mtg-banner">
-        <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
+        <img src="<?php echo esc_url(MAILTARGET_PLUGIN_URL.'/assets/image/logo.png') ?>" />
     </div>
     <div class="wrap">
         <h1 class="wp-heading-inline">Setup New Form - Mailtarget Form</h1>
@@ -11,8 +11,8 @@
                 <table class="form-table">
                     <tr class="user-rich-editing-wrap">
                         <th>MailTarget Form Name</th>
-                        <td><strong><?php echo $form['name'] ?></strong>
-                            <input type="hidden" name="form_id" value="<?php echo $form['formId'] ?>">
+                        <td><strong><?php echo esc_attr($form['name']) ?></strong>
+                            <input type="hidden" name="form_id" value="<?php echo esc_attr($form['formId']) ?>">
                         </td>
                     </tr>
                     <tr class="user-rich-editing-wrap">

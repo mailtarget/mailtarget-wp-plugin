@@ -30,18 +30,18 @@ class MailTarget_Widget extends WP_Widget {
         if (isset($instance['mailtarget_form_id'])) $id = $instance['mailtarget_form_id'];
         ?>
         <p>
-            <label for="<?php echo $this->get_field_id('mailtarget_form_id') ?>">
+            <label for="<?php echo esc_attr($this->get_field_id('mailtarget_form_id')) ?>">
                 <?php echo __('Select form:', 'mailtarget') ?>
             </label>
             <select class="widefat"
-                    id="<?php echo $this->get_field_id('mailtarget_form_id') ?>"
-                    name="<?php echo $this->get_field_name('mailtarget_form_id') ?>"
+                    id="<?php echo esc_attr($this->get_field_id('mailtarget_form_id')) ?>"
+                    name="<?php echo esc_attr($this->get_field_name('mailtarget_form_id')) ?>"
             >
                 <?php
                 foreach ($widgets as $item) {
-                    ?><option value="<?php echo $item->id ?>"
-                    <?php echo $item->id == $id ? 'selected="selected"' : ''  ?>
-                    ><?php echo $item->name ?></option><?php
+                    ?><option value="<?php echo esc_attr($item->id) ?>"
+                    <?php echo $item->id == $id ? esc_html('selected="selected"') : ''  ?>
+                    ><?php echo esc_attr($item->name) ?></option><?php
                 }
                 ?>
             </select>

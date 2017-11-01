@@ -11,7 +11,7 @@ class MailTarget_Popup {
         require_once MAILTARGET_PLUGIN_DIR . '/include/mailtarget_form.php';
         ?>
         <div class="mtg-popup-modal" style="display: none">
-            <div class="modal"><?php echo load_mailtarget_popup($formId) ?></div>
+            <div class="modal"><?php echo esc_html(load_mailtarget_popup($formId)) ?></div>
         </div>
         <script>
             var delay = <?php echo $delay ?>;

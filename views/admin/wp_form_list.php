@@ -1,6 +1,6 @@
 <div class="mtg-form-plugin">
     <div class="mtg-banner">
-        <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
+        <img src="<?php echo esc_url(MAILTARGET_PLUGIN_URL.'/assets/image/logo.png') ?>" />
     </div>
     <div class="wrap">
         <h1 class="wp-heading-inline">List - Mailtarget Form</h1>
@@ -27,13 +27,13 @@
             foreach ($widgets as $item) {
                 ?>
                 <tr>
-                    <td><?php echo $no ?></td>
-                    <td><?php echo $item->name ?></td>
-                    <td>[mailtarget_form form_id=<?php echo $item->id ?>]</td>
-                    <td><?php echo $item->time ?></td>
+                    <td><?php echo esc_attr($no) ?></td>
+                    <td><?php echo esc_attr($item->name) ?></td>
+                    <td>[mailtarget_form form_id=<?php echo esc_attr($item->id) ?>]</td>
+                    <td><?php echo esc_attr($item->time) ?></td>
                     <td>
-                        <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-edit&id=<?php echo $item->id ?>">Edit</a> |
-                        <a href="admin.php?page=mailtarget-form-plugin--admin-menu&action=delete&id=<?php echo $item->id ?>">Delete</a>
+                        <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-edit&id=<?php echo esc_attr($item->id) ?>">Edit</a> |
+                        <a href="admin.php?page=mailtarget-form-plugin--admin-menu&action=delete&id=<?php echo esc_attr($item->id) ?>">Delete</a>
                     </td>
                 </tr>
                 <?php

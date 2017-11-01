@@ -8,7 +8,7 @@ $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
 
 <div class="mtg-form-plugin">
     <div class="mtg-banner">
-        <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
+        <img src="<?php echo esc_url(MAILTARGET_PLUGIN_URL.'/assets/image/logo.png') ?>" />
     </div>
 
     <div class="wrap">
@@ -29,8 +29,8 @@ $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
                         <th>Popup Status</th>
                         <td>
                             <select name="mtg_popup_enable">
-                                <option value="1" <?php if ($popupEnable) echo 'selected' ?>>Enable</option>
-                                <option value="0" <?php if (!$popupEnable) echo 'selected' ?>>Disable</option>
+                                <option value="1" <?php if ($popupEnable) echo esc_attr('selected') ?>>Enable</option>
+                                <option value="0" <?php if (!$popupEnable) echo esc_attr('selected') ?>>Disable</option>
                             </select>
                         </td>
                     </tr>

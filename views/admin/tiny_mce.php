@@ -17,7 +17,7 @@
 		<label for="mailtarget_form_id">Form :</label>
 		<select class="widefat" id="mailtarget_form_id" name="mailtarget_form_id" style="font-size: 14px;">
 			<?php foreach ($forms as $form): ?>
-				<option value="<?php echo $form->id; ?>"><?php echo $form->name; ?></option>
+				<option value="<?php echo esc_attr($form->id); ?>"><?php echo esc_attr($form->name); ?></option>
 			<?php endforeach; ?>
 		</select>
 	</p>
