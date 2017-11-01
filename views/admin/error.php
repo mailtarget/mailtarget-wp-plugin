@@ -14,6 +14,7 @@ if (isset($error['message'])) $message = $error['message'];
 if (isset($error['data'])) $data = $error['data'];
 
 if ($code == 32) $errSlug = 'expired-token';
+if ($code == 101) $errSlug = 'unset-api-key';
 if ($code == 410 and $data = 'form') $errSlug = 'form-not-found';
 if ($code == 413 and $data = 'invalid origin host') $errSlug = 'cap-domain-regist';
 
@@ -26,6 +27,10 @@ if ($code == 413 and $data = 'invalid origin host') $errSlug = 'cap-domain-regis
     <div class="wrap">
         <h1 class="">Error - Mailtarget Form</h1>
         <?php switch ($errSlug) {
+            case 'unset-api-key':
+                ?><div class="update-nag">Apikey not set, please update your apikey at
+                <a href="admin.php?page=mailtarget-form-plugin--admin-menu-config">mailtarget form setting</a></div><?php
+                break;
             case 'expired-token':
                 ?><div class="update-nag">Apikey invalid or expired, please update your apikey at
                 <a href="admin.php?page=mailtarget-form-plugin--admin-menu-config">mailtarget form setting</a></div><?php

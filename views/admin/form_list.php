@@ -1,12 +1,9 @@
 <?php
 $targetPage = 'mailtarget-form-plugin--admin-menu-widget-add';
-$for = '';
-if (isset($_GET['for'])) {
-    $for = '&for='.$_GET['for'];
-    if ($_GET['for'] == 'popup') $targetPage = 'mailtarget-form-plugin--admin-menu-popup-main';
-}
-$pg = 1;
-if (isset($_GET['pg'])) $pg = $_GET['pg'];
+$for = isset($_GET['for']) ? sanitize_text_field($_GET['for']) : '';
+if ($for == 'popup') $targetPage = 'mailtarget-form-plugin--admin-menu-popup-main';
+
+$pg = isset($_GET['pg']) ? intval($_GET['pg']) : 1;
 ?>
 <div class="mtg-form-plugin">
     <div class="mtg-banner">

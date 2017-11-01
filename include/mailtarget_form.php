@@ -93,27 +93,27 @@ function load_mailtarget_popup ($formId) {
 
 }
 
-function render_text($row) {
+function mtgf_render_text($row) {
 	if (!isset($row['setting'])) return;
 	include MAILTARGET_PLUGIN_DIR.'/views/render/input_text.php';
 }
 
-function render_textarea($row) {
+function mtgf_render_textarea($row) {
 	if (!isset($row['setting'])) return;
 	include MAILTARGET_PLUGIN_DIR.'/views/render/input_textarea.php';
 }
 
-function render_dropdown($row) {
+function mtgf_render_dropdown($row) {
 	if (!isset($row['setting'])) return;
 	include MAILTARGET_PLUGIN_DIR.'/views/render/input_dropdown.php';
 }
 
-function render_multiple($row) {
+function mtgf_render_multiple($row) {
 	if (!isset($row['setting'])) return;
 	include MAILTARGET_PLUGIN_DIR.'/views/render/input_multiple.php';
 }
 
-function render_checkbox($row) {
+function mtgf_render_checkbox($row) {
 	if (!isset($row['setting'])) return;
 	include MAILTARGET_PLUGIN_DIR.'/views/render/input_checkbox.php';
 }

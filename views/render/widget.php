@@ -21,19 +21,19 @@ if ($submitTitle === '') $submitTitle = 'Submit';
             foreach ($form['component'] as $item) {
                 switch ($item['type']) {
                     case 'inputText':
-                        render_text($item);
+                        mtgf_render_text($item);
                         break;
                     case 'inputTextarea':
-                        render_textarea($item);
+                        mtgf_render_textarea($item);
                         break;
                     case 'inputMultiple':
-                        render_multiple($item);
+                        mtgf_render_multiple($item);
                         break;
                     case 'inputDropdown':
-                        render_dropdown($item);
+                        mtgf_render_dropdown($item);
                         break;
                     case 'inputCheckbox':
-                        render_checkbox($item);
+                        mtgf_render_checkbox($item);
                         break;
                     default:
                         break;
