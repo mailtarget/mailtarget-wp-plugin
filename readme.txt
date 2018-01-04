@@ -9,7 +9,7 @@ Stable tag: 1.0.0
 
 == Description ==
 
-Use MailTarget Forms Plugin to add MailTarget Form to your Wordpress site. You can embed the form inside a post or display it as widget or showing as popup window.
+Use MailTarget Form Plugin to add MailTarget Form to your Wordpress site. You can embed the form inside a post or display it as widget or showing as popup window.
 
 
 == Installation ==
