@@ -7,15 +7,8 @@
 		<table class="form-table">
 			<tr class="user-rich-editing-wrap">
 				<th>Form</th>
-				<td>
-                    <select name="form_id">
-                        <?php
-                        foreach ($form['data'] as $item) {
-                            print_r($item);
-                            ?><option value="<?php echo $item['formId']; ?>"><?php echo $item['name']; ?></option><?php
-                        }
-                        ?>
-                    </select>
+				<td><strong><?php echo $form['name'] ?></strong>
+                    <input type="hidden" name="form_id" value="<?php echo $form['formId'] ?>">
                 </td>
 			</tr>
 			<tr class="user-rich-editing-wrap">
@@ -33,7 +26,7 @@
 			<tr class="user-rich-editing-wrap">
 				<th>Description</th>
 				<td>
-                    <input type="text" class="regular-text" name="widget_description">
+                    <textarea class="regular-text" name="widget_description"></textarea>
                 </td>
 			</tr>
 			<tr class="user-rich-editing-wrap">
