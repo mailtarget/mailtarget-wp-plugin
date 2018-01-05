@@ -3,10 +3,12 @@ $data = json_decode($widget->data);
 $widget_title = '';
 $widget_description = '';
 $widget_submit_desc = '';
+$widget_redir = '';
 
 if (isset($data->widget_title)) $widget_title = $data->widget_title;
 if (isset($data->widget_description)) $widget_description = $data->widget_description;
 if (isset($data->widget_submit_desc)) $widget_submit_desc = $data->widget_submit_desc;
+if (isset($data->widget_redir)) $widget_redir = $data->widget_redir;
 ?>
 <div class="wrap">
     <?php include MAILTARGET_PLUGIN_DIR . '/views/admin/style.php' ?>
@@ -46,6 +48,12 @@ if (isset($data->widget_submit_desc)) $widget_submit_desc = $data->widget_submit
                 <th>Submit Title</th>
                 <td>
                     <input type="text" class="regular-text" name="widget_submit_desc" value="<?php echo $widget_submit_desc ?>">
+                </td>
+            </tr>
+            <tr class="user-rich-editing-wrap">
+                <th>Redirect Url</th>
+                <td>
+                    <input type="text" class="regular-text" name="widget_redir" value="<?php echo $widget_redir ?>">
                 </td>
             </tr>
 

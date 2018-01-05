@@ -39,6 +39,12 @@
                 </td>
             </tr>
 
+            <tr class="user-rich-editing-wrap">
+                <th>Redirect Url</th>
+                <td>
+                    <input type="text" class="regular-text" name="widget_redir">
+                </td>
+            </tr>
             <tr>
                 <td></td>
                 <td>
