@@ -1,6 +1,7 @@
 <?php
 $title = esc_attr(get_option('mtg_popup_title'));
 $description = get_option('mtg_popup_description');
+$redirUlr = get_option('mtg_popup_redirect');
 $submitTitle = esc_attr(get_option('mtg_popup_submit'));
 if ($submitTitle === '') $submitTitle = 'Submit';
 ?>
@@ -36,6 +37,7 @@ if ($submitTitle === '') $submitTitle = 'Submit';
                 <div class="mt-c-form__btn-action">
                     <input type="hidden" value="submit_form" name="mailtarget_form_action">
                     <input type="hidden" value="popup" name="mailtarget_form_mode">
+                    <input type="hidden" value="<?php echo $redirUlr ?>" name="mailtarget_form_redir">
                     <input type="hidden" value="<?php echo $form['formId'] ?>" name="mailtarget_form_id">
                     <input type="submit" class="mt-o-btn mt-btn-submit" value="<?php echo $submitTitle ?>">
                 </div>
