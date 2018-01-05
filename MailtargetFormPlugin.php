@@ -1,12 +1,11 @@
 <?php
 
 /*
-  Plugin Name: Mailtarget Form Plugin
-  Plugin URI: https://mailtarget.co
-  Description: A plugin to enable mailtarget form in your wp
+  Plugin Name: MailTarget Forms
+  Description: The MailTarget plugin to simplify embedding Mailtarget Forms in your post or as widget, also easily to set Mailtarget Forms as popup.
   Version: 1.0.0
-  Author: Timen Chad
-  Author URI: http://www.timen.net
+  Author: MailTarget Teams
+  Author URI: https://mailtarget.co/
   License: GPL V3
  */
 
@@ -45,10 +44,6 @@ class MailtargetFormPlugin {
 		$this->plugin_url  = plugin_dir_url( __FILE__ );
 
 		load_plugin_textdomain( $this->text_domain, false, $this->plugin_path . '\lang' );
-
-
-//        add_action( 'admin_enqueue_scripts', array( $this, 'register_scripts' ) );
-//		add_action( 'admin_enqueue_scripts', array( $this, 'register_styles' ) );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_styles' ) );
@@ -117,6 +112,11 @@ class MailtargetFormPlugin {
 	function register_setting () {
         register_setting($this->option_group, 'mtg_api_token');
         register_setting($this->option_group, 'mtg_company_id');
+        register_setting($this->option_group, 'mtg_popup_form_id');
+        register_setting($this->option_group, 'mtg_popup_form_name');
+        register_setting($this->option_group, 'mtg_popup_width');
+        register_setting($this->option_group, 'mtg_popup_height');
+        register_setting($this->option_group, 'mtg_popup_delay');
     }
 
     function handling_admin_post () {
@@ -139,7 +139,7 @@ class MailtargetFormPlugin {
             case 'setup_setting':
                 $key = $_POST['mtg_api_token'];
 	            $api = $this->get_api($key);
-	            if (!$api) return;
+	            if (!$api) return false;
                 $team = $api->getTeam();
 	            update_option('mtg_api_token', $key);
                 break;
@@ -183,8 +183,6 @@ class MailtargetFormPlugin {
             default:
                 break;
         }
-
-        error_log('handling admin setting '.$action);
     }
 
     function handling_post () {
@@ -222,7 +220,7 @@ class MailtargetFormPlugin {
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',
             'List Form',
-            'All Form',
+            'New Form',
             'manage_options',
             'mailtarget-form-plugin--admin-menu',
             array($this, 'list_widget_view')
@@ -230,10 +228,18 @@ class MailtargetFormPlugin {
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',
             'New Form',
-            'Add New',
+            'New Form',
             'manage_options',
             'mailtarget-form-plugin--admin-menu-widget-form',
             array($this, 'add_widget_view_form')
+        );
+        add_submenu_page(
+            'mailtarget-form-plugin--admin-menu',
+            'Popup Config',
+            'Popup Config',
+            'manage_options',
+            'mailtarget-form-plugin--admin-menu-popup-main',
+            array($this, 'add_popup_view')
         );
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',
@@ -245,8 +251,8 @@ class MailtargetFormPlugin {
         );
         add_submenu_page(
             null,
-            'Edit Widget',
-            'Edit Widget',
+            'Edit Form',
+            'Edit Form',
             'manage_options',
             'mailtarget-form-plugin--admin-menu-widget-edit',
             array($this, 'edit_widget_view')
@@ -254,7 +260,7 @@ class MailtargetFormPlugin {
         add_submenu_page(
             null,
             'New Form',
-            'Add New',
+            'New Form',
             'manage_options',
             'mailtarget-form-plugin--admin-menu-widget-add',
             array($this, 'add_widget_view')
@@ -276,7 +282,7 @@ class MailtargetFormPlugin {
             }
 
             $widgets = $wpdb->get_results("SELECT * FROM " . $wpdb->base_prefix . "mailtarget_forms");
-            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/widget_list.php');
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/wp_form_list.php');
         }
     }
 
@@ -314,7 +320,7 @@ class MailtargetFormPlugin {
             if (is_wp_error($form)) {
                 return false;
             }
-            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/widget_add.php');
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/wp_form_add.php');
         }
     }
 
@@ -339,7 +345,7 @@ class MailtargetFormPlugin {
             if (is_wp_error($form)) {
                 return false;
             }
-            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/widget_edit.php');
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/wp_form_edit.php');
         }
     }
 
@@ -353,6 +359,19 @@ class MailtargetFormPlugin {
             ?><p>Problem connecting to mailtarget server e</p><?php
         } else {
             require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/setup.php');
+        }
+    }
+
+    function add_popup_view () {
+        if ( !current_user_can( 'manage_options' ) )  {
+            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+        }
+        $valid = $this->is_key_valid();
+
+        if ($valid === false) {
+            ?><p>Problem connecting to mailtarget server e</p><?php
+        } else {
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/form_popup.php');
         }
     }
 
@@ -400,4 +419,5 @@ class MailtargetFormPlugin {
     }
 }
 require_once(MAILTARGET_PLUGIN_DIR . 'include/mailtarget_shortcode.php');
+require_once(MAILTARGET_PLUGIN_DIR . 'include/mailtarget_widget.php');
 MailtargetFormPlugin::get_instance();

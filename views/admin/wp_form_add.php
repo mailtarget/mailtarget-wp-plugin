@@ -3,7 +3,7 @@
     <div class="mtg-banner">
         <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
     </div>
-    <h1 class="wp-heading-inline">New Form - Mailtarget Form</h1>
+    <h1 class="wp-heading-inline">Setup New Form - Mailtarget Form</h1>
     <?php if ($valid === null) { ?>
         <br>
         <div class="update-nag">Token not correctly set / empty, please update
@@ -12,12 +12,12 @@
 
     <?php if ($valid) {
         ?>
-        <form method="post" action="options-general.php?page=mailtarget-form-plugin--admin-menu">
+        <form method="post" action="admin.php?page=mailtarget-form-plugin--admin-menu">
             <?php settings_fields( $this->option_group ); ?>
             <?php do_settings_sections( $this->option_group ); ?>
             <table class="form-table">
                 <tr class="user-rich-editing-wrap">
-                    <th>Form</th>
+                    <th>MailTarget Form Name</th>
                     <td><strong><?php echo $form['name'] ?></strong>
                         <input type="hidden" name="form_id" value="<?php echo $form['formId'] ?>">
                     </td>
@@ -51,7 +51,7 @@
                     <td></td>
                     <td>
                         <input type="hidden" value="create_widget" name="mailtarget_form_action">
-                        <?php submit_button('Create Widget'); ?></td>
+                        <?php submit_button('Create Form'); ?></td>
                 </tr>
             </table>
         </form>
