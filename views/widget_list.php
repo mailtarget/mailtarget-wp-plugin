@@ -10,7 +10,9 @@
             <div class="update-nag">List empty, start by
                 <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-add">creating one</a></div><?php
         } else {
-            ?><table>
+            ?>
+            <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-add">new widget</a>
+            <table>
                 <thead>
                 <tr>
                     <th>No</th>
@@ -27,7 +29,10 @@
                     <td><?php echo $no ?></td>
                     <td><?php echo $item->name ?></td>
                     <td><?php echo $item->time ?></td>
-                    <td><a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-add&mode=edit&id=<?php echo $item->id ?>">Edit</a></td>
+                    <td>
+                        <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-edit&id=<?php echo $item->id ?>">Edit</a>
+                        <a href="admin.php?page=mailtarget-form-plugin--admin-menu&action=delete&id=<?php echo $item->id ?>">Delete</a>
+                    </td>
                 </tr>
                 <?php
                 $no++;
