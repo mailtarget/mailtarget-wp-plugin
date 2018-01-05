@@ -160,9 +160,14 @@ class MailtargetFormPlugin {
 	            $api = $this->get_api($data['mtg_api_token']);
 	            if (!$api) return false;
                 $team = $api->getTeam();
-	            update_option('mtg_api_token', $data['mtg_api_token']);
-	            update_option('mtg_popup_enable', $data['mtg_popup_enable']);
-                wp_redirect('admin.php?page=mailtarget-form-plugin--admin-menu-config&success=1');
+                $redirect = 'admin.php?page=mailtarget-form-plugin--admin-menu-config';
+                if (!is_wp_error($team)) {
+                    $redirect .= '&success=1';
+                    update_option('mtg_company_id', $team['companyId']);
+                    update_option('mtg_api_token', $data['mtg_api_token']);
+                    update_option('mtg_popup_enable', $data['mtg_popup_enable']);
+                }
+                wp_redirect($redirect);
                 break;
             case 'popup_config':
                 $data = array(
@@ -284,8 +289,8 @@ class MailtargetFormPlugin {
 
 	function set_admin_menu () {
         add_menu_page(
-            'Mailtarget Form',
-            'Mailtarget Form',
+            'MailTarget Form',
+            'MailTarget Form',
             'manage_options',
             'mailtarget-form-plugin--admin-menu',
             null,
