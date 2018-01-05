@@ -111,7 +111,7 @@ class MailtargetFormPlugin {
      * Enqueue and register CSS files here.
      */
     public function register_styles() {
-
+        ?><link rel="stylesheet"  href="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/css/style.css" type="text/css" media="all" /><?php
 	}
 
 	function register_setting () {
@@ -166,39 +166,100 @@ class MailtargetFormPlugin {
 
         switch ($action) {
             case 'submit_form':
-                wp_redirect($_SERVER['HTTP_REFERER']);
+                $id = $_POST['mailtarget_form_id'];
+	            $api = $this->get_api();
+	            if (!$api) return;
+	            $form = $api->getFormDetail($id);
+	            $input = array();
+	            foreach ($form['component'] as $item) {
+	                $setting = $item['setting'];
+	                $input[$setting['name']] = $_POST['mtin__'.$setting['name']];
+                }
+                $res = $api->submit($input, $form['url']);
+	            $res = json_encode($res);
+                if ($res === 'true') wp_redirect(wp_get_referer());
                 break;
             default:
                 break;
         }
 
-        error_log('handling setting '.$action);
     }
 
 	function set_admin_menu () {
-        add_options_page(
-            'MailTarget Config',
-            'MailTarget Config',
+        add_menu_page(
+            'Mailtarget Form',
+            'Mailtarget Form',
             'manage_options',
             'mailtarget-form-plugin--admin-menu',
-            array($this, 'admin_menu_view') );
+            null
+        );
+        add_submenu_page(
+            'mailtarget-form-plugin--admin-menu',
+            'List Form',
+            'All Form',
+            'manage_options',
+            'mailtarget-form-plugin--admin-menu',
+            array($this, 'list_widget_view')
+        );
+        add_submenu_page(
+            'mailtarget-form-plugin--admin-menu',
+            'New Form',
+            'Add New',
+            'manage_options',
+            'mailtarget-form-plugin--admin-menu-widget-add',
+            array($this, 'add_widget_view')
+        );
+        add_submenu_page(
+            'mailtarget-form-plugin--admin-menu',
+            'Configure Form Api',
+            'Configure',
+            'manage_options',
+            'mailtarget-form-plugin--admin-menu-config',
+            array($this, 'admin_config_view')
+        );
     }
 
-    function admin_menu_view() {
-	    $path = plugin_dir_path(__FILE__);
+    function list_widget_view () {
         if ( !current_user_can( 'manage_options' ) )  {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
         }
         $valid = $this->is_key_valid();
-        if ($valid) {
-	        $api = $this->get_api();
-	        if (!$api) return;
-	        $form = $api->getFormList();
-	        require_once($path.'/views/widget_form.php');
-        } else if ($valid === null) {
-	        require_once($path.'/views/setup.php');
-        } else {
+        if ($valid === false) {
             ?><p>Problem connecting to mailtarget server e</p><?php
+        } else {
+            global $wpdb, $forms;
+
+            if (!current_user_can('edit_posts')) {
+                return;
+            }
+
+            $widgets = $wpdb->get_results("SELECT * FROM " . $wpdb->base_prefix . "mailtarget_forms");
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/widget_list.php');
+        }
+    }
+
+    function add_widget_view () {
+        if ( !current_user_can( 'manage_options' ) )  {
+            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+        }
+        $valid = $this->is_key_valid();
+        if ($valid === false) {
+            ?><p>Problem connecting to mailtarget server e</p><?php
+        } else {
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/widget_add.php');
+        }
+    }
+
+    function admin_config_view() {
+        if ( !current_user_can( 'manage_options' ) )  {
+            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+        }
+        $valid = $this->is_key_valid();
+
+        if ($valid === false) {
+            ?><p>Problem connecting to mailtarget server e</p><?php
+        } else {
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/setup.php');
         }
     }
 

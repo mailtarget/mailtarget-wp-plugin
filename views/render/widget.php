@@ -1,6 +1,12 @@
+<?php
+$title = $widget['data']['widget_title'];
+$description = $widget['data']['widget_description'];
+$submitTitle = $widget['data']['widget_submit_desc'];
+if ($submitTitle === '') $submitTitle = 'Submit';
+?>
 <div>
-	<h2><?php echo $widget['data']['widget_title']; ?></h2>
-    <p><?php echo $widget['data']['widget_description']; ?></p>
+	<?php if ($title !== '') { ?><h2><?php echo $title ?></h2><?php } ?>
+    <?php if ($description !== '') { ?><p><?php echo $description ?></p><?php } ?>
     <div class="mt-c-form">
         <form method="post">
             <?php
@@ -29,7 +35,8 @@
             <div class="mt-c-form__wrap">
                 <div class="mt-c-form__btn-action">
                     <input type="hidden" value="submit_form" name="mailtarget_form_action">
-                    <input type="submit" class="mt-o-btn mt-btn-submit" value="<?php echo $widget['data']['widget_submit_desc']; ?>">
+                    <input type="hidden" value="<?php echo $form['formId'] ?>" name="mailtarget_form_id">
+                    <input type="submit" class="mt-o-btn mt-btn-submit" value="<?php echo $submitTitle ?>">
                 </div>
             </div>
 
