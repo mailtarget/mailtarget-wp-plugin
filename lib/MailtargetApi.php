@@ -97,7 +97,7 @@ class MailtargetApi {
 			return json_decode($request['body'], true);
 		} elseif (is_array($request) && $request['response']['code']) {
 			$error = json_decode($request['body'], true);
-			$error = new WP_Error('mailtarget-error-get', $error['detail']);
+			$error = new WP_Error('mailtarget-error-get', $error);
 			return $error;
 		} else {
 			return false;
