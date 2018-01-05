@@ -12,7 +12,7 @@ if (isset($_GET['pg'])) $pg = $_GET['pg'];
         <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
     </div>
     <h1 class="wp-heading-inline">Select Form - Mailtarget Form</h1>
-    <p>Select MailTarget Form to setup</p>
+    <p>Below is list of your MailTarget Form, select one of your form to setup.</p>
 
     <?php if (count($forms['data']) < 1) {?>
             <div class="update-nag">List empty, start by

@@ -25,6 +25,7 @@ $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
                     <th>MailTarget Form Name</th>
                     <td>
                         <strong><?php echo $formName ?></strong>
+                        or <a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form&for=popup">change form</a>
                         <input type="hidden" name="popup_form_id" value="<?php echo $formId ?>">
                         <input type="hidden" name="popup_form_name" value="<?php echo $formName ?>">
                     </td>
