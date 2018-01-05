@@ -68,8 +68,12 @@ class MailtargetApi {
 		if (is_array($request) && $request['response']['code'] === 200) {
 			return json_decode($request['body'], true);
 		} elseif (is_array($request) && $request['response']['code']) {
-			$error = json_decode($request['body'], true);
-			$error = new WP_Error('mailtarget-error-get', $error);
+		    $data = json_decode($request['body'], true);
+			$error = new WP_Error('mailtarget-error', [
+			    'method' => 'get',
+			    'data' => $data,
+                'code' => $request['response']['code']
+            ]);
 			return $error;
 		} else {
 			return false;
@@ -96,8 +100,12 @@ class MailtargetApi {
 		if (is_array($request) && $request['response']['code'] === 200) {
 			return json_decode($request['body'], true);
 		} elseif (is_array($request) && $request['response']['code']) {
-			$error = json_decode($request['body'], true);
-			$error = new WP_Error('mailtarget-error-get', $error);
+            $data = json_decode($request['body'], true);
+            $error = new WP_Error('mailtarget-error', [
+                'method' => 'post',
+                'data' => $data,
+                'code' => $request['response']['code']
+            ]);
 			return $error;
 		} else {
 			return false;
