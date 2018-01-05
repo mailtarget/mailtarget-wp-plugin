@@ -1,3 +1,9 @@
+<?php
+$targetPage = 'mailtarget-form-plugin--admin-menu-widget-add';
+if (isset($_GET['for'])) {
+    if ($_GET['for'] == 'popup') $targetPage = 'mailtarget-form-plugin--admin-menu-popup-main';
+}
+?>
 <div class="wrap mtg-form-plugin">
     <?php include MAILTARGET_PLUGIN_DIR . '/views/admin/style.php' ?>
     <div class="mtg-banner">
@@ -33,7 +39,7 @@
                     <td><?php echo $no ?></td>
                     <td><?php echo $item['name'] ?></td>
                     <td><?php echo date('Y-m-d H:i', $item['createdAt']/1000) ?></td>
-                    <td><a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-add&form_id=<?php echo $item['formId'] ?>">Select</a></td>
+                    <td><a href="admin.php?page=<?php echo $targetPage ?>&form_id=<?php echo $item['formId'] ?>">Select</a></td>
                 </tr>
                 <?php
                 $no++;
