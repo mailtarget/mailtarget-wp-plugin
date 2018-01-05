@@ -4,9 +4,9 @@ class MailTarget_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
             'mailtarget_widget',
-            __('Mailtarget sign up form', 'mailtarget'),
+            __('MailTarget Form', 'mailtarget'),
             array('description' => __(
-                'Mailtarget sign up form Widget', 'mailtarget'
+                'MailTarget Form Widget', 'mailtarget'
             ))
         );
     }

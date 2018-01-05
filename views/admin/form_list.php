@@ -6,8 +6,7 @@ if (isset($_GET['for'])) {
 $pg = 1;
 if (isset($_GET['pg'])) $pg = $_GET['pg'];
 ?>
-<div class="wrap mtg-form-plugin">
-    <?php include MAILTARGET_PLUGIN_DIR . '/views/admin/style.php' ?>
+<div class="mtg-form-plugin">
     <div class="mtg-banner">
         <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
     </div>

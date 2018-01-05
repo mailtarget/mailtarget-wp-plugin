@@ -6,8 +6,7 @@ $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
     ?><div class="update-nag">Mailtarget Form configuration updated successfully !</div><?php
 } ?>
 
-<div class="wrap mtg-form-plugin">
-    <?php include MAILTARGET_PLUGIN_DIR . '/views/admin/style.php' ?>
+<div class="mtg-form-plugin">
     <div class="mtg-banner">
         <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
     </div>
