@@ -74,6 +74,7 @@ class MailtargetApi {
 			    'data' => $data,
                 'code' => $request['response']['code']
             ]);
+			error_log($path);
 			error_log($request['body']);
 			return $error;
 		} else {
