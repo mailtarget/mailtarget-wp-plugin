@@ -14,7 +14,7 @@ class MailtargetApi {
 
 		$this->apiKey = $apiKey;
 		$this->companyId = $companyId;
-		$this->apiUrl = 'https://apidev.mailtarget.co';
+		$this->apiUrl = 'https://api.mailtarget.co';
 	}
 
 	public function ping () {

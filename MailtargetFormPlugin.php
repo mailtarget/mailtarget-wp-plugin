@@ -13,9 +13,9 @@ define('MAILTARGET_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('MAILTARGET_PLUGIN_URL', plugins_url('', __FILE__));
 
 if (!class_exists('MailtargetApi')) {
-	$path = plugin_dir_path(__FILE__);
-	require_once($path . 'lib/MailtargetApi.php');
+	require_once(MAILTARGET_PLUGIN_DIR . '/lib/MailtargetApi.php');
 }
+require_once(MAILTARGET_PLUGIN_DIR . '/lib/helpers.php');
 
 class MailtargetFormPlugin {
 	private static $instance = null;
@@ -137,25 +137,25 @@ class MailtargetFormPlugin {
 
     function handling_admin_post () {
 
-        if (isset($_GET['action'])) {
-            $action = $_GET['action'];
+        if (input_get('action') != null) {
+            $action = input_get('action');
             if ($action === 'delete') {
-                if(!isset($_GET['id'])) return false;
-                $id = $_GET['id'];
+                if(input_get('id') == null) return false;
+                $id = input_get('id');
                 global $wpdb;
                 $wpdb->delete($wpdb->base_prefix . "mailtarget_forms", array('id' => $id));
                 return wp_redirect('admin.php?page=mailtarget-form-plugin--admin-menu');
             }
         }
 
-        if(!isset($_POST['mailtarget_form_action'])) return false;
-        $action = $_POST['mailtarget_form_action'];
+        $action = input_post('mailtarget_form_action');
+        if($action == null) return false;
 
         switch ($action) {
             case 'setup_setting':
                 $data = array(
-                    'mtg_api_token' => $_POST['mtg_api_token'],
-                    'mtg_popup_enable' => $_POST['mtg_popup_enable'],
+                    'mtg_api_token' => input_post('mtg_api_token'),
+                    'mtg_popup_enable' => input_post('mtg_popup_enable'),
                 );
 	            $api = $this->get_api($data['mtg_api_token']);
 	            if (!$api) return false;
@@ -166,13 +166,13 @@ class MailtargetFormPlugin {
                 break;
             case 'popup_config':
                 $data = array(
-                    'mtg_popup_form_id' => $_POST['popup_form_id'],
-                    'mtg_popup_form_name' => $_POST['popup_form_name'],
-                    'mtg_popup_delay' => $_POST['popup_delay'],
-                    'mtg_popup_title' => $_POST['popup_title'],
-                    'mtg_popup_description' => $_POST['popup_description'],
-                    'mtg_popup_redirect' => $_POST['popup_redirect'],
-                    'mtg_popup_enable' => $_POST['mtg_popup_enable'],
+                    'mtg_popup_form_id' => input_post('popup_form_id'),
+                    'mtg_popup_form_name' => input_post('popup_form_name'),
+                    'mtg_popup_delay' => input_post('popup_delay'),
+                    'mtg_popup_title' => input_post('popup_title'),
+                    'mtg_popup_description' => input_post('popup_description'),
+                    'mtg_popup_redirect' => input_post('popup_redirect'),
+                    'mtg_popup_enable' => input_post('mtg_popup_enable'),
                 );
 	            update_option('mtg_popup_form_id', $data['mtg_popup_form_id']);
 	            update_option('mtg_popup_form_name', $data['mtg_popup_form_name']);
@@ -189,17 +189,17 @@ class MailtargetFormPlugin {
 	            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	            $input = array(
                     'time' => current_time('mysql'),
-                    'form_id' => $_POST['form_id'],
-                    'name' => $_POST['widget_name'],
+                    'form_id' => input_post('form_id'),
+                    'name' => input_post('widget_name'),
                     'type' => 1,
                     'data' => json_encode(array(
-                        'widget_title' => $_POST['widget_title'],
-                        'widget_description' => $_POST['widget_description'],
-                        'widget_submit_desc' => $_POST['widget_submit_desc'],
-                        'widget_redir' => $_POST['widget_redir'],
+                        'widget_title' => input_post('widget_title'),
+                        'widget_description' => input_post('widget_description'),
+                        'widget_submit_desc' => input_post('widget_submit_desc'),
+                        'widget_redir' => input_post('widget_redir'),
                     ))
                 );
-	            if ($_POST['widget_name'] != '') {
+	            if (input_post('widget_name') != '') {
 		            $wpdb->insert($table_name, $input);
                 }
                 break;
@@ -209,17 +209,17 @@ class MailtargetFormPlugin {
 	            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	            $input = array(
                     'time' => current_time('mysql'),
-                    'name' => $_POST['widget_name'],
+                    'name' => input_post('widget_name'),
                     'type' => 1,
                     'data' => json_encode(array(
-                        'widget_title' => $_POST['widget_title'],
-                        'widget_description' => $_POST['widget_description'],
-                        'widget_submit_desc' => $_POST['widget_submit_desc'],
-                        'widget_redir' => $_POST['widget_redir'],
+                        'widget_title' => input_post('widget_title'),
+                        'widget_description' => input_post('widget_description'),
+                        'widget_submit_desc' => input_post('widget_submit_desc'),
+                        'widget_redir' => input_post('widget_redir'),
                     ))
                 );
-	            if ($_POST['widget_name'] != '') {
-		            $wpdb->update($table_name, $input, array('id' => $_POST['widget_id']));
+	            if (input_post('widget_name') != '') {
+		            $wpdb->update($table_name, $input, array('id' => input_post('widget_id')));
                 }
                 break;
             default:
@@ -228,12 +228,12 @@ class MailtargetFormPlugin {
     }
 
     function handling_post () {
-        if(!isset($_POST['mailtarget_form_action'])) return false;
-        $action = $_POST['mailtarget_form_action'];
+        $action = input_post('mailtarget_form_action');
+        if($action == null) return false;
 
         switch ($action) {
             case 'submit_form':
-                $id = $_POST['mailtarget_form_id'];
+                $id = input_post('mailtarget_form_id');
 	            $api = $this->get_api();
 	            if (!$api) return;
 	            $form = $api->getFormDetail($id);
@@ -245,24 +245,36 @@ class MailtargetFormPlugin {
                 if (!isset($form['component'])) die ('form data not valid');
 	            foreach ($form['component'] as $item) {
 	                $setting = $item['setting'];
-	                $input[$setting['name']] = $_POST['mtin__'.$setting['name']];
+                    $input[$setting['name']] = input_post('mtin__'.$setting['name']);
+
+	                if ($item['type'] == 'inputMultiple' and $setting['showOtherOption'] and input_post('mtin__'.$setting['name']) == 'mtiot__'.$setting['name']) {
+                        $input[$setting['name']] = input_post('mtino__'.$setting['name']);
+                    }
+
+	                if ($item['type'] == 'inputCheckbox') {
+                        $in = input_post('mtin__'.$setting['name']);
+                        if ($setting['showOtherOption'] and input_post('mtiot__'.$setting['name']) == 'yes') {
+                            $in[] = input_post('mtino__'.$setting['name']);
+                        }
+//                        error_log($in);
+                        $input[$setting['name']] = join(', ', $in);
+                    }
                 }
                 error_log(json_encode($input));
                 $submitUrl = $form['url'];
-	            $submitUrl = str_replace('https', 'http', $submitUrl);
                 $res = $api->submit($input, $submitUrl);
                 if (is_wp_error($form)) {
                     die('failed to submit form');
                     break;
                 }
 	            $url = wp_get_referer();
-	            if (isset($_POST['mailtarget_form_mode'])) {
+	            if (input_post('mailtarget_form_mode') != null) {
 	                $popupUrl =  esc_attr(get_option('mtg_popup_redirect'));
-	                if ($_POST['mailtarget_form_mode'] == 'popup' and $popupUrl != '') {
+	                if (input_post('mailtarget_form_mode') == 'popup' and $popupUrl != '') {
 	                    $url = $popupUrl;
                     }
                 }
-                if (isset($_POST['mailtarget_form_redir'])) $url = $_POST['mailtarget_form_redir'];
+                if (input_post('mailtarget_form_redir') != null) $url = input_post('mailtarget_form_redir');
                 wp_redirect($url);
                 break;
             default:
@@ -297,16 +309,16 @@ class MailtargetFormPlugin {
         );
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',
-            'Popup Config',
-            'Popup Config',
+            'Popup Setting',
+            'Popup Setting',
             'manage_options',
             'mailtarget-form-plugin--admin-menu-popup-main',
             array($this, 'add_popup_view')
         );
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',
-            'Configure Form Api',
-            'Configure',
+            'Form Api Setting',
+            'Setting',
             'manage_options',
             'mailtarget-form-plugin--admin-menu-config',
             array($this, 'admin_config_view')
@@ -354,7 +366,7 @@ class MailtargetFormPlugin {
         if ($valid === true) {
             $api = $this->get_api();
             if (!$api) return null;
-            $pg = isset($_GET['pg']) ? $_GET['pg'] : 1;
+            $pg = input_get('pg', 1);
             $forms = $api->getFormList($pg);
             if (is_wp_error($forms)) {
                 $error = $forms;
@@ -371,8 +383,8 @@ class MailtargetFormPlugin {
         }
         $valid = $this->is_key_valid();
         if ($valid === true) {
-            if (!isset($_GET['form_id'])) return false;
-            $formId = $_GET['form_id'];
+            $formId = input_get('form_id');
+            if ($formId == null) return false;
             $api = $this->get_api();
             if (!$api) return null;
             $form = $api->getFormDetail($formId);
@@ -392,7 +404,7 @@ class MailtargetFormPlugin {
         $valid = $this->is_key_valid();
         if ($valid === true) {
             global $wpdb;
-            $widgetId = sanitize_key($_GET['id']);
+            $widgetId = sanitize_key(input_get('id'));
             $widget = $wpdb->get_row("SELECT * FROM " . $wpdb->base_prefix . "mailtarget_forms where id = $widgetId");
             if (!isset($widget->form_id)) {
                 wp_redirect('admin.php?page=mailtarget-form-plugin--admin-menu');
@@ -430,8 +442,8 @@ class MailtargetFormPlugin {
         if ($valid === true) {
             $formId = '';
             $formName = '';
-            if (isset($_GET['form_id'])) {
-                $getFormId = $_GET['form_id'];
+            $getFormId = input_get('form_id');
+            if ($getFormId != null) {
                 $api = $this->get_api();
                 if (!$api) return;
                 $form = $api->getFormDetail($getFormId);
