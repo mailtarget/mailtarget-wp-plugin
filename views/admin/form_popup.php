@@ -12,7 +12,7 @@ $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
 
 <div class="mtg-form-plugin">
     <div class="mtg-banner">
-        <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
+        <img src="<?php echo esc_url(MAILTARGET_PLUGIN_URL.'/assets/image/logo.png') ?>" />
     </div>
 
     <div class="wrap">
@@ -26,10 +26,10 @@ $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
                         <tr class="user-rich-editing-wrap">
                             <th>MailTarget Form Name</th>
                             <td>
-                                <strong><?php echo $formName ?></strong>
+                                <strong><?php echo esc_attr($formName) ?></strong>
                                 or <a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form&for=popup">change form</a>
-                                <input type="hidden" name="popup_form_id" value="<?php echo $formId ?>">
-                                <input type="hidden" name="popup_form_name" value="<?php echo $formName ?>">
+                                <input type="hidden" name="popup_form_id" value="<?php echo esc_attr($formId) ?>">
+                                <input type="hidden" name="popup_form_name" value="<?php echo esc_attr($formName) ?>">
                             </td>
                         </tr>
                         <tr class="user-rich-editing-wrap">
@@ -63,8 +63,8 @@ $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
                             <th>Popup Status</th>
                             <td>
                                 <select name="mtg_popup_enable">
-                                    <option value="1" <?php if ($popupEnable) echo 'selected' ?>>Enable</option>
-                                    <option value="0" <?php if (!$popupEnable) echo 'selected' ?>>Disable</option>
+                                    <option value="1" <?php if ($popupEnable) echo esc_attr('selected') ?>>Enable</option>
+                                    <option value="0" <?php if (!$popupEnable) echo esc_attr('selected') ?>>Disable</option>
                                 </select>
                             </td>
                         </tr>

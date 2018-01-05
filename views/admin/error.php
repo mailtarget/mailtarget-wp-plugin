@@ -21,7 +21,7 @@ if ($code == 413 and $data = 'invalid origin host') $errSlug = 'cap-domain-regis
 ?>
 <div class="mtg-form-plugin">
     <div class="mtg-banner">
-        <img src="<?php echo MAILTARGET_PLUGIN_URL ?>/assets/image/logo.png" />
+        <img src="<?php echo esc_url(MAILTARGET_PLUGIN_URL.'/assets/image/logo.png') ?>" />
     </div>
 
     <div class="wrap">
