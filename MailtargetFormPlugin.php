@@ -59,6 +59,7 @@ class MailtargetFormPlugin {
         add_action( 'admin_menu', array( $this, 'set_admin_menu' ) );
         add_action( 'admin_init', array( $this, 'register_setting') );
         add_action( 'admin_init', array( $this, 'handling_admin_post') );
+        add_action( 'init', array( $this, 'handling_post') );
 
 	}
 
@@ -128,8 +129,10 @@ class MailtargetFormPlugin {
 	            $api = $this->get_api($key);
 	            if (!$api) return;
                 $team = $api->getTeam();
-                error_log(json_encode($team));
 	            update_option('mtg_api_token', $key);
+                break;
+            case 'submit_form':
+                error_log('submit form');
                 break;
             case 'create_widget':
 	            global $wpdb;
@@ -149,6 +152,21 @@ class MailtargetFormPlugin {
 	            if ($_POST['widget_name'] != '') {
 		            $wpdb->insert($table_name, $input);
                 }
+                break;
+            default:
+                break;
+        }
+
+        error_log('handling admin setting '.$action);
+    }
+
+    function handling_post () {
+        if(!isset($_POST['mailtarget_form_action'])) return false;
+        $action = $_POST['mailtarget_form_action'];
+
+        switch ($action) {
+            case 'submit_form':
+                wp_redirect($_SERVER['HTTP_REFERER']);
                 break;
             default:
                 break;
@@ -202,7 +220,6 @@ class MailtargetFormPlugin {
 			    return false;
 		    }
 		    update_option('mtg_company_id', $cek['companyId']);
-//	        error_log(json_encode($cek['companyId']));
         }
 
         return true;
@@ -227,17 +244,6 @@ class MailtargetFormPlugin {
         if (!isset($err->errors['mailtarget-error-get'][0]['code'])) return false;
         return $err->errors['mailtarget-error-get'][0]['code'];
     }
-
-	public function process_form ($atts) {
-		$a = shortcode_atts( array(
-			'form-id' => ''
-		), $atts );
-
-		$formId = $a["form-id"];
-		$json = wp_remote_get('https://api.mailtarget.co/form/public/'.$formId);
-		print_r($json);
-		return 'ok';
-	}
 }
 require_once(MAILTARGET_PLUGIN_DIR . 'include/mailtarget_shortcode.php');
 MailtargetFormPlugin::get_instance();

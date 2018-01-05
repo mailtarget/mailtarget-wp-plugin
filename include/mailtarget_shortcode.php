@@ -1,7 +1,6 @@
 <?php
 
-class MailTarget_Shortcode
-{
+class MailTarget_Shortcode {
 
 	/**
 	 * WordPress' init() hook
@@ -42,13 +41,9 @@ class MailTarget_Shortcode
 	 * @param $buttons
 	 * @return mixed
 	 */
-	public static function mailtarget_register_button($buttons)
-	{
-
+	public static function mailtarget_register_button($buttons){
 		array_push($buttons, "mailtarget_shortcode");
-
 		return $buttons;
-
 	}
 
 	/**
@@ -57,31 +52,20 @@ class MailTarget_Shortcode
 	 * @param $plugin_array
 	 * @return mixed
 	 */
-	public static function mailtarget_add_tinymce_plugin($plugin_array)
-	{
-		$plugin_array['mailtarget_shortcode']
-			= MAILTARGET_PLUGIN_URL . '/assets/js/mailtarget_shortcode.js';
-
+	public static function mailtarget_add_tinymce_plugin ($plugin_array) {
+		$plugin_array['mailtarget_shortcode'] = MAILTARGET_PLUGIN_URL . '/assets/js/mailtarget_shortcode.js';
 		return $plugin_array;
 	}
 
-	/**
-	 * Returns selection of forms
-	 */
-	public static function mailtarget_tinymce_window()
-	{
+	public static function mailtarget_tinymce_window () {
 		global $wpdb, $forms;
 
 		if (!current_user_can('edit_posts')) {
 			return;
 		}
 
-		$forms = $wpdb->get_results(
-			"SELECT * FROM " . $wpdb->base_prefix . "mailtarget_forms"
-		);
-
+		$forms = $wpdb->get_results("SELECT * FROM " . $wpdb->base_prefix . "mailtarget_forms");
 		include(MAILTARGET_PLUGIN_DIR  . 'views/tiny_mce.php');
-
 		exit;
 	}
 
@@ -95,15 +79,11 @@ class MailTarget_Shortcode
 	 */
 	public static function mailtarget_generate_shortcode($attributes)
 	{
-		$form_attributes = shortcode_atts(
-			array(
-				'form_id' => '1'
-			), $attributes
-		);
+		require_once MAILTARGET_PLUGIN_DIR . '/include/mailtarget_form.php';
+		$form_attributes = shortcode_atts(array('form_id' => '1'), $attributes);
 
 		ob_start();
 		load_mailtarget_form($form_attributes['form_id']);
-
 		return ob_get_clean();
 	}
 }
