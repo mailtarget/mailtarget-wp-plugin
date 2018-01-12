@@ -75,7 +75,7 @@ class MailtargetFormPlugin {
 	    $table_name = $wpdb->base_prefix . "mailtarget_forms";
 	    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
-	    $charset_collate = ' CHARACTER SET utf8 COLLATE utf8_bin';
+	    $charset_collate = ' CHARACTER SET utf8mb4 COLLATE utf8mb4_bin';
 
 	    $sql = "CREATE TABLE IF NOT EXISTS " . $table_name . " (
               id mediumint(9) NOT NULL AUTO_INCREMENT,

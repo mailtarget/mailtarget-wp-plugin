@@ -26,7 +26,13 @@ class MailtargetApi {
 	}
 
 	public function getFormList ($page = 1) {
-		return $this->get('/form', [ 'accessToken' => $this->apiKey, 'companyId' => $this->companyId, 'page' => $page ]);
+		return $this->get('/form', [
+		    'accessToken' => $this->apiKey,
+            'companyId' => $this->companyId,
+            'order' => 'desc',
+            'field' => 'lastUpdate',
+            'page' => $page
+        ]);
 	}
 
 	public function getCity ($country = 'indonesia') {
@@ -74,8 +80,6 @@ class MailtargetApi {
 			    'data' => $data,
                 'code' => $request['response']['code']
             ]);
-//			error_log($url);
-//			error_log($request['body']);
 			return $error;
 		} else {
 			return false;
@@ -108,7 +112,6 @@ class MailtargetApi {
                 'data' => $data,
                 'code' => $request['response']['code']
             ]);
-//            error_log($request['body']);
 			return $error;
 		} else {
 			return false;
