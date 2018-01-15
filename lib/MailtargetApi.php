@@ -106,10 +106,10 @@ class MailtargetApi {
 		if (is_array($request) && $request['response']['code'] === 200) {
 			return json_decode($request['body'], true);
 		} elseif (is_array($request) && $request['response']['code']) {
-		    if ($request['response']['code'] === 416) {
+            $data = json_decode($request['body'], true);
+		    if ($data['code'] === 416) {
                 return json_decode($request['body'], true);
             } else {
-                $data = json_decode($request['body'], true);
                 $error = new WP_Error('mailtarget-error', [
                     'method' => 'post',
                     'data' => $data,
