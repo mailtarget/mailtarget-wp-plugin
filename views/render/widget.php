@@ -15,7 +15,7 @@ if ($submitTitle === '') $submitTitle = 'Submit';
 <div>
 	<?php if ($title !== '') { ?><h2><?php echo $title ?></h2><?php } ?>
     <?php if ($description !== '') { ?><p><?php echo $description ?></p><?php } ?>
-    <div class="mt-c-form">
+    <div class="mt-c-form" id="mt-widget-form_<?php echo $form['formId'] ?>">
         <form method="post">
             <?php
             foreach ($form['component'] as $item) {
@@ -52,3 +52,27 @@ if ($submitTitle === '') $submitTitle = 'Submit';
         </form>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+
+<script>
+    (function(){
+        var jQuery = window.jQueryWP || window.jQuery;
+        jQuery(document).ready(function() {
+            var mtForm = jQuery("#mt-widget-form_<?php echo $form['formId'] ?> form");
+            mtForm.submit(function(e) {
+                e.preventDefault();
+            })
+            .validate({
+                submitHandler: function(form) {
+                    jQuery(this.submitButton).prop('disabled', true);
+                    var data = jQuery(form).serialize();
+                    console.log(data)
+                    jQuery.post('<?php echo home_url() ?>', data, function(response) {
+
+                    })
+                }
+            })
+        })
+    })();
+</script>
