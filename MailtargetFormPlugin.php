@@ -22,6 +22,7 @@ class MailtargetFormPlugin {
 	private $plugin_url;
     private $text_domain = '';
     private $option_group = 'mtg-form-group';
+    private $ajax_post = false;
 
 	/**
 	 * Creates or returns an instance of this class.
@@ -56,7 +57,7 @@ class MailtargetFormPlugin {
         add_action( 'admin_init', array( $this, 'register_setting') );
         add_action( 'admin_init', array( $this, 'handling_admin_post') );
         add_action( 'init', array( $this, 'handling_post') );
-
+//        add_action( 'wp_ajax_nopriv_form_submit', array( $this, 'handling_ajax_post') );
 	}
 
 	public function get_plugin_url() {
@@ -102,6 +103,52 @@ class MailtargetFormPlugin {
     public function register_scripts() {
         ?>
         <script type="application/javascript" src="<?php echo esc_url(MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.js') ?>"></script>
+        <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" >
+            $(document).ready(function($) {
+
+                $('input[type=submit').on('click', function (e) {
+                    e.preventDefault();
+                    var _this = $(this);
+                    var target = _this.attr('data-target');
+                    var data = $('#form-' + target).serializeArray();
+                    var errorTarget = $('.error-' + target);
+                    var successTarget = $('.success-' + target);
+                    var submitUrl = '<?php echo admin_url('admin-ajax.php') ?>';
+                    var submitData = {
+                        mailtarget_ajax_post: true
+                    }
+                    data.forEach(function (item) {
+                        submitData[item.name] = item.value
+                    })
+                    errorTarget.hide();
+                    successTarget.hide();
+                    _this.attr('disabled', 'disabled');
+
+                    $.post(submitUrl, submitData, function(response) {
+                        _this.removeAttr('disabled');
+                        if (response.code !== undefined) {
+                            switch (response.code) {
+                                case 400:
+                                    errorTarget.text(response.msg);
+                                    errorTarget.show();
+                                    break;
+                                case 200:
+                                    successTarget.text('Form submitted successfully.');
+                                    successTarget.show();
+                                    $('#form-' + target).hide();
+                                    setTimeout(function () {
+                                        if (submitData.mailtarget_form_redir !== undefined) {
+                                            document.location.href = submitData.mailtarget_form_redir
+                                        }
+                                    }, 2000)
+                                    break;
+                            }
+                        }
+                    }, 'json');
+                })
+            });
+        </script>
         <?php
 	}
 
@@ -271,6 +318,11 @@ class MailtargetFormPlugin {
         }
     }
 
+    function handling_ajax_post () {
+        $this->is_ajax = true;
+        return $this->handling_post();
+    }
+
     function handling_post () {
         $action = isset($_POST['mailtarget_form_action']) ? sanitize_key($_POST['mailtarget_form_action']) : null;
         if($action == null) return false;
@@ -278,15 +330,19 @@ class MailtargetFormPlugin {
         switch ($action) {
             case 'submit_form':
                 $id = isset($_POST['mailtarget_form_id']) ? sanitize_key($_POST['mailtarget_form_id']) : null;
+                $this->ajax_post = isset($_POST['mailtarget_ajax_post']);
 	            $api = $this->get_api();
 	            if (!$api) return;
 	            $form = $api->getFormDetail($id);
                 if (is_wp_error($form)) {
-                    die('failed to get form data');
-                    break;
+                    $this->error_response('Failed to get form data');
+                    die();
                 }
 	            $input = array();
-                if (!isset($form['component'])) die ('form data not valid');
+                if (!isset($form['component'])) {
+                    $this->error_response('form data not valid');
+                    die ();
+                }
 	            foreach ($form['component'] as $item) {
 	                $setting = $item['setting'];
 	                $inputVal = isset($_POST['mtin__'.$setting['name']]) ?
@@ -318,8 +374,8 @@ class MailtargetFormPlugin {
                 $submitUrl = $form['url'];
                 $res = $api->submit($input, $submitUrl);
                 if (is_wp_error($res)) {
-                    die('failed to submit form');
-                    break;
+                    $this->error_response($this->submit_error_process($res));
+                    die();
                 }
 	            $url = wp_get_referer();
                 $formMode = isset($_POST['mailtarget_form_mode']) ?
@@ -331,11 +387,36 @@ class MailtargetFormPlugin {
                     }
                 }
                 if (isset($_POST['mailtarget_form_redir'])) $url = esc_url($_POST['mailtarget_form_redir']);
-                wp_redirect($url);
+                if ($this->ajax_post) {
+                    echo json_encode(['code' => 200, 'msg' => 'ok']);
+                    die();
+                }
+                else wp_redirect($url);
                 break;
             default:
                 break;
         }
+    }
+
+    function error_response ($msg, $data = []) {
+        if ($this->ajax_post) echo json_encode(['code' => 400, 'msg' => $msg, 'data' => $data]);
+        else echo $msg;
+    }
+
+    function submit_error_process ($err) {
+        $msg = 'Failed tu submit form';
+        if (isset($err->{0})) $err = $err->{0};
+        if (isset($err->errors)) $err = $err->errors;
+        if (isset($err['mailtarget-error'])) $err = $err['mailtarget-error'];
+        if (isset($err[0])) $err = $err[0];
+        if (isset($err['data'])) $err = $err['data'];
+        if (isset($err['code'])) {
+            switch ($err['code']) {
+                case 413:
+                    $msg = $err['data'] . ' is required';
+            }
+        }
+        return $msg;
     }
 
 	function set_admin_menu () {
