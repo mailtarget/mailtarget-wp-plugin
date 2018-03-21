@@ -3,7 +3,7 @@
 /*
   Plugin Name: MailTarget Form
   Description: The MailTarget plugin to simplify embedding Mailtarget Form in your post or as widget, also easily to set Mailtarget Forms as popup.
-  Version: 1.0.2
+  Version: 1.0.3
   Author: MailTarget Teams
   Author URI: https://mailtarget.co/
   License: GPL V3
