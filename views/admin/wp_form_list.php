@@ -3,7 +3,7 @@
         <img src="<?php echo esc_url(MAILTARGET_PLUGIN_URL.'/assets/image/logo.png') ?>" />
     </div>
     <div class="wrap">
-        <h1 class="wp-heading-inline">List - Mailtarget Form</h1>
+        <h1 class="wp-heading-inline">List - MTARGET Form</h1>
         <?php if (count($widgets) < 1) {?>
             <div class="update-nag">List empty, start by
                 <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form">creating one</a></div><?php

@@ -1,7 +1,7 @@
 
-# Mailtarget Wordpress Form Plugin
+# MTARGET Wordpress Form Plugin
 
-This is a plugin for embedding mailtarget form into wordpress application
+This is a plugin for embedding mtarget form into wordpress application
 
 # History
 
@@ -14,8 +14,12 @@ Initial release, features:
 
 ## v1.0.2
 Changes:
-- bug fix handle response from mailtarget api
+- bug fix handle response from mtarget api
 
 ## v1.0.3
 Changes:
 - change form post method from legacy to jquery ajax post
+
+## v1.0.4
+Changes:
+- change form MailTarget to MTARGET
