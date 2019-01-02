@@ -1,11 +1,11 @@
 <?php
 
 /*
-  Plugin Name: MailTarget Form
-  Description: The MailTarget plugin to simplify embedding Mailtarget Form in your post or as widget, also easily to set Mailtarget Forms as popup.
-  Version: 1.0.2
-  Author: MailTarget Teams
-  Author URI: https://mailtarget.co/
+  Plugin Name: MTARGET Form
+  Description: The MTARGET plugin to simplify embedding MTARGET Form in your post or as widget, also easily to set MTARGET Forms as popup.
+  Version: 1.0.4
+  Author: MTARGET Teams
+  Author URI: https://mtarget.co/
   License: GPL V3
  */
 
@@ -421,8 +421,8 @@ class MailtargetFormPlugin {
 
 	function set_admin_menu () {
         add_menu_page(
-            'MailTarget Form',
-            'MailTarget Form',
+            'MTARGET Form',
+            'MTARGET Form',
             'manage_options',
             'mailtarget-form-plugin--admin-menu',
             null,

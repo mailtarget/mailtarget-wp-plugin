@@ -15,7 +15,7 @@ if (isset($data->widget_redir)) $widget_redir = $data->widget_redir;
         <img src="<?php echo esc_url(MAILTARGET_PLUGIN_URL.'/assets/image/logo.png') ?>" />
     </div>
     <div class="wrap">
-        <h1 class="wp-heading-inline">Edit Form - Mailtarget Form</h1>
+        <h1 class="wp-heading-inline">Edit Form - MTARGET Form</h1>
         <div class="mtg-form-wrapper">
             <form method="post" action="admin.php?page=mailtarget-form-plugin--admin-menu">
                 <?php settings_fields( $this->option_group ); ?>

@@ -11,8 +11,8 @@ $pg = isset($_GET['pg']) ? intval($_GET['pg']) : 1;
     </div>
 
     <div class="wrap">
-        <h1 class="wp-heading-inline">Select Form - Mailtarget Form</h1>
-        <p>Below is list of your MailTarget Form, select one of your form to setup.</p>
+        <h1 class="wp-heading-inline">Select Form - MTARGET Form</h1>
+        <p>Below is list of your MTARGET Form, select one of your form to setup.</p>
 
         <?php if (count($forms['data']) < 1) {?>
             <div class="update-nag">List empty, start by
