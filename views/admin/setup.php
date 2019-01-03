@@ -3,7 +3,7 @@ $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
 ?>
 
 <?php if (isset($_GET['success'])) {
-    ?><div class="update-nag">Mailtarget Form configuration updated successfully !</div><?php
+    ?><div class="update-nag">MTARGET Form configuration updated successfully !</div><?php
 } ?>
 
 <div class="mtg-form-plugin">
@@ -12,10 +12,10 @@ $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
     </div>
 
     <div class="wrap">
-        <h1 class="wp-heading-inline">Setup - Mailtarget Form</h1>
+        <h1 class="wp-heading-inline">Setup - MTARGET Form</h1>
         <div class="mtg-form-wrapper">
-            <p>Use this plugin to show your MailTarget Form in your Wordpress Application as embed to your post, as widget or as popup form. You may choose MailTarget Form directly from your Wordpress Application.</p>
-            <p>But you must set API token via form below, you can find the API token at integration page of MailTarget Application.</p>
+            <p>Use this plugin to show your MTARGET Form in your Wordpress Application as embed to your post, as widget or as popup form. You may choose MTARGET Form directly from your Wordpress Application.</p>
+            <p>But you must set API token via form below, you can find the API token at integration page of MTARGET Application.</p>
             <form method="post" action="admin.php?page=mailtarget-form-plugin--admin-menu">
                 <?php settings_fields( $this->option_group ); ?>
                 <?php do_settings_sections( $this->option_group ); ?>
