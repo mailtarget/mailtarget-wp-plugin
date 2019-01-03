@@ -26,7 +26,13 @@ class MailtargetApi {
 	}
 
 	public function getFormList ($page = 1) {
-		return $this->get('/form', [ 'accessToken' => $this->apiKey, 'companyId' => $this->companyId, 'page' => $page ]);
+		return $this->get('/form', [
+		    'accessToken' => $this->apiKey,
+            'companyId' => $this->companyId,
+            'order' => 'desc',
+            'field' => 'lastUpdate',
+            'page' => $page
+        ]);
 	}
 
 	public function getCity ($country = 'indonesia') {
@@ -74,8 +80,6 @@ class MailtargetApi {
 			    'data' => $data,
                 'code' => $request['response']['code']
             ]);
-//			error_log($url);
-//			error_log($request['body']);
 			return $error;
 		} else {
 			return false;
@@ -103,13 +107,16 @@ class MailtargetApi {
 			return json_decode($request['body'], true);
 		} elseif (is_array($request) && $request['response']['code']) {
             $data = json_decode($request['body'], true);
-            $error = new WP_Error('mailtarget-error', [
-                'method' => 'post',
-                'data' => $data,
-                'code' => $request['response']['code']
-            ]);
-//            error_log($request['body']);
-			return $error;
+		    if ($data['code'] === 416) {
+                return json_decode($request['body'], true);
+            } else {
+                $error = new WP_Error('mailtarget-error', [
+                    'method' => 'post',
+                    'data' => $data,
+                    'code' => $request['response']['code']
+                ]);
+                return $error;
+            }
 		} else {
 			return false;
 		}
