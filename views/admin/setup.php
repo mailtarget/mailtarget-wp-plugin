@@ -13,6 +13,11 @@ $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
 
     <div class="wrap">
         <h1 class="wp-heading-inline">Setup - MTARGET Form</h1>
+        <div>
+            <?php
+            include "nav-content-form.php"
+            ?>
+        </div>
         <div class="mtg-form-wrapper">
             <p>Use this plugin to show your MTARGET Form in your Wordpress Application as embed to your post, as widget or as popup form. You may choose MTARGET Form directly from your Wordpress Application.</p>
             <p>But you must set API token via form below, you can find the API token at integration page of MTARGET Application.</p>

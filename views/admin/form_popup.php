@@ -17,6 +17,11 @@ $popupEnable = esc_attr(get_option('mtg_popup_enable')) == '1';
 
     <div class="wrap">
         <h1 class="wp-heading-inline">Setup New Form - MTARGET Form</h1>
+        <div>
+            <?php
+            include "nav-content-form.php"
+            ?>
+        </div>
         <div class="mtg-form-wrapper">
             <?php if ($formId != '') { ?>
                 <form method="post" action="admin.php?page=mailtarget-form-plugin--admin-menu">

@@ -421,8 +421,8 @@ class MailtargetFormPlugin {
 
 	function set_admin_menu () {
         add_menu_page(
-            'MTARGET Form',
-            'MTARGET Form',
+            'MTARGET',
+            'MTARGET',
             'manage_options',
             'mailtarget-form-plugin--admin-menu',
             null,
@@ -431,7 +431,7 @@ class MailtargetFormPlugin {
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',
             'List Form',
-            'List Form',
+            'Form',
             'manage_options',
             'mailtarget-form-plugin--admin-menu',
             array($this, 'list_widget_view')
@@ -439,27 +439,27 @@ class MailtargetFormPlugin {
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',
             'New Form',
-            'New Form',
+            'WooCommerce',
             'manage_options',
             'mailtarget-form-plugin--admin-menu-widget-form',
             array($this, 'add_widget_view_form')
         );
-        add_submenu_page(
-            'mailtarget-form-plugin--admin-menu',
-            'Popup Setting',
-            'Popup Setting',
-            'manage_options',
-            'mailtarget-form-plugin--admin-menu-popup-main',
-            array($this, 'add_popup_view')
-        );
-        add_submenu_page(
-            'mailtarget-form-plugin--admin-menu',
-            'Form Api Setting',
-            'Setting',
-            'manage_options',
-            'mailtarget-form-plugin--admin-menu-config',
-            array($this, 'admin_config_view')
-        );
+//        add_submenu_page(
+//            'mailtarget-form-plugin--admin-menu',
+//            'Popup Setting',
+//            'Popup Setting',
+//            'manage_options',
+//            'mailtarget-form-plugin--admin-menu-popup-main',
+//            array($this, 'add_popup_view')
+//        );
+//        add_submenu_page(
+//            'mailtarget-form-plugin--admin-menu',
+//            'Form Api Setting',
+//            'Setting',
+//            'manage_options',
+//            'mailtarget-form-plugin--admin-menu-config',
+//            array($this, 'admin_config_view')
+//        );
         add_submenu_page(
             null,
             'Edit Form',
