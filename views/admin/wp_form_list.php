@@ -4,9 +4,16 @@
     </div>
     <div class="wrap">
         <h1 class="wp-heading-inline">List - MTARGET Form</h1>
+        <div>
+            <?php
+            include "nav-content-form.php"
+            ?>
+        </div>
         <?php if (count($widgets) < 1) {?>
             <div class="update-nag">List empty, start by
-                <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form">creating one</a></div><?php
+                <a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form">creating one</a>
+            </div>
+            <?php
         } else {
             ?>
             <a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form">new form</a>

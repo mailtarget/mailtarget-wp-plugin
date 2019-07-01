@@ -15,3 +15,15 @@
     margin-top: 10px;
     padding: 10px 20px 20px 20px;
 }
+.error-content {
+    color: #e74c3c;
+    background-color: antiquewhite;
+    margin-top: 10px;
+    padding: 10px;
+}
+.success-content {
+    color: #15900e;
+    background-color: #b2f6b2;
+    margin-top: 10px;
+    padding: 10px;
+}
