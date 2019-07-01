@@ -12,14 +12,11 @@ $pg = isset($_GET['pg']) ? intval($_GET['pg']) : 1;
 
     <div class="wrap">
         <h1 class="wp-heading-inline">Select Form - MTARGET Form</h1>
-        <h2 class="nav-tab-wrapper">
-            <a class="nav-tab" href="">Connect</a>
-            <a class="nav-tab" href="">Store Setting</a>
-            <a class="nav-tab" href="">Audience Default</a>
-            <a class="nav-tab" href="">Audience Setting</a>
-            <a class="nav-tab" href="">Sync</a>
-            <a class="nav-tab" href="">Logs</a>
-        </h2>
+        <div>
+            <?php
+            include "nav-content-form.php"
+            ?>
+        </div>
         <p>Below is list of your MTARGET Form, select one of your form to setup.</p>
 
         <?php if (count($forms['data']) < 1) {?>

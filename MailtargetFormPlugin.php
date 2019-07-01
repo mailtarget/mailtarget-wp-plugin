@@ -430,7 +430,7 @@ class MailtargetFormPlugin {
         );
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',
-            'List Form',
+            'Form',
             'Form',
             'manage_options',
             'mailtarget-form-plugin--admin-menu',
@@ -438,28 +438,28 @@ class MailtargetFormPlugin {
         );
         add_submenu_page(
             'mailtarget-form-plugin--admin-menu',
-            'New Form',
+            'WooCommerce',
             'WooCommerce',
             'manage_options',
-            'mailtarget-form-plugin--admin-menu-widget-form',
-            array($this, 'add_widget_view_form')
+            'mailtarget-form-plugin--admin-menu-widget-woocommerce',
+            array($this, 'add_woocommerce')
         );
-//        add_submenu_page(
-//            'mailtarget-form-plugin--admin-menu',
-//            'Popup Setting',
-//            'Popup Setting',
-//            'manage_options',
-//            'mailtarget-form-plugin--admin-menu-popup-main',
-//            array($this, 'add_popup_view')
-//        );
-//        add_submenu_page(
-//            'mailtarget-form-plugin--admin-menu',
-//            'Form Api Setting',
-//            'Setting',
-//            'manage_options',
-//            'mailtarget-form-plugin--admin-menu-config',
-//            array($this, 'admin_config_view')
-//        );
+        add_submenu_page(
+            null,
+            'Popup Setting',
+            'Popup Setting',
+            'manage_options',
+            'mailtarget-form-plugin--admin-menu-popup-main',
+            array($this, 'add_popup_view')
+        );
+        add_submenu_page(
+            null,
+            'Form Api Setting',
+            'Setting',
+            'manage_options',
+            'mailtarget-form-plugin--admin-menu-config',
+            array($this, 'admin_config_view')
+        );
         add_submenu_page(
             null,
             'Edit Form',
@@ -475,6 +475,14 @@ class MailtargetFormPlugin {
             'manage_options',
             'mailtarget-form-plugin--admin-menu-widget-add',
             array($this, 'add_widget_view')
+        );
+        add_submenu_page(
+            null,
+            'New Form',
+            'New Form',
+            'manage_options',
+            'mailtarget-form-plugin--admin-menu-widget-form',
+            array($this, 'add_widget_view_form')
         );
     }
 
@@ -511,6 +519,25 @@ class MailtargetFormPlugin {
                 return false;
             }
             require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/form_list.php');
+        }
+    }
+
+    function add_woocommerce () {
+        if ( !current_user_can( 'manage_options' ) )  {
+            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+        }
+        $valid = $this->is_key_valid();
+        if ($valid === true) {
+            $api = $this->get_api();
+            if (!$api) return null;
+            $pg = isset($_GET['pg']) ? intval($_GET['pg']) : 1;
+            $forms = $api->getFormList($pg);
+            if (is_wp_error($forms)) {
+                $error = $forms;
+                require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/error.php');
+                return false;
+            }
+            require_once(MAILTARGET_PLUGIN_DIR.'/views/admin/woocommerce.php');
         }
     }
 
