@@ -107,7 +107,7 @@ class MailtargetFormPlugin {
         <script type="text/javascript" >
             $(document).ready(function($) {
 
-                $('input[type=submit').on('click', function (e) {
+                $('input[type=submit].mt-btn-submit').on('click', function (e) {
                     e.preventDefault();
                     var _this = $(this);
                     var target = _this.attr('data-target');
