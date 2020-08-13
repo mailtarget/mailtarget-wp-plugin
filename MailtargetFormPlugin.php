@@ -3,7 +3,7 @@
 /*
   Plugin Name: MTARGET Form
   Description: The MTARGET plugin to simplify embedding MTARGET Form in your post or as widget, also easily to set MTARGET Forms as popup.
-  Version: 1.0.6
+  Version: 1.0.7
   Author: MTARGET Teams
   Author URI: https://mtarget.co/
   License: GPL V3
