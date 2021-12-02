@@ -404,7 +404,7 @@ class MailtargetFormPlugin {
     }
 
     function submit_error_process ($err) {
-        $msg = 'Failed tu submit form';
+        $msg = 'Failed to submit form';
         if (isset($err->{0})) $err = $err->{0};
         if (isset($err->errors)) $err = $err->errors;
         if (isset($err['mailtarget-error'])) $err = $err['mailtarget-error'];
