@@ -11,7 +11,7 @@ $hash = substr(md5(mt_rand()), 0, 7);
     <?php if ($description !== '') { ?><p><?php echo $description ?></p><?php } ?>
     <div class="mt-c-form">
         <p class="mt-c-form__success success-<?php echo $hash ?>" style="display: none;"></p>
-        <form method="post" id="form-<?php echo $hash ?>">
+        <form method="post" id="form-<?php echo $hash ?>" enctype="multipart/form-data">
             <?php
             foreach ($form['component'] as $item) {
                 switch ($item['type']) {
@@ -29,6 +29,12 @@ $hash = substr(md5(mt_rand()), 0, 7);
                         break;
                     case 'inputCheckbox':
                         mtgf_render_checkbox($item);
+                        break;
+                    // case 'uploadFile':
+                    //     mtgf_render_upload($item);
+                    //     break;
+                    case 'inputPhone':
+                        mtgf_render_phone($item);
                         break;
                     default:
                         break;
