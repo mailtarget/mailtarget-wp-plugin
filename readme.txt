@@ -4,7 +4,7 @@ Donate link: https://mtarget.co/
 Tags: mtarget, mailtarget, form, webform, newsletter, subscribe, email, marketing
 Requires at least: 3.0.1
 Tested up to: 5.4.1
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 
 
 == Description ==
@@ -43,3 +43,6 @@ This section describes how to install the plugin and how to using it.
 
 = 1.0.7 =
 * Bugfix warning
+
+= 1.0.8 =
+* Bugfix typo
