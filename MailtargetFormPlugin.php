@@ -115,37 +115,41 @@ class MailtargetFormPlugin {
                     var errorTarget = $('.error-' + target);
                     var successTarget = $('.success-' + target);
                     var submitUrl = '<?php echo admin_url('admin-ajax.php') ?>';
-                    var submitData = {
-                        mailtarget_ajax_post: true
-                    }
-                    data.forEach(function (item) {
-                        submitData[item.name] = item.value
-                    })
+                    var formData = new FormData($('#form-' + target)[0]);
+                    formData.append('mailtarget_ajax_post', true)
                     errorTarget.hide();
                     successTarget.hide();
                     _this.attr('disabled', 'disabled');
 
-                    $.post(submitUrl, submitData, function(response) {
-                        _this.removeAttr('disabled');
-                        if (response.code !== undefined) {
-                            switch (response.code) {
-                                case 400:
-                                    errorTarget.text(response.msg);
-                                    errorTarget.show();
-                                    break;
-                                case 200:
-                                    successTarget.text('Form submitted successfully.');
-                                    successTarget.show();
-                                    $('#form-' + target).hide();
-                                    setTimeout(function () {
-                                        if (submitData.mailtarget_form_redir !== undefined) {
-                                            document.location.href = submitData.mailtarget_form_redir
-                                        }
-                                    }, 2000)
-                                    break;
+                    $.ajax({
+                        url: submitUrl,
+                        type: 'POST',
+                        dataType: "JSON",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            _this.removeAttr('disabled');
+                            if (response.code !== undefined) {
+                                switch (response.code) {
+                                    case 400:
+                                        errorTarget.text(response.msg);
+                                        errorTarget.show();
+                                        break;
+                                    case 200:
+                                        successTarget.text('Form submitted successfully.');
+                                        successTarget.show();
+                                        $('#form-' + target).hide();
+                                        setTimeout(function () {
+                                            if (submitData.mailtarget_form_redir !== undefined) {
+                                                document.location.href = submitData.mailtarget_form_redir
+                                            }
+                                        }, 2000)
+                                        break;
+                                }
                             }
                         }
-                    }, 'json');
+                    });
                 })
             });
         </script>
@@ -369,6 +373,18 @@ class MailtargetFormPlugin {
                             if ($otherInput != null) $in[] = $otherInput;
                         }
                         $input[$setting['name']] = join(', ', $in);
+                    }
+
+	                // if ($item['type'] == 'uploadFile') {
+	                //     $inputVal = isset($_FILES['mtin__'.$setting['name']]) ?
+                    //         $_FILES['mtin__'.$setting['name']] : null;
+                    //     $input[$setting['name']] = 'mtFormFilename:' . $inputVal['name'] . '###' . 'mtFormTempFile:' . $inputVal['tmp_name'];
+                    // }
+
+	                if ($item['type'] == 'inputPhone') {
+	                    $inputVal = isset($_POST['mtin__'.$setting['name']]) ?
+                            $_POST['mtin__'.$setting['name']] : null;
+                        $input[$setting['name']] = $inputVal;
                     }
                 }
                 $submitUrl = $form['url'];

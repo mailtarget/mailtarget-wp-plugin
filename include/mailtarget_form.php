@@ -117,3 +117,13 @@ function mtgf_render_checkbox($row) {
 	if (!isset($row['setting'])) return;
 	include MAILTARGET_PLUGIN_DIR.'/views/render/input_checkbox.php';
 }
+
+function mtgf_render_upload($row) {
+	if (!isset($row['setting'])) return;
+	include MAILTARGET_PLUGIN_DIR.'/views/render/input_upload.php';
+}
+
+function mtgf_render_phone($row) {
+	if (!isset($row['setting'])) return;
+	include MAILTARGET_PLUGIN_DIR.'/views/render/input_phone.php';
+}

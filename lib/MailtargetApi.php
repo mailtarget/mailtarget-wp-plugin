@@ -14,29 +14,28 @@ class MailtargetApi {
 
 		$this->apiKey = $apiKey;
 		$this->companyId = $companyId;
-		$this->apiUrl = 'https://api.mailtarget.co';
+		$this->apiUrl = 'https://apiv2.mtarget.co/v2';
 	}
 
 	public function ping () {
-		return $this->get('/user/ping', ['accessToken' => $this->apiKey]);
+		return $this->get('/me');
 	}
 
 	public function getTeam () {
-		return $this->get('/company/default', [ 'accessToken' => $this->apiKey ]);
+		return $this->get('/companies/detail');
 	}
 
 	public function getFormList ($page = 1) {
-		return $this->get('/form', [
-		    'accessToken' => $this->apiKey,
-            'companyId' => $this->companyId,
+		return $this->get('/forms', [
             'order' => 'desc',
             'field' => 'lastUpdate',
-            'page' => $page
+            'page' => $page,
+						'conditional' => false
         ]);
 	}
 
-	public function getCity ($country = 'indonesia') {
-		return $this->get('/city', [ 'accessToken' => $country ]);
+	public function getCity ($country = 'Indonesia') {
+		return $this->get('/city', [ 'country' => $country ]);
 	}
 
 	public function getCountry () {
@@ -44,11 +43,12 @@ class MailtargetApi {
 	}
 
 	public function getFormDetail ($formId) {
-		return $this->get('/form/public/' . $formId);
+		return $this->get('/forms/public/' . $formId);
 	}
 
 	public function submit ($input, $url) {
 		return $this->post($url, $input);
+		// return $this->postData($url . '/submit-data', $input);
 	}
 
 	private function get ($path, $params = array()) {
@@ -58,7 +58,7 @@ class MailtargetApi {
 				$paramsString .= $key . '=' . $value . '&';
 			}
 		}
-		$paramsString .= 'accessToken=' . $this->apiKey;
+		// $paramsString .= 'accessToken=' . $this->apiKey;
 
 		$url = $this->apiUrl . $path . '?' . $paramsString;
 
@@ -66,7 +66,10 @@ class MailtargetApi {
 			'timeout' => 5,
 			'redirection' => 5,
 			'httpversion' => '1.1',
-			'user-agent'  => 'MailTarget Form Plugin/' . get_bloginfo( 'url' )
+			'user-agent'  => 'MailTarget Form Plugin/' . get_bloginfo( 'url' ),
+			'headers'     => array(
+					'Authorization' => 'Bearer ' . $this->apiKey,
+			)
 		);
 
 		$request = wp_remote_get($url, $args);
@@ -87,14 +90,15 @@ class MailtargetApi {
 	}
 
 	private function post ($path, $data, $method = 'POST') {
-		$data['accessToken'] = $this->apiKey;
-
 		$args = array(
 			'method' => $method,
 			'timeout' => 5,
 			'redirection' => 5,
 			'httpversion' => '1.1',
 			'user-agent'  => 'MailTarget Form Plugin/' . get_bloginfo( 'url' ),
+			'headers'     => array(
+				'Authorization' => 'Bearer ' . $this->apiKey,
+			),
 			'body' => json_encode($data)
 		);
 
@@ -102,6 +106,83 @@ class MailtargetApi {
 		if (count(explode('://', $url)) > 1) $url = $path;
 
 		$request = wp_remote_post($url, $args);
+
+		if (is_array($request) && $request['response']['code'] === 200) {
+			return json_decode($request['body'], true);
+		} elseif (is_array($request) && $request['response']['code']) {
+            $data = json_decode($request['body'], true);
+		    if ($data['code'] === 416) {
+                return json_decode($request['body'], true);
+            } else {
+                $error = new WP_Error('mailtarget-error', [
+                    'method' => 'post',
+                    'data' => $data,
+                    'code' => $request['response']['code']
+                ]);
+                return $error;
+            }
+		} else {
+			return false;
+		}
+	}
+
+	private function postData ($path, $data, $method = 'POST') {
+		$boundary = wp_generate_password( 24 );
+		$payload = '';
+		foreach ($data as $name => $value) {
+			if (substr($value, 0, 15) == 'mtFormFilename:' && strlen($value) <= 33) {
+				$payload .= '--' . $boundary;
+				$payload .= "\r\n";
+				$payload .= 'Content-Disposition: form-data; name="' . $name . '"' . "\r\n\r\n";
+				$payload .= '';
+				$payload .= "\r\n";
+			} else if (substr($value, 0, 15) == 'mtFormFilename:' && strlen($value) > 33) {
+				$file = explode('###', $value);
+				$filename = substr($file[0], 15);
+				$local_file = substr($file[1], 15);
+				$payload .= '--' . $boundary;
+				$payload .= "\r\n";
+				$payload .= 'Content-Disposition: form-data; name="' . $name . '"; filename="' . $filename . '"' . "\r\n";
+				// $payload .= 'Content-Type: image/jpeg' . "\r\n";
+				$payload .= "\r\n";
+				$payload .= file_get_contents( $local_file );
+				$payload .= "\r\n";
+			} else {
+				$payload .= '--' . $boundary;
+				$payload .= "\r\n";
+				$payload .= 'Content-Disposition: form-data; name="' . $name . '"' . "\r\n\r\n";
+				$payload .= $value;
+				$payload .= "\r\n";
+			}
+		}
+		$payload .= '--' . $boundary . '--';
+
+		$headers  = array(
+			'Authorization' => 'Bearer ' . $this->apiKey,
+			'accept' => 'application/json', // The API returns JSON
+			'content-type' => 'multipart/form-data;boundary=' . $boundary, // Set content type to multipart/form-data
+		);
+
+		$args = array(
+			'method' => $method,
+			'timeout' => 5,
+			'redirection' => 5,
+			'httpversion' => '1.1',
+			'user-agent' => 'MailTarget Form Plugin/' . get_bloginfo( 'url' ),
+			'headers' => $headers,
+			'body' => $payload
+		);
+
+		$url = $this->apiUrl . $path;
+		if (count(explode('://', $url)) > 1) $url = $path;
+
+		var_dump(array( 'headers' => $headers ));
+		var_dump(array( 'payload' => $payload ));
+		var_dump(array( 'args' => $args ));
+	
+		$request = wp_remote_post($url, $args);
+
+		var_dump(array( 'request' => $request ));
 
 		if (is_array($request) && $request['response']['code'] === 200) {
 			return json_decode($request['body'], true);
