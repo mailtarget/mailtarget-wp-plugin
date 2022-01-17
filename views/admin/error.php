@@ -18,6 +18,7 @@ if ($code == 101) $errSlug = 'unset-api-key';
 if ($code == 410 and $data = 'form') $errSlug = 'form-not-found';
 if ($code == 413 and $data = 'invalid origin host') $errSlug = 'cap-domain-regist';
 
+print_r($error)
 ?>
 <div class="mtg-form-plugin">
     <div class="mtg-banner">
