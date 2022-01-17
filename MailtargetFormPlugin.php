@@ -646,6 +646,7 @@ class MailtargetFormPlugin
     if (!$api) return null;
     $valid = $api->ping();
     if (is_wp_error($valid)) {
+      if ($this->get_code_from_error($valid) === 400) return true;
       if ($this->get_code_from_error($valid) == 32 and $setup) return null;
       $error = $valid;
       require_once(MAILTARGET_PLUGIN_DIR . '/views/admin/error.php');
@@ -691,10 +692,7 @@ class MailtargetFormPlugin
     $error = (array) $error;
     if (isset($error['errors'])) $error = $error['errors'];
     if (isset($error['mailtarget-error'])) $error = $error['mailtarget-error'];
-    if (isset($error[0])) $error = $error[0];
-    if (isset($error['data'])) $error = $error['data'];
-
-    if (isset($error['code'])) return $error['code'];
+    if (isset($error[0])) return $error[0]['code'];
     return false;
   }
 }
