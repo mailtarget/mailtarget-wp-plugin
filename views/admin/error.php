@@ -4,6 +4,9 @@ $errSlug = '';
 $message = '';
 $code = '';
 $data = '';
+
+print_r($error);
+
 if (isset($error['errors'])) $error = $error['errors'];
 if (isset($error['mailtarget-error'])) $error = $error['mailtarget-error'];
 if (isset($error[0])) $error = $error[0];
@@ -13,10 +16,6 @@ if (isset($error['code'])) $code = $error['code'];
 if (isset($error['message'])) $message = $error['message'];
 if (isset($error['data'])) $data = $error['data'];
 
-if ($code == 32) $errSlug = 'expired-token';
-if ($code == 101) $errSlug = 'unset-api-key';
-if ($code == 410 and $data = 'form') $errSlug = 'form-not-found';
-if ($code == 413 and $data = 'invalid origin host') $errSlug = 'cap-domain-regist';
 
 ?>
 <div class="mtg-form-plugin">
@@ -26,16 +25,16 @@ if ($code == 413 and $data = 'invalid origin host') $errSlug = 'cap-domain-regis
 
     <div class="wrap">
         <h1 class="">Error - MTARGET Form</h1>
-        <?php switch ($errSlug) {
-            case 'unset-api-key':
+        <?php switch ($code) {
+            case 101:
                 ?><div class="update-nag">Apikey not set, please update your apikey at
                 <a href="admin.php?page=mailtarget-form-plugin--admin-menu-config">mtarget form setting</a></div><?php
                 break;
-            case 'expired-token':
+            case 'tokenException':
                 ?><div class="update-nag">Apikey invalid or expired, please update your apikey at
                 <a href="admin.php?page=mailtarget-form-plugin--admin-menu-config">mtarget form setting</a></div><?php
                 break;
-            case 'form-not-found':
+            case 'entityNotFoundException':
                 ?><div class="update-nag">Form data not found, possible form not published yet</div><?php
                 break;
             case 'cap-domain-regist':

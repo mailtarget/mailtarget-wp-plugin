@@ -3,7 +3,7 @@
 /*
   Plugin Name: MTARGET Form
   Description: The MTARGET plugin to simplify embedding MTARGET Form in your post or as widget, also easily to set MTARGET Forms as popup.
-  Version: 2.0.0
+  Version: 2.0.1
   Author: MTARGET Teams
   Author URI: https://mtarget.co/
   License: GPL V3
@@ -646,7 +646,8 @@ class MailtargetFormPlugin
     if (!$api) return null;
     $valid = $api->ping();
     if (is_wp_error($valid)) {
-      if ($this->get_code_from_error($valid) === 400) return true;
+      if ($this->get_code_from_error($valid) === 400) return null;
+      if ($this->get_code_from_error($valid) === 401) return null;
       if ($this->get_code_from_error($valid) == 32 and $setup) return null;
       $error = $valid;
       require_once(MAILTARGET_PLUGIN_DIR . '/views/admin/error.php');
