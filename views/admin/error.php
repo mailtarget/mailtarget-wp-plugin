@@ -5,8 +5,6 @@ $message = '';
 $code = '';
 $data = '';
 
-print_r($error);
-
 if (isset($error['errors'])) $error = $error['errors'];
 if (isset($error['mailtarget-error'])) $error = $error['mailtarget-error'];
 if (isset($error[0])) $error = $error[0];

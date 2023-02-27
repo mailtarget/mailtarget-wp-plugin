@@ -12,11 +12,17 @@ class MailTarget_Widget extends WP_Widget {
     }
 
     public function widget ($args, $instance) {
+        $widgetId = '';
         if (!isset($instance['mailtarget_form_id'])) {
+            $widgetId = sanitize_key(preg_replace('/[^0-9]/', '', $args['id']));
+        } else {
+            $widgetId = sanitize_key($instance['mailtarget_form_id']);
+        }
+        
+        if ($widgetId === '') {
             echo 'id not recognize';
             return false;
         }
-        $widgetId = sanitize_key($instance['mailtarget_form_id']);
 
         require_once MAILTARGET_PLUGIN_DIR . '/include/mailtarget_form.php';
         load_mailtarget_form($widgetId);

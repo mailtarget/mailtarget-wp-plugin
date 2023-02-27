@@ -23,3 +23,7 @@ Changes:
 ## v1.0.4
 Changes:
 - change form MailTarget to MTARGET
+
+## v2.1.1
+Changes:
+- Fixing support for wordpress version 4, 5 & 6

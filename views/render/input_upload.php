@@ -1,6 +1,6 @@
 <?php
 $setting = $row['setting'];
-//print_r($setting);
+
 ?>
 <div class="mt-c-form__wrap">
     <div div class="mt-c-form__upload">

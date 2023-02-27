@@ -1,6 +1,6 @@
 <?php
 $setting = $row['setting'];
-//print_r($setting);
+
 $options = array();
 if (in_array($setting['name'], array('country', 'city', 'gender'))) {
 	$options = $setting['options'];

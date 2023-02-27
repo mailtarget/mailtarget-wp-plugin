@@ -1,10 +1,10 @@
 === Plugin Name ===
-Contributors: MTARGET
+Contributors: timenz
 Donate link: https://mtarget.co/
 Tags: mtarget, mailtarget, form, webform, newsletter, subscribe, email, marketing
-Requires at least: 3.0.1
-Tested up to: 5.8.3
-Stable tag: 2.0.1
+Requires at least: 4.0.0
+Tested up to: 6.1.1
+Stable tag: 2.1.1
 
 
 == Description ==
@@ -52,3 +52,6 @@ This section describes how to install the plugin and how to using it.
 
 = 2.0.1 =
 * Bugfix error message
+
+= 2.1.1 =
+* Fixing support for wordpress version 4, 5 & 6

@@ -3,7 +3,7 @@
 /*
   Plugin Name: MTARGET Form
   Description: The MTARGET plugin to simplify embedding MTARGET Form in your post or as widget, also easily to set MTARGET Forms as popup.
-  Version: 2.0.1
+  Version: 2.1.1
   Author: MTARGET Teams
   Author URI: https://mtarget.co/
   License: GPL V3
@@ -442,10 +442,7 @@ class MailtargetFormPlugin
     if (isset($err[0])) $err = $err[0];
     if (isset($err['data'])) $err = $err['data'];
     if (isset($err['code'])) {
-      switch ($err['code']) {
-        case 413:
-          $msg = $err['data'] . ' is required';
-      }
+      $msg = $err['message'];
     }
     return $msg;
   }
