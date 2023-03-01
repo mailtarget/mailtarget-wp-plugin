@@ -9,10 +9,10 @@
  * @link      {{author_url}}
  */
 
-$targetPage = 'mailtarget-form-plugin--admin-menu-widget-add';
-$for        = isset( $_GET['for'] ) ? sanitize_text_field( $_GET['for'] ) : '';
-if ( $for === 'popup' ) {
-	$targetPage = 'mailtarget-form-plugin--admin-menu-popup-main';
+$target_page = 'mailtarget-form-plugin--admin-menu-widget-add';
+$for         = isset( $_GET['for'] ) ? sanitize_text_field( wp_unslash( $_GET['for'] ) ) : '';
+if ( 'popup' === $for ) {
+    $target_page = 'mailtarget-form-plugin--admin-menu-popup-main';
 }
 
 $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
@@ -49,7 +49,7 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
 					?>
 					<tr>
 						<td><?php echo esc_attr( $no ); ?></td>
-						<td><?php echo esc_attr( date( 'Y-m-d H:i', $item['createdAt'] / 1000 ) ); ?></td>
+						<td><?php echo esc_attr( gmdate( 'Y-m-d H:i', $item['createdAt'] / 1000 ) ); ?></td>
 						<td><?php echo esc_attr( $item['name'] ); ?></td>
 						<td>
 						<?php
@@ -64,7 +64,7 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
 							<?php
 							if ( $item['published'] ) {
 								?>
-								<a href="admin.php?page=<?php echo esc_attr( $targetPage ); ?>&form_id=<?php echo esc_attr( $item['formId'] ); ?>">Select</a>
+								<a href="admin.php?page=<?php echo esc_attr( $target_page ); ?>&form_id=<?php echo esc_attr( $item['formId'] ); ?>">Select</a>
 								<?php
 							} else {
 								?>
