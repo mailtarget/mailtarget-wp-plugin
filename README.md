@@ -27,3 +27,4 @@ Changes:
 ## v2.1.1
 Changes:
 - Fixing support for wordpress version 4, 5 & 6
+
