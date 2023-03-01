@@ -1,7 +1,17 @@
 <?php
+/**
+ * Form List
+ *
+ * @package  Mailtarget_Form
+ * @author    {{author_name}} <{{author_email}}>
+ * @copyright {{author_copyright}}
+ * @license   {{author_license}}
+ * @link      {{author_url}}
+ */
+
 $targetPage = 'mailtarget-form-plugin--admin-menu-widget-add';
 $for        = isset( $_GET['for'] ) ? sanitize_text_field( $_GET['for'] ) : '';
-if ( $for == 'popup' ) {
+if ( $for === 'popup' ) {
 	$targetPage = 'mailtarget-form-plugin--admin-menu-popup-main';
 }
 
@@ -43,11 +53,11 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
 						<td><?php echo esc_attr( $item['name'] ); ?></td>
 						<td>
 						<?php
-							$status = ( $item['published'] ) ? 'published' : 'not published';
+							$statuse = ( $item['published'] ) ? 'published' : 'not published';
 						if ( $item['setting']['captcha'] ) {
-							$status .= ', captcha enabled';
+							$statuse .= ', captcha enabled';
 						}
-							echo esc_attr( $status );
+							echo esc_attr( $statuse );
 						?>
 							</td>
 						<td>
@@ -58,7 +68,7 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
 								<?php
 							} else {
 								?>
-								
+								<span></span>
 								<?php
 							}
 							?>

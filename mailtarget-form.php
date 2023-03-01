@@ -551,7 +551,7 @@ class MailtargetFormPlugin
             }
 
             $widgets = $wpdb->get_results("SELECT * FROM " . $wpdb->base_prefix . "mailtarget_forms");
-            require_once(MAILTARGET_PLUGIN_DIR . '/views/admin/wp_form_list.php');
+            require_once(MAILTARGET_PLUGIN_DIR . '/views/admin/form_list.php');
         }
     }
 

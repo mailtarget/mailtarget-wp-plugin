@@ -1,31 +1,40 @@
 <?php
-$error   = (array) $error;
-$errSlug = '';
+/**
+ * Doc Comment for views/admin/error.php
+ *
+ * @package  Mailtarget_Form
+ * @author    {{author_name}} <{{author_email}}>
+ * @copyright {{author_copyright}}
+ * @license   {{author_license}}
+ * @link      {{author_url}}
+ */
+
+$err     = (array) $error;
 $message = '';
 $code    = '';
 $data    = '';
 
-if ( isset( $error['errors'] ) ) {
-	$error = $error['errors'];
+if ( isset( $err['errors'] ) ) {
+	$err = $err['errors'];
 }
-if ( isset( $error['mailtarget-error'] ) ) {
-	$error = $error['mailtarget-error'];
+if ( isset( $err['mailtarget-error'] ) ) {
+	$err = $err['mailtarget-error'];
 }
-if ( isset( $error[0] ) ) {
-	$error = $error[0];
+if ( isset( $err[0] ) ) {
+	$err = $err[0];
 }
-if ( isset( $error['data'] ) ) {
-	$error = $error['data'];
+if ( isset( $err['data'] ) ) {
+	$err = $err['data'];
 }
 
-if ( isset( $error['code'] ) ) {
-	$code = $error['code'];
+if ( isset( $err['code'] ) ) {
+	$code = $err['code'];
 }
-if ( isset( $error['message'] ) ) {
-	$message = $error['message'];
+if ( isset( $err['message'] ) ) {
+	$message = $err['message'];
 }
-if ( isset( $error['data'] ) ) {
-	$data = $error['data'];
+if ( isset( $err['data'] ) ) {
+	$data = $err['data'];
 }
 
 
