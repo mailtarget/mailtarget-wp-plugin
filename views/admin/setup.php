@@ -1,5 +1,12 @@
 <?php
-$popupEnable = esc_attr( get_option( 'mtg_popup_enable' ) ) == '1';
+/**
+ * Setup
+ *
+ * @package  Mailtarget_Form
+ * @author    {{author_name}} <{{author_email}}>
+ */
+
+$popup_enable = esc_attr( get_option( 'mtg_popup_enable' ) ) === '1';
 ?>
 
 <?php
@@ -35,13 +42,13 @@ if ( isset( $_GET['success'] ) ) {
 							<select name="mtg_popup_enable">
 								<option value="1" 
 								<?php
-								if ( $popupEnable ) {
+								if ( $popup_enable ) {
 									echo esc_attr( 'selected' );}
 								?>
 								>Enable</option>
 								<option value="0" 
 								<?php
-								if ( ! $popupEnable ) {
+								if ( ! $popup_enable ) {
 									echo esc_attr( 'selected' );}
 								?>
 								>Disable</option>

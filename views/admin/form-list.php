@@ -10,12 +10,12 @@
  */
 
 $target_page = 'mailtarget-form-plugin--admin-menu-widget-add';
-$for         = isset( $_GET['for'] ) ? sanitize_text_field( wp_unslash( $_GET['for'] ) ) : '';
+$for         = isset( $_GET['for'] ) ? sanitize_text_field( wp_unslash( $_GET['for'] ) ) : ''; // WPCS: CSRF ok.
 if ( 'popup' === $for ) {
-    $target_page = 'mailtarget-form-plugin--admin-menu-popup-main';
+	$target_page = 'mailtarget-form-plugin--admin-menu-popup-main';
 }
 
-$pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
+$pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; // WPCS: CSRF ok.
 ?>
 <div class="mtg-form-plugin">
 	<div class="mtg-banner">
@@ -26,7 +26,8 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
 		<h1 class="wp-heading-inline">Select Form - MTARGET Form</h1>
 		<p>Below is list of your MTARGET Form, select one of your form to setup.</p>
 
-		<?php if ( count( $forms['data'] ) < 1 ) { 
+		<?php
+		if ( count( $forms['data'] ) < 1 ) {
 			$url = wp_nonce_url( $target_page, 'admin-menu-widget-form-action' );
 			?>
 			<div class="update-nag">List empty, start by

@@ -1,3 +1,12 @@
+<?php
+/**
+ * WP Form List
+ *
+ * @category   WP Form List
+ * @package    Mailtarget Form
+ */
+
+?>
 <div class="mtg-form-plugin">
 	<div class="mtg-banner">
 		<img src="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/image/logo.png' ); ?>" />
@@ -9,12 +18,12 @@
 				<?php
 					$create_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form', 'admin-menu-widget-form-action' );
 				?>
-				<a href="<?php echo esc_url($create_url); ?>">creating one</a></div>
+				<a href="<?php echo esc_url( $create_url ); ?>">creating one</a></div>
 				<?php
 		} else {
 				$new_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form', 'admin-menu-widget-form-action' );
 			?>
-			<a class="page-title-action" href="<?php echo esc_url($new_url); ?>">New form</a>
+			<a class="page-title-action" href="<?php echo esc_url( $new_url ); ?>">New form</a>
 			<p>Use this form widget as embed to your post or as sidebar widget. Manage your widget so users easily access your form.</p>
 			<hr class="wp-header-end">
 			<table class="wp-list-table widefat fixed striped pages">
@@ -38,11 +47,11 @@
 					<td><?php echo esc_attr( $item->time ); ?></td>
 					<td>
 						<?php
-							$edit_url 	= wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-edit&id=' . $item->id, 'edit_action' );
+							$edit_url   = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-edit&id=' . $item->id, 'edit_action' );
 							$delete_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu&action=delete&id=' . $item->id, 'delete_action' );
 						?>
-						<a href="<?php echo esc_url($edit_url); ?>">Edit</a> |
-						<a href="<?php echo esc_url($delete_url); ?>">Delete</a>
+						<a href="<?php echo esc_url( $edit_url ); ?>">Edit</a> |
+						<a href="<?php echo esc_url( $delete_url ); ?>">Delete</a>
 					</td>
 				</tr>
 				<?php

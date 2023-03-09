@@ -1,9 +1,18 @@
 <?php
-if ( $form_id === '' ) {
-	$form_id    = esc_attr( get_option( 'mtg_popup_form_id' ) );
+/**
+ * Form Popup
+ *
+ * Form Popup.
+ *
+ * @category Admin view Form Popup
+ * @package  Mailtarget Form
+ */
+
+if ( '' === $form_id ) {
+	$form_id   = esc_attr( get_option( 'mtg_popup_form_id' ) );
 	$form_name = esc_attr( get_option( 'mtg_popup_form_name' ) );
 }
-$popupEnable = esc_attr( get_option( 'mtg_popup_enable' ) ) == '1';
+$popup_enable = esc_attr( get_option( 'mtg_popup_enable' ) ) === '1';
 ?>
 
 <?php
@@ -22,7 +31,7 @@ if ( isset( $_GET['success'] ) ) {
 	<div class="wrap">
 		<h1 class="wp-heading-inline">Setup New Form - MTARGET Form</h1>
 		<div class="mtg-form-wrapper">
-			<?php if ( $form_id != '' ) { ?>
+			<?php if ( '' !== $form_id ) { ?>
 				<form method="post" action="admin.php?page=mailtarget-form-plugin--admin-menu">
 					<?php settings_fields( $this->option_group ); ?>
 					<?php do_settings_sections( $this->option_group ); ?>
@@ -69,13 +78,13 @@ if ( isset( $_GET['success'] ) ) {
 								<select name="mtg_popup_enable">
 									<option value="1" 
 									<?php
-									if ( $popupEnable ) {
+									if ( $popup_enable ) {
 										echo esc_attr( 'selected' );}
 									?>
 									>Enable</option>
 									<option value="0" 
 									<?php
-									if ( ! $popupEnable ) {
+									if ( ! $popup_enable ) {
 										echo esc_attr( 'selected' );}
 									?>
 									>Disable</option>

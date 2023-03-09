@@ -1,4 +1,11 @@
 <?php
+/**
+ * WP Form Edit
+ *
+ * @category   WP Form Edit
+ * @package    Mailtarget Form
+ */
+
 $data               = json_decode( $widget->data );
 $widget_title       = '';
 $widget_description = '';

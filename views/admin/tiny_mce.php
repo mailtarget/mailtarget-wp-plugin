@@ -1,8 +1,17 @@
+<?php
+/**
+ * Tiny Mce
+ *
+ * @category   MailTarget_Shortcode
+ * @package    Mailtarget Form
+ */
+
+?>
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script type="text/javascript"
-			src="<?php echo site_url() . '/wp-includes/js/tinymce/tiny_mce_popup.js'; ?>"></script>
+			src="<?php echo esc_url( site_url() . '/wp-includes/js/tinymce/tiny_mce_popup.js' ); ?>"></script>
 </head>
 
 <body>
@@ -11,7 +20,7 @@
 
 <form id="mailtarget_tinymce_form" action="" method="post">
 
-	<p><?php _e( 'Select form from list below, and hit "Add Shortcode" to add the shortcode to your post!', 'mailtarget' ); ?></p>
+	<p><?php esc_html( 'Select form from list below, and hit "Add Shortcode" to add the shortcode to your post!' ); ?></p>
 
 	<p>
 		<label for="mailtarget_form_id">Form :</label>
@@ -22,7 +31,7 @@
 		</select>
 	</p>
 	<p>
-		<input type="button" name="<?php _e( 'Add Shortcode', 'mailtarget' ); ?>" value="Add Shortcode" style="font-size: 14px;">
+		<input type="button" name="<?php esc_html( 'Add Shortcode' ); ?>" value="Add Shortcode" style="font-size: 14px;">
 	</p>
 
 
