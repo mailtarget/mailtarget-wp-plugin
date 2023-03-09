@@ -1,16 +1,29 @@
 <?php
+/**
+ * MailTarget_Popup.php Doc Comment
+ *
+ * Mailtarget Popup is file that show on popup.
+ *
+ * @category   MailTarget_Popup
+ * @package    Mailtarget Form
+ */
 
+/**
+ * MailTarget_Popup
+ */
 class MailTarget_Popup {
 
-
+	/**
+	 * Init.
+	 **/
 	public static function init() {
 		$form_id      = esc_attr( get_option( 'mtg_popup_form_id' ) );
-		$delay       = intval( esc_attr( get_option( 'mtg_popup_delay' ) ) ) * 1000;
-		$popupEnable = esc_attr( get_option( 'mtg_popup_enable' ) ) == '1';
-		if ( $form_id == '' ) {
+		$delay        = intval( esc_attr( get_option( 'mtg_popup_delay' ) ) ) * 1000;
+		$popup_enable = esc_attr( get_option( 'mtg_popup_enable' ) ) === '1';
+		if ( '' === $form_id ) {
 			return false;
 		}
-		if ( ! $popupEnable ) {
+		if ( ! $popup_enable ) {
 			return false;
 		}
 		require_once MAILTARGET_PLUGIN_DIR . '/include/mailtarget_form.php';
@@ -19,7 +32,7 @@ class MailTarget_Popup {
 			<div class="modal"><?php echo esc_html( mailtarget_load_popup( $form_id ) ); ?></div>
 		</div>
 		<script>
-			var delay = <?php echo $delay; ?>;
+			var delay = <?php echo esc_attr( $delay ); ?>;
 			var modal = new tingle.modal({
 				footer: false,
 				stickyFooter: false,

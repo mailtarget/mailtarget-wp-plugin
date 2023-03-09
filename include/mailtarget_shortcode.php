@@ -1,5 +1,16 @@
 <?php
+/**
+ * MailTarget_Shortcode.php Doc Comment
+ *
+ * MailTarget_Shortcode is file that Converts shortcode into html.
+ *
+ * @category   MailTarget_Shortcode
+ * @package    Mailtarget Form
+ */
 
+/**
+ * MailTarget_Popup
+ */
 class MailTarget_Shortcode {
 
 
@@ -46,8 +57,7 @@ class MailTarget_Shortcode {
 	/**
 	 * Add tinymce button to toolbar
 	 *
-	 * @param $buttons
-	 * @return mixed
+	 * @param mixed $buttons is buttons id to select.
 	 */
 	public static function mailtarget_register_button( $buttons ) {
 		array_push( $buttons, 'mailtarget_shortcode' );
@@ -57,14 +67,16 @@ class MailTarget_Shortcode {
 	/**
 	 * Register tinymce plugin
 	 *
-	 * @param $plugin_array
-	 * @return mixed
+	 * @param mixed $plugin_array is buttons id to select.
 	 */
 	public static function mailtarget_add_tinymce_plugin( $plugin_array ) {
 		$plugin_array['mailtarget_shortcode'] = MAILTARGET_PLUGIN_URL . '/assets/js/mailtarget_shortcode.js';
 		return $plugin_array;
 	}
 
+	/**
+	 * Mailtarget_tinymce_window.
+	 */
 	public static function mailtarget_tinymce_window() {
 		global $wpdb, $forms;
 
@@ -72,7 +84,7 @@ class MailTarget_Shortcode {
 			return;
 		}
 
-		$forms = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->base_prefix . 'mailtarget_forms' );
+		$forms = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->base_prefix . 'mailtarget_forms' ); // WPCS: db call ok. // WPCS: cache ok.
 		include MAILTARGET_PLUGIN_DIR . 'views/admin/tiny_mce.php';
 		exit;
 	}
@@ -81,9 +93,7 @@ class MailTarget_Shortcode {
 	 *
 	 * Converts shortcode into html
 	 *
-	 * @param $attributes
-	 *
-	 * @return string
+	 * @param string $attributes is attributes.
 	 */
 	public static function mailtarget_generate_shortcode( $attributes ) {
 		require_once MAILTARGET_PLUGIN_DIR . '/include/mailtarget_form.php';
