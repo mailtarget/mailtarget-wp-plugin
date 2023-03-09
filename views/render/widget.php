@@ -68,6 +68,7 @@ if ( $submitTitle === '' ) {
 				<div class="mt-c-form__btn-action">
 					<p class="mt-c-form__error error-<?php echo $hash; ?>" style="display: none;"></p>
 					<input type="hidden" value="submit_form" name="mailtarget_form_action">
+					<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' ); ?>" name="_wpnonce"/>
 					<input type="hidden" value="<?php echo $redirUlr; ?>" name="mailtarget_form_redir">
 					<input type="hidden" value="<?php echo $form['formId']; ?>" name="mailtarget_form_id">
 					<input type="submit" class="mt-o-btn mt-btn-submit" data-target="<?php echo $hash; ?>" value="<?php echo $submitTitle; ?>">

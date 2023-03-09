@@ -84,12 +84,12 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
 			<?php
 			if ( $pg > 1 ) {
 				?>
-				<a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form<?php echo esc_attr( $for ); ?>&pg=<?php echo esc_attr( $pg - 1 ); ?>">previous</a> 
+				<a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form<?php echo esc_attr( $for ); ?>&pg=<?php echo esc_attr( $pg - 1 ); ?>">Previous</a> 
 				<?php
 			}
 			if ( count( $forms['data'] ) > 9 ) {
 				?>
-				<a class="page-title-action" style="float: right" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form<?php echo esc_attr( $for ); ?>&pg=<?php echo esc_attr( $pg + 1 ); ?>">next</a>
+				<a class="page-title-action" style="float: right" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form<?php echo esc_attr( $for ); ?>&pg=<?php echo esc_attr( $pg + 1 ); ?>">Next</a>
 				<?php
 			}
 			?>

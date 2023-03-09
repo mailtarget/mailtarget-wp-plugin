@@ -16,20 +16,20 @@ class MailTarget_Widget extends WP_Widget {
 	}
 
 	public function widget( $args, $instance ) {
-		$widgetId = '';
+		$widget_id = '';
 		if ( ! isset( $instance['mailtarget_form_id'] ) ) {
-			$widgetId = sanitize_key( preg_replace( '/[^0-9]/', '', $args['id'] ) );
+			$widget_id = sanitize_key( preg_replace( '/[^0-9]/', '', $args['id'] ) );
 		} else {
-			$widgetId = sanitize_key( $instance['mailtarget_form_id'] );
+			$widget_id = sanitize_key( $instance['mailtarget_form_id'] );
 		}
 
-		if ( $widgetId === '' ) {
+		if ( $widget_id === '' ) {
 			echo 'id not recognize';
 			return false;
 		}
 
 		require_once MAILTARGET_PLUGIN_DIR . '/include/mailtarget_form.php';
-		load_mailtarget_form( $widgetId );
+		mailtarget_load_form( $widget_id );
 	}
 
 	public function form( $instance ) {

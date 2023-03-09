@@ -90,7 +90,7 @@ class MailTarget_Shortcode {
 		$form_attributes = shortcode_atts( array( 'form_id' => '1' ), $attributes );
 
 		ob_start();
-		load_mailtarget_form( $form_attributes['form_id'] );
+		mailtarget_load_form( $form_attributes['form_id'] );
 		return ob_get_clean();
 	}
 }

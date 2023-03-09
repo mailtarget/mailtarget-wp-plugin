@@ -53,6 +53,7 @@ $hash = substr( md5( mt_rand() ), 0, 7 );
 				<div class="mt-c-form__btn-action">
 					<p class="mt-c-form__error error-<?php echo $hash; ?>" style="display: none;"></p>
 					<input type="hidden" value="submit_form" name="mailtarget_form_action">
+					<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' ); ?>" name="_wpnonce"/>
 					<input type="hidden" value="popup" name="mailtarget_form_mode">
 					<input type="hidden" value="<?php echo $redirUlr; ?>" name="mailtarget_form_redir">
 					<input type="hidden" value="<?php echo $form['formId']; ?>" name="mailtarget_form_id">

@@ -4,10 +4,10 @@ class MailTarget_Popup {
 
 
 	public static function init() {
-		$formId      = esc_attr( get_option( 'mtg_popup_form_id' ) );
+		$form_id      = esc_attr( get_option( 'mtg_popup_form_id' ) );
 		$delay       = intval( esc_attr( get_option( 'mtg_popup_delay' ) ) ) * 1000;
 		$popupEnable = esc_attr( get_option( 'mtg_popup_enable' ) ) == '1';
-		if ( $formId == '' ) {
+		if ( $form_id == '' ) {
 			return false;
 		}
 		if ( ! $popupEnable ) {
@@ -16,7 +16,7 @@ class MailTarget_Popup {
 		require_once MAILTARGET_PLUGIN_DIR . '/include/mailtarget_form.php';
 		?>
 		<div class="mtg-popup-modal" style="display: none">
-			<div class="modal"><?php echo esc_html( load_mailtarget_popup( $formId ) ); ?></div>
+			<div class="modal"><?php echo esc_html( mailtarget_load_popup( $form_id ) ); ?></div>
 		</div>
 		<script>
 			var delay = <?php echo $delay; ?>;

@@ -49,6 +49,7 @@
 					<tr>
 						<td></td>
 						<td>
+							<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' ); ?>" name="_wpnonce"/>
 							<input type="hidden" value="create_widget" name="mailtarget_form_action">
 							<?php submit_button( 'Create Form' ); ?></td>
 					</tr>

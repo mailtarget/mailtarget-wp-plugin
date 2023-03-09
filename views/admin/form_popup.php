@@ -1,7 +1,7 @@
 <?php
-if ( $formId == '' ) {
-	$formId   = esc_attr( get_option( 'mtg_popup_form_id' ) );
-	$formName = esc_attr( get_option( 'mtg_popup_form_name' ) );
+if ( $form_id === '' ) {
+	$form_id    = esc_attr( get_option( 'mtg_popup_form_id' ) );
+	$form_name = esc_attr( get_option( 'mtg_popup_form_name' ) );
 }
 $popupEnable = esc_attr( get_option( 'mtg_popup_enable' ) ) == '1';
 ?>
@@ -22,7 +22,7 @@ if ( isset( $_GET['success'] ) ) {
 	<div class="wrap">
 		<h1 class="wp-heading-inline">Setup New Form - MTARGET Form</h1>
 		<div class="mtg-form-wrapper">
-			<?php if ( $formId != '' ) { ?>
+			<?php if ( $form_id != '' ) { ?>
 				<form method="post" action="admin.php?page=mailtarget-form-plugin--admin-menu">
 					<?php settings_fields( $this->option_group ); ?>
 					<?php do_settings_sections( $this->option_group ); ?>
@@ -30,10 +30,10 @@ if ( isset( $_GET['success'] ) ) {
 						<tr class="user-rich-editing-wrap">
 							<th>MTARGET Form Name</th>
 							<td>
-								<strong><?php echo esc_attr( $formName ); ?></strong>
-								or <a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form&for=popup">change form</a>
-								<input type="hidden" name="popup_form_id" value="<?php echo esc_attr( $formId ); ?>">
-								<input type="hidden" name="popup_form_name" value="<?php echo esc_attr( $formName ); ?>">
+								<strong><?php echo esc_attr( $form_name ); ?></strong>
+								or <a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form&for=popup">Change form</a>
+								<input type="hidden" name="popup_form_id" value="<?php echo esc_attr( $form_id ); ?>">
+								<input type="hidden" name="popup_form_name" value="<?php echo esc_attr( $form_name ); ?>">
 							</td>
 						</tr>
 						<tr class="user-rich-editing-wrap">

@@ -10,7 +10,7 @@
 				<?php
 		} else {
 			?>
-			<a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form">new form</a>
+			<a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form">New form</a>
 			<p>Use this form widget as embed to your post or as sidebar widget. Manage your widget so users easily access your form.</p>
 			<hr class="wp-header-end">
 			<table class="wp-list-table widefat fixed striped pages">
@@ -33,8 +33,12 @@
 					<td>[mailtarget_form form_id=<?php echo esc_attr( $item->id ); ?>]</td>
 					<td><?php echo esc_attr( $item->time ); ?></td>
 					<td>
-						<a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-edit&id=<?php echo esc_attr( $item->id ); ?>">Edit</a> |
-						<a href="admin.php?page=mailtarget-form-plugin--admin-menu&action=delete&id=<?php echo esc_attr( $item->id ); ?>">Delete</a>
+						<?php
+							$edit_url 	= wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-edit&id=' . $item->id, 'edit_action' );
+							$delete_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu&action=delete&id=' . $item->id, 'delete_action' );
+						?>
+						<a href="<?php echo esc_url($edit_url); ?>">Edit</a> |
+						<a href="<?php echo esc_url($delete_url); ?>">Delete</a>
 					</td>
 				</tr>
 				<?php

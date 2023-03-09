@@ -1,10 +1,21 @@
 <?php
+/**
+ * Mailtarget Form
+ *
+ * Mailtarget Form.
+ *
+ * @category   Components
+ * @package    Mailtarget Form
+ * @subpackage Mailtarget Form
+ */
 
-function load_mailtarget_form( $widgetId ) {
+?>
+<?php
+function mailtarget_load_form( $widget_id ) {
 	global $wpdb;
-	$widgetId = sanitize_key( $widgetId );
-	$sql      = 'SELECT * FROM ' . $wpdb->base_prefix . "mailtarget_forms where id = '$widgetId'";
-	$widget   = $wpdb->get_row( $sql );
+	$widget_id = sanitize_key( $widget_id );
+	$sql       = 'SELECT * FROM ' . $wpdb->base_prefix . "mailtarget_forms where id = '$widget_id'";
+	$widget    = $wpdb->get_row( $sql );
 	if ( ! isset( $widget->form_id ) ) {
 		echo 'Widget not exist';
 		return;
@@ -12,10 +23,10 @@ function load_mailtarget_form( $widgetId ) {
 	$widget->data = json_decode( $widget->data, true );
 	$widget       = (array) $widget;
 	require_once MAILTARGET_PLUGIN_DIR . '/lib/MailtargetApi.php';
-	$key       = get_option( 'mtg_api_token' );
-	$companyId = get_option( 'mtg_company_id' );
-	$api       = new MailtargetApi( $key, $companyId );
-	$form      = $api->getFormDetail( $widget['form_id'] );
+	$key        = get_option( 'mtg_api_token' );
+	$company_id = get_option( 'mtg_company_id' );
+	$api        = new MailtargetApi( $key, $company_id );
+	$form       = $api->getFormDetail( $widget['form_id'] );
 	if ( is_wp_error( $form ) ) {
 		echo( 'Failed to get form data' );
 		return;
@@ -56,13 +67,13 @@ function load_mailtarget_form( $widgetId ) {
 	include MAILTARGET_PLUGIN_DIR . '/views/render/widget.php';
 }
 
-function load_mailtarget_popup( $formId ) {
-	$formId = sanitize_key( $formId );
+function mailtarget_load_popup( $form_id ) {
+	$form_id = sanitize_key( $form_id );
 	require_once MAILTARGET_PLUGIN_DIR . '/lib/MailtargetApi.php';
-	$key       = get_option( 'mtg_api_token' );
-	$companyId = get_option( 'mtg_company_id' );
-	$api       = new MailtargetApi( $key, $companyId );
-	$form      = $api->getFormDetail( $formId );
+	$key        = get_option( 'mtg_api_token' );
+	$company_id = get_option( 'mtg_company_id' );
+	$api        = new MailtargetApi( $key, $company_id );
+	$form       = $api->getFormDetail( $form_id );
 	if ( is_wp_error( $form ) ) {
 		echo( 'Failed to get form data' );
 		return;
