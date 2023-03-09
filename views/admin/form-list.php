@@ -23,12 +23,14 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
 	</div>
 
 	<div class="wrap">
-		<h1 class="wp-heading-inline">Select Form - MTARGET Form</h1>
+		<h1 class="wp-heading-inline">Select Form - MTARGET Form asdasd</h1>
 		<p>Below is list of your MTARGET Form, select one of your form to setup.</p>
 
-		<?php if ( count( $forms['data'] ) < 1 ) { ?>
+		<?php if ( count( $forms['data'] ) < 1 ) { 
+			$url = wp_nonce_url( $target_page, 'admin-menu-widget-form-action' );
+			?>
 			<div class="update-nag">List empty, start by
-				<a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-add">creating one</a></div>
+				<a href="<?php echo esc_url( $url ); ?>">creating one</a></div>
 				<?php
 		} else {
 			?>
@@ -83,13 +85,15 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
 			<div class="nav" style="margin-top: 15px;">
 			<?php
 			if ( $pg > 1 ) {
+				$prev_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form' . esc_attr( $for ) . '&pg=' . esc_attr( $pg - 1 ), 'admin-menu-widget-form-action' );
 				?>
-				<a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form<?php echo esc_attr( $for ); ?>&pg=<?php echo esc_attr( $pg - 1 ); ?>">Previous</a> 
+				<a class="page-title-action" href="<?php echo esc_url( $prev_url ); ?>">Previous</a> 
 				<?php
 			}
 			if ( count( $forms['data'] ) > 9 ) {
+				$next_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form' . esc_attr( $for ) . '&pg=' . esc_attr( $pg + 1 ), 'admin-menu-widget-form-action' );
 				?>
-				<a class="page-title-action" style="float: right" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form<?php echo esc_attr( $for ); ?>&pg=<?php echo esc_attr( $pg + 1 ); ?>">Next</a>
+				<a class="page-title-action" style="float: right" href="<?php echo esc_url( $next_url ); ?>">Next</a>
 				<?php
 			}
 			?>

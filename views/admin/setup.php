@@ -53,6 +53,7 @@ if ( isset( $_GET['success'] ) ) {
 						<td></td>
 						<td>
 							<input type="hidden" value="setup_setting" name="mailtarget_form_action">
+							<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' ); ?>" name="_wpnonce"/>
 							<?php submit_button(); ?></td>
 					</tr>
 				</table>
