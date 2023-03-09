@@ -251,7 +251,7 @@ class MailtargetFormPlugin {
 						return false;
 					}
 					global $wpdb;
-					$wpdb->delete( $wpdb->base_prefix . 'mailtarget_forms', array( 'id' => $id ) );
+					$wpdb->delete( $wpdb->base_prefix . 'mailtarget_forms', array( 'id' => $id ) );// WPCS: db call ok. // WPCS: cache ok.
 					return wp_safe_redirect( 'admin.php?page=mailtarget-form-plugin--admin-menu' );
 				}
 			}
@@ -329,7 +329,7 @@ class MailtargetFormPlugin {
 							)
 						),
 					);
-					$wpdb->insert( $table_name, $input );
+					$wpdb->insert( $table_name, $input );// WPCS: db call ok.
 					break;
 				case 'edit_widget':
 					global $wpdb;
@@ -357,7 +357,7 @@ class MailtargetFormPlugin {
 						),
 					);
 					if ( null !== $widget_id ) {
-						$wpdb->update( $table_name, $input, array( 'id' => $widget_id ) );
+						$wpdb->update( $table_name, $input, array( 'id' => $widget_id ) );// WPCS: db call ok. // WPCS: cache ok.
 					}
 					break;
 				default:
@@ -602,7 +602,7 @@ class MailtargetFormPlugin {
 				return false;
 			}
 
-			$widgets = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->base_prefix . 'mailtarget_forms' );
+			$widgets = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->base_prefix . 'mailtarget_forms' );// WPCS: db call ok. // WPCS: cache ok.
 			require_once MAILTARGET_PLUGIN_DIR . '/views/admin/wp-form-list.php';
 		}
 	}
@@ -676,7 +676,7 @@ class MailtargetFormPlugin {
 			if ( true === $valid ) {
 				global $wpdb;
 				$widget_id = isset( $_GET['id'] ) ? sanitize_key( $_GET['id'] ) : null;
-				$widget    = $wpdb->get_row( 'SELECT * FROM ' . $wpdb->base_prefix . "mailtarget_forms where id = $widget_id" );
+				$widget    = $wpdb->get_row( 'SELECT * FROM ' . $wpdb->base_prefix . "mailtarget_forms where id = $widget_id" ); // WPCS: db call ok. // WPCS: cache ok. // WPCS: unprepared SQL ok.
 				if ( ! isset( $widget->form_id ) ) {
 					wp_safe_redirect( 'admin.php?page=mailtarget-form-plugin--admin-menu' );
 					return false;

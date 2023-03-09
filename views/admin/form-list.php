@@ -23,7 +23,7 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
 	</div>
 
 	<div class="wrap">
-		<h1 class="wp-heading-inline">Select Form - MTARGET Form asdasd</h1>
+		<h1 class="wp-heading-inline">Select Form - MTARGET Form</h1>
 		<p>Below is list of your MTARGET Form, select one of your form to setup.</p>
 
 		<?php if ( count( $forms['data'] ) < 1 ) { 
