@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Plugin Name: MTARGET Form
  * Description: The MTARGET plugin to simplify embedding MTARGET Form in your post or as widget, also easily to set MTARGET Forms as popup.
@@ -149,8 +149,8 @@ class MailtargetFormPlugin {
 	 */
 	public function register_scripts() {
 		?>
-	<script type="application/javascript" src="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.js' ); ?>"></script>
-	<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="application/javascript" src="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.js' ); ?>"></script><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
+	<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 	<script type="text/javascript">
 	$(document).ready(function($) {
 
@@ -208,8 +208,8 @@ class MailtargetFormPlugin {
 	 */
 	public function register_styles() {
 		?>
-	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/style.css' ); ?>" type="text/css" media="all" />
-	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.css' ); ?>" type="text/css" media="all" />
+	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/style.css' ); ?>" type="text/css" media="all" /><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
+	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.css' ); ?>" type="text/css" media="all" /><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
 		<?php
 	}
 
@@ -218,7 +218,7 @@ class MailtargetFormPlugin {
 	 */
 	public function register_admin_styles() {
 		?>
-	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/mailtarget_admin.css' ); ?>" type="text/css" media="all" />
+	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/mailtarget_admin.css' ); ?>" type="text/css" media="all" /><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
 		<?php
 	}
 
@@ -676,7 +676,7 @@ class MailtargetFormPlugin {
 			if ( true === $valid ) {
 				global $wpdb;
 				$widget_id = isset( $_GET['id'] ) ? sanitize_key( $_GET['id'] ) : null;
-				$widget    = $wpdb->get_row( 'SELECT * FROM ' . $wpdb->base_prefix . "mailtarget_forms where id = $widget_id" ); // WPCS: db call ok. // WPCS: cache ok. // WPCS: unprepared SQL ok.
+				$widget    = $wpdb->get_row( 'SELECT * FROM ' . $wpdb->base_prefix . "mailtarget_forms where id = $widget_id" ); // WPCS: db call ok. // WPCS: cache ok. //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared.
 				if ( ! isset( $widget->form_id ) ) {
 					wp_safe_redirect( 'admin.php?page=mailtarget-form-plugin--admin-menu' );
 					return false;
