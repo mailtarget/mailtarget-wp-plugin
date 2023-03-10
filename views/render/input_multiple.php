@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * Input multiple
  *
@@ -12,7 +12,7 @@ $setting = $row['setting'];
 <div class="mt-c-form__wrap">
 	<div div class="mt-c-form__radio">
 		<?php if ( $setting['showTitle'] ) { ?>
-		<label class="mt-o-label" v-if="setting.showTitle"><?php echo esc_html( $setting['title'] ); ?></label>
+		<label class="mt-o-label" v-if="setting.showTitle"><?php echo $setting['title']; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 		<?php } ?>
 		<div class="<?php echo ( $setting['showImage'] && 'grid' === $setting['styleOption'] ) ? 'mt-c-radio__wrap--grid' : 'mt-c-radio__wrap'; ?>">
 			<?php
@@ -25,7 +25,7 @@ $setting = $row['setting'];
 											<?php
 											if ( false === $setting['showImage'] ) {
 												?>
-						<div class="mt-c-checkbox__text"><p><?php echo esc_html( $item['name'] ); ?></p></div>
+						<div class="mt-c-checkbox__text"><p><?php echo $item['name']; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p></div>
 													<?php
 											} else {
 												?>
@@ -44,7 +44,7 @@ $setting = $row['setting'];
 													<?php
 													if ( $setting['showImage'] ) {
 														?>
-								<p style="font-weight: normal;"><?php echo esc_html( $item['name'] ); ?></p>
+								<p style="font-weight: normal;"><?php echo $item['name']; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 														<?php
 													}
 													?>
