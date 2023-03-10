@@ -676,7 +676,10 @@ class MailtargetFormPlugin {
 			if ( true === $valid ) {
 				global $wpdb;
 				$widget_id = isset( $_GET['id'] ) ? sanitize_key( $_GET['id'] ) : null;
-				$widget    = $wpdb->get_row( 'SELECT * FROM ' . $wpdb->base_prefix . "mailtarget_forms where id = $widget_id" ); // WPCS: db call ok. // WPCS: cache ok. //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared.
+				$widget    = $wpdb->get_row(
+					'SELECT * FROM ' . $wpdb->base_prefix .
+					"mailtarget_forms where id = $widget_id"  //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				); // WPCS: db call ok. // WPCS: cache ok.
 				if ( ! isset( $widget->form_id ) ) {
 					wp_safe_redirect( 'admin.php?page=mailtarget-form-plugin--admin-menu' );
 					return false;

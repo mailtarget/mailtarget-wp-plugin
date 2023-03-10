@@ -21,7 +21,12 @@ function mailtarget_load_form( $widget_id ) {
 	$widget_id = sanitize_key( $widget_id );
 
 	$table_name = "{$wpdb->base_prefix}mailtarget_forms";
-	$widget     = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM `$table_name` WHERE `id` = %s", $widget_id ) ); // WPCS: db call ok. // WPCS: cache ok. //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared.
+	$widget     = $wpdb->get_row(
+		$wpdb->prepare(
+			"SELECT * FROM `$table_name` WHERE `id` = %s", //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$widget_id
+		)
+	); // WPCS: db call ok. // WPCS: cache ok.
 	if ( ! isset( $widget->form_id ) ) {
 		echo 'Widget not exist';
 		return;
