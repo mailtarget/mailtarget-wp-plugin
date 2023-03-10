@@ -1,25 +1,32 @@
 <?php
-$title       = esc_attr( get_option( 'mtg_popup_title' ) );
-$description = get_option( 'mtg_popup_description' );
-$redirUlr    = get_option( 'mtg_popup_redirect' );
-$submitTitle = esc_attr( get_option( 'mtg_popup_submit' ) );
-if ( $submitTitle === '' ) {
-	$submitTitle = 'Submit';
+/**
+ * Popup
+ *
+ * @category   Popup
+ * @package    Mailtarget Form
+ */
+
+$mt_title     = esc_attr( get_option( 'mtg_popup_title' ) );
+$description  = get_option( 'mtg_popup_description' );
+$redir_ulr    = get_option( 'mtg_popup_redirect' );
+$submit_title = esc_attr( get_option( 'mtg_popup_submit' ) );
+if ( '' === $submit_title ) {
+	$submit_title = 'Submit';
 }
-$hash = substr( md5( mt_rand() ), 0, 7 );
+$hash = substr( md5( wp_rand() ), 0, 7 );
 ?>
 <div>
 	<?php
-	if ( $title !== '' ) {
+	if ( '' !== $mt_title ) {
 		?>
-		<h2><?php echo $title; ?></h2><?php } ?>
+		<h2><?php echo esc_html( $mt_title ); ?></h2><?php } ?>
 	<?php
-	if ( $description !== '' ) {
+	if ( '' !== $description ) {
 		?>
-		<p><?php echo $description; ?></p><?php } ?>
+		<p><?php echo esc_html( $description ); ?></p><?php } ?>
 	<div class="mt-c-form">
-		<p class="mt-c-form__success success-<?php echo $hash; ?>" style="display: none;"></p>
-		<form method="post" id="form-<?php echo $hash; ?>" enctype="multipart/form-data">
+		<p class="mt-c-form__success success-<?php echo esc_html( $hash ); ?>" style="display: none;"></p>
+		<form method="post" id="form-<?php echo esc_html( $hash ); ?>" enctype="multipart/form-data">
 			<?php
 			foreach ( $form['component'] as $item ) {
 				switch ( $item['type'] ) {
@@ -38,9 +45,9 @@ $hash = substr( md5( mt_rand() ), 0, 7 );
 					case 'inputCheckbox':
 						mtgf_render_checkbox( $item );
 						break;
-					// case 'uploadFile':
-					// mtgf_render_upload($item);
-					// break;
+					case 'uploadFile':
+						mtgf_render_upload( $item );
+						break;
 					case 'inputPhone':
 						mtgf_render_phone( $item );
 						break;
@@ -51,13 +58,13 @@ $hash = substr( md5( mt_rand() ), 0, 7 );
 			?>
 			<div class="mt-c-form__wrap">
 				<div class="mt-c-form__btn-action">
-					<p class="mt-c-form__error error-<?php echo $hash; ?>" style="display: none;"></p>
+					<p class="mt-c-form__error error-<?php echo esc_html( $hash ); ?>" style="display: none;"></p>
 					<input type="hidden" value="submit_form" name="mailtarget_form_action">
-					<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' ); ?>" name="_wpnonce"/>
+					<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="_wpnonce"/> 
 					<input type="hidden" value="popup" name="mailtarget_form_mode">
-					<input type="hidden" value="<?php echo $redirUlr; ?>" name="mailtarget_form_redir">
-					<input type="hidden" value="<?php echo $form['formId']; ?>" name="mailtarget_form_id">
-					<input type="submit" class="mt-o-btn mt-btn-submit" data-target="<?php echo $hash; ?>" value="<?php echo $submitTitle; ?>">
+					<input type="hidden" value="<?php echo esc_html( $redir_ulr ); ?>" name="mailtarget_form_redir">
+					<input type="hidden" value="<?php echo esc_html( $form['formId'] ); ?>" name="mailtarget_form_id">
+					<input type="submit" class="mt-o-btn mt-btn-submit" data-target="<?php echo esc_html( $hash ); ?>" value="<?php echo esc_html( $submit_title ); ?>">
 				</div>
 			</div>
 
