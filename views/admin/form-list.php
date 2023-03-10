@@ -10,12 +10,15 @@
  */
 
 $target_page = 'mailtarget-form-plugin--admin-menu-widget-add';
-$for         = isset( $_GET['for'] ) ? sanitize_text_field( wp_unslash( $_GET['for'] ) ) : ''; // WPCS: CSRF ok.
+$for         = isset( $_GET['for'] ) //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	?
+	sanitize_text_field( wp_unslash( $_GET['for'] ) ) //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	: '';
 if ( 'popup' === $for ) {
 	$target_page = 'mailtarget-form-plugin--admin-menu-popup-main';
 }
 
-$pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; // WPCS: CSRF ok.
+$pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 ?>
 <div class="mtg-form-plugin">
 	<div class="mtg-banner">

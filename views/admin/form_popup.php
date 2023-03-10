@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * Form Popup
  *
@@ -16,7 +16,9 @@ $popup_enable = esc_attr( get_option( 'mtg_popup_enable' ) ) === '1';
 ?>
 
 <?php
-if ( isset( $_GET['success'] ) ) {
+if (
+	isset( $_GET['success'] ) //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	) {
 	?>
 	<div class="update-nag">MTARGET Form Popup configuration updated successfully !</div>
 	<?php
@@ -96,7 +98,7 @@ if ( isset( $_GET['success'] ) ) {
 							<td></td>
 							<td>
 								<input type="hidden" value="popup_config" name="mailtarget_form_action">
-								<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' ); ?>" name="_wpnonce"/>
+								<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="_wpnonce"/>
 								<?php submit_button( 'Setup Popup' ); ?></td>
 						</tr>
 					</table>

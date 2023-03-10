@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * WP Form Edit
  *
@@ -78,7 +78,7 @@ if ( isset( $data->widget_redir ) ) {
 						<td>
 							<input type="hidden" value="edit_widget" name="mailtarget_form_action">
 							<input type="hidden" value="<?php echo esc_attr( $widget->id ); ?>" name="widget_id">
-							<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' ); ?>" name="_wpnonce"/>
+							<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="_wpnonce"/>
 							<?php submit_button( 'Edit Widget' ); ?></td>
 					</tr>
 				</table>

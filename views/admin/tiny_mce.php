@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * Tiny Mce
  *
@@ -9,7 +9,7 @@
 ?>
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 	<script type="text/javascript"
 			src="<?php echo esc_url( site_url() . '/wp-includes/js/tinymce/tiny_mce_popup.js' ); ?>"></script>
 </head>
