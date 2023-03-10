@@ -131,11 +131,11 @@ function mailtarget_load_popup( $form_id ) {
 }
 
 /**
- * Define mtgf_render_text.
+ * Define mailtarget_render_text.
  *
  * @param string $row is row to get.
  **/
-function mtgf_render_text( $row ) {
+function mailtarget_render_text( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
 	}
@@ -143,11 +143,11 @@ function mtgf_render_text( $row ) {
 }
 
 /**
- * Define mtgf_render_textarea.
+ * Define mailtarget_render_textarea.
  *
  * @param string $row is row to get.
  **/
-function mtgf_render_textarea( $row ) {
+function mailtarget_render_textarea( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
 	}
@@ -155,11 +155,11 @@ function mtgf_render_textarea( $row ) {
 }
 
 /**
- * Define mtgf_render_dropdown.
+ * Define mailtarget_render_dropdown.
  *
  * @param string $row is row to get.
  **/
-function mtgf_render_dropdown( $row ) {
+function mailtarget_render_dropdown( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
 	}
@@ -167,11 +167,11 @@ function mtgf_render_dropdown( $row ) {
 }
 
 /**
- * Define mtgf_render_multiple.
+ * Define mailtarget_render_multiple.
  *
  * @param string $row is row to get.
  **/
-function mtgf_render_multiple( $row ) {
+function mailtarget_render_multiple( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
 	}
@@ -179,11 +179,11 @@ function mtgf_render_multiple( $row ) {
 }
 
 /**
- * Define mtgf_render_checkbox.
+ * Define mailtarget_render_checkbox.
  *
  * @param string $row is row to get.
  **/
-function mtgf_render_checkbox( $row ) {
+function mailtarget_render_checkbox( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
 	}
@@ -191,11 +191,11 @@ function mtgf_render_checkbox( $row ) {
 }
 
 /**
- * Define mtgf_render_upload.
+ * Define mailtarget_render_upload.
  *
  * @param string $row is row to get.
  **/
-function mtgf_render_upload( $row ) {
+function mailtarget_render_upload( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
 	}
@@ -203,11 +203,11 @@ function mtgf_render_upload( $row ) {
 }
 
 /**
- * Define mtgf_render_phone.
+ * Define mailtarget_render_phone.
  *
  * @param string $row is row to get.
  **/
-function mtgf_render_phone( $row ) {
+function mailtarget_render_phone( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
 	}

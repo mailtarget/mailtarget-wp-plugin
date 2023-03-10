@@ -89,10 +89,10 @@ class MailTarget_Widget extends WP_Widget {
 }
 
 /**
- * Register_mailtarget_widget.
+ * Mailtarget_register_widget.
  */
-function register_mailtarget_widget() {
+function mailtarget_register_widget() {
 	register_widget( 'MailTarget_Widget' );
 }
 
-add_action( 'widgets_init', 'register_mailtarget_widget' );
+add_action( 'widgets_init', 'mailtarget_register_widget' );
