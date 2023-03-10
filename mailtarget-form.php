@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Plugin Name: MTARGET Form
  * Description: The MTARGET plugin to simplify embedding MTARGET Form in your post or as widget, also easily to set MTARGET Forms as popup.
@@ -7,7 +7,7 @@
  * Author URI: https://mtarget.co/
  * License: GPL V3
  *
- * @package  Mailtarget_Form
+ * @package  MailtargetForm
  * @author    {{author_name}} <{{author_email}}>
  * @copyright {{author_copyright}}
  * @license   {{author_license}}
@@ -21,8 +21,16 @@ if ( ! class_exists( 'MailtargetApi' ) ) {
 	require_once MAILTARGET_PLUGIN_DIR . '/lib/MailtargetApi.php';
 }
 
+/**
+ * MyClass Class Doc Comment
+ *
+ * @category Class
+ * @package  MyClass
+ * @author    A N Other
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     http://www.hashbangcode.com/
+ */
 class MailtargetFormPlugin {
-
 	/**
 	 * Instance
 	 *
@@ -83,7 +91,6 @@ class MailtargetFormPlugin {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_styles' ) );
-
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_styles' ) );
 
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
@@ -142,7 +149,8 @@ class MailtargetFormPlugin {
 	 */
 	public function register_scripts() {
 		?>
-	<script type="application/javascript" src="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.js' ); ?>"></script>
+	<script type="application/javascript" src="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.js' ); ?>"></script><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
+	<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 	<script type="text/javascript">
 	$(document).ready(function($) {
 
@@ -153,7 +161,7 @@ class MailtargetFormPlugin {
 			var data = $('#form-' + target).serializeArray();
 			var errorTarget = $('.error-' + target);
 			var successTarget = $('.success-' + target);
-			var submitUrl = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
+			var submitUrl = '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>';
 			var formData = new FormData($('#form-' + target)[0]);
 			formData.append('mailtarget_ajax_post', true)
 			errorTarget.hide();
@@ -200,8 +208,8 @@ class MailtargetFormPlugin {
 	 */
 	public function register_styles() {
 		?>
-	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/style.css' ); ?>" type="text/css" media="all" />
-	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.css' ); ?>" type="text/css" media="all" />
+	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/style.css' ); ?>" type="text/css" media="all" /><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
+	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.css' ); ?>" type="text/css" media="all" /><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
 		<?php
 	}
 
@@ -210,7 +218,7 @@ class MailtargetFormPlugin {
 	 */
 	public function register_admin_styles() {
 		?>
-	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/mailtarget_admin.css' ); ?>" type="text/css" media="all" />
+	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/mailtarget_admin.css' ); ?>" type="text/css" media="all" /><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
 		<?php
 	}
 
@@ -233,151 +241,128 @@ class MailtargetFormPlugin {
 	 * Handling Admin Post
 	 */
 	public function handling_admin_post() {
-
-		$get_action = isset( $_GET['action'] ) ? sanitize_key( $_GET['action'] ) : null;
-
-		if ( null !== $get_action ) {
-			if ( 'delete' === $get_action ) {
-				$id = isset( $_GET['id'] ) ? sanitize_text_field( $_GET['id'] ) : null;
-				if ( null === $id ) {
-					return false;
+		$verify = isset( $_GET['_wpnonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'delete_action' ) : false;
+		if ( $verify ) {
+			$get_action = isset( $_GET['action'] ) ? sanitize_key( $_GET['action'] ) : null;
+			if ( null !== $get_action ) {
+				if ( 'delete' === $get_action ) {
+					$id = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : null;
+					if ( null === $id ) {
+						return false;
+					}
+					global $wpdb;
+					$wpdb->delete( $wpdb->base_prefix . 'mailtarget_forms', array( 'id' => $id ) );// WPCS: db call ok. // WPCS: cache ok.
+					return wp_safe_redirect( 'admin.php?page=mailtarget-form-plugin--admin-menu' );
 				}
-				global $wpdb;
-				$wpdb->delete( $wpdb->base_prefix . 'mailtarget_forms', array( 'id' => $id ) );
-				return wp_redirect( 'admin.php?page=mailtarget-form-plugin--admin-menu' );
 			}
 		}
 
-		$post_action = isset( $_POST['mailtarget_form_action'] ) ?
-		sanitize_key( $_POST['mailtarget_form_action'] ) : null;
+		$verify = isset( $_POST['_wpnonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'wpnonce_action' ) : false;
+		if ( $verify ) {
+			$post_action = isset( $_POST['mailtarget_form_action'] ) ? sanitize_key( $_POST['mailtarget_form_action'] ) : null;
+			if ( null === $post_action ) {
+				return false;
+			}
+			switch ( $post_action ) {
+				case 'setup_setting':
+					$api_token    = isset( $_POST['mtg_api_token'] ) ? sanitize_text_field( wp_unslash( $_POST['mtg_api_token'] ) ) : null;
+					$popup_enable = isset( $_POST['mtg_popup_enable'] ) && intval( $_POST['mtg_popup_enable'] ) === 1 ? 1 : 0;
+					$data         = array(
+						'mtg_api_token'    => $api_token,
+						'mtg_popup_enable' => $popup_enable,
+					);
+					$api          = $this->get_api( $data['mtg_api_token'] );
+					if ( ! $api ) {
+						return false;
+					}
+					$team     = $api->getTeam();
+					$redirect = 'admin.php?page=mailtarget-form-plugin--admin-menu-config';
+					if ( ! is_wp_error( $team ) ) {
+						$redirect .= '&success=1';
+						update_option( 'mtg_company_id', $team['companyId'] );
+						update_option( 'mtg_api_token', $data['mtg_api_token'] );
+						update_option( 'mtg_popup_enable', $data['mtg_popup_enable'] );
+					}
+					wp_safe_redirect( $redirect );
+					break;
+				case 'popup_config':
+					$popup_form_id    = isset( $_POST['popup_form_id'] ) && '' !== $_POST['popup_form_id'] ? sanitize_text_field( wp_unslash( $_POST['popup_form_id'] ) ) : null;
+					$popup_form_name  = isset( $_POST['popup_form_name'] ) && '' !== $_POST['popup_form_name'] ? sanitize_text_field( wp_unslash( $_POST['popup_form_name'] ) ) : __( 'Join for Newsletter', 'mailtarget' );
+					$popup_form_delay = isset( $_POST['popup_delay'] ) && intval( $_POST['popup_delay'] ) > 0 ? intval( $_POST['popup_delay'] ) : 10;
+					$popup_title      = isset( $_POST['popup_title'] ) && '' !== $_POST['popup_title'] ? sanitize_text_field( wp_unslash( $_POST['popup_title'] ) ) : __( 'Join form', 'mailtarget' );
+					$popup_desc       = isset( $_POST['popup_description'] ) && '' !== $_POST['popup_description'] ? sanitize_textarea_field( wp_unslash( $_POST['popup_description'] ) ) : __( 'Please send me your newsletter', 'mailtarget' );
+					$popup_redirect   = isset( $_POST['popup_redirect'] ) && '' !== $_POST['popup_redirect'] ? esc_url_raw( wp_unslash( $_POST['popup_redirect'] ) ) : null;
+					$popup_enable     = isset( $_POST['mtg_popup_enable'] ) && intval( $_POST['mtg_popup_enable'] ) === 1 ? 1 : 0;
 
-		if ( null === $post_action ) {
-			return false;
-		}
+					update_option( 'mtg_popup_form_id', $popup_form_id );
+					update_option( 'mtg_popup_form_name', $popup_form_name );
+					update_option( 'mtg_popup_delay', $popup_form_delay );
+					update_option( 'mtg_popup_title', $popup_title );
+					update_option( 'mtg_popup_description', $popup_desc );
+					update_option( 'mtg_popup_redirect', $popup_redirect );
+					update_option( 'mtg_popup_enable', $popup_enable );
+					wp_safe_redirect( 'admin.php?page=mailtarget-form-plugin--admin-menu-popup-main&success=1' );
+					break;
+				case 'create_widget':
+					global $wpdb;
+					$table_name = $wpdb->base_prefix . 'mailtarget_forms';
+					require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-		switch ( $post_action ) {
-			case 'setup_setting':
-				$api_token    = isset( $_POST['mtg_api_token'] ) ?
-				sanitize_text_field( $_POST['mtg_api_token'] ) : null;
-				$popup_enable = isset( $_POST['mtg_popup_enable'] ) && intval( $_POST['mtg_popup_enable'] ) === 1 ? 1 : 0;
-				$data         = array(
-					'mtg_api_token'    => $api_token,
-					'mtg_popup_enable' => $popup_enable,
-				);
-				$api          = $this->get_api( $data['mtg_api_token'] );
-				if ( ! $api ) {
-					return false;
-				}
-				$team     = $api->getTeam();
-				$redirect = 'admin.php?page=mailtarget-form-plugin--admin-menu-config';
-				if ( ! is_wp_error( $team ) ) {
-					$redirect .= '&success=1';
-					update_option( 'mtg_company_id', $team['companyId'] );
-					update_option( 'mtg_api_token', $data['mtg_api_token'] );
-					update_option( 'mtg_popup_enable', $data['mtg_popup_enable'] );
-				}
-				wp_safe_redirect( $redirect );
-				break;
-			case 'popup_config':
-				$popup_form_id    = isset( $_POST['popup_form_id'] ) && '' !== $_POST['popup_form_id'] ?
-				sanitize_text_field( $_POST['popup_form_id'] ) : null;
-				$popup_form_name  = isset( $_POST['popup_form_name'] ) && '' !== $_POST['popup_form_name'] ?
-				sanitize_text_field( $_POST['popup_form_name'] ) : __( 'Join for Newsletter', 'mailtarget' );
-				$popup_form_delay = isset( $_POST['popup_delay'] ) && intval( $_POST['popup_delay'] ) > 0 ?
-				intval( $_POST['popup_delay'] ) : 10;
-				$popup_title      = isset( $_POST['popup_title'] ) && '' !== $_POST['popup_title'] ?
-				sanitize_text_field( $_POST['popup_title'] ) : __( 'Join form', 'mailtarget' );
-				$popup_desc       = isset( $_POST['popup_description'] ) && '' !== $_POST['popup_description'] ?
-				sanitize_textarea_field( $_POST['popup_description'] ) :
-				__( 'Please send me your newsletter', 'mailtarget' );
-				$popup_redirect   = isset( $_POST['popup_redirect'] ) && '' !== $_POST['popup_redirect'] ?
-				esc_url( $_POST['popup_redirect'] ) : null;
-				$popup_enable     = isset( $_POST['mtg_popup_enable'] ) && intval( $_POST['mtg_popup_enable'] ) === 1 ? 1 : 0;
+					$form_id       = isset( $_POST['form_id'] ) && '' !== $_POST['form_id'] ? sanitize_text_field( wp_unslash( $_POST['form_id'] ) ) : null;
+					$widget_name   = isset( $_POST['widget_name'] ) && '' !== $_POST['widget_name'] ? sanitize_text_field( wp_unslash( $_POST['widget_name'] ) ) : __( 'Newsletter Form', 'mailtarget' );
+					$widget_title  = isset( $_POST['widget_title'] ) && '' !== $_POST['widget_title'] ? sanitize_text_field( wp_unslash( $_POST['widget_title'] ) ) : __( 'Newsletter Form', 'mailtarget' );
+					$widget_desc   = isset( $_POST['widget_description'] ) && '' !== $_POST['widget_description'] ? sanitize_textarea_field( wp_unslash( $_POST['widget_description'] ) ) : __( 'Please send me your newsletter', 'mailtarget' );
+					$widget_submit = isset( $_POST['widget_submit_desc'] ) && '' !== $_POST['widget_submit_desc'] ? sanitize_text_field( wp_unslash( $_POST['widget_submit_desc'] ) ) : __( 'Submit', 'mailtarget' );
+					$widget_redir  = isset( $_POST['widget_redir'] ) && '' !== $_POST['widget_redir'] ? sanitize_text_field( wp_unslash( $_POST['widget_redir'] ) ) : null;
 
-				update_option( 'mtg_popup_form_id', $popup_form_id );
-				update_option( 'mtg_popup_form_name', $popup_form_name );
-				update_option( 'mtg_popup_delay', $popup_form_delay );
-				update_option( 'mtg_popup_title', $popup_title );
-				update_option( 'mtg_popup_description', $popup_desc );
-				update_option( 'mtg_popup_redirect', $popup_redirect );
-				update_option( 'mtg_popup_enable', $popup_enable );
-				wp_redirect( 'admin.php?page=mailtarget-form-plugin--admin-menu-popup-main&success=1' );
-				break;
-			case 'create_widget':
-				global $wpdb;
-				$table_name = $wpdb->base_prefix . 'mailtarget_forms';
-				require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+					$input = array(
+						'time'    => current_time( 'mysql' ),
+						'form_id' => $form_id,
+						'name'    => $widget_name,
+						'type'    => 1,
+						'data'    => wp_json_encode(
+							array(
+								'widget_title'       => $widget_title,
+								'widget_description' => $widget_desc,
+								'widget_submit_desc' => $widget_submit,
+								'widget_redir'       => $widget_redir,
+							)
+						),
+					);
+					$wpdb->insert( $table_name, $input );// WPCS: db call ok.
+					break;
+				case 'edit_widget':
+					global $wpdb;
+					$table_name = $wpdb->base_prefix . 'mailtarget_forms';
+					require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-				$formId        = isset( $_POST['form_id'] ) && '' !== $_POST['form_id'] ?
-				sanitize_text_field( $_POST['form_id'] ) : null;
-				$widget_name   = isset( $_POST['widget_name'] ) && '' !== $_POST['widget_name'] ?
-				sanitize_text_field( $_POST['widget_name'] ) : __( 'Newsletter Form', 'mailtarget' );
-				$widget_title  = isset( $_POST['widget_title'] ) && '' !== $_POST['widget_title'] ?
-				sanitize_text_field( $_POST['widget_title'] ) : __( 'Newsletter Form', 'mailtarget' );
-				$widget_desc   = isset( $_POST['widget_description'] ) && '' !== $_POST['widget_description'] ?
-				sanitize_textarea_field( $_POST['widget_description'] ) :
-				__( 'Please send me your newsletter', 'mailtarget' );
-				$widget_submit = isset( $_POST['widget_submit_desc'] ) && '' !== $_POST['widget_submit_desc'] ?
-				sanitize_text_field( $_POST['widget_submit_desc'] ) :
-				__( 'Submit', 'mailtarget' );
-				$widget_redir  = isset( $_POST['widget_redir'] ) && '' !== $_POST['widget_redir'] ?
-				sanitize_text_field( $_POST['widget_redir'] ) : null;
+					$widget_id     = isset( $_POST['widget_id'] ) && '' !== $_POST['widget_id'] ? sanitize_text_field( wp_unslash( $_POST['widget_id'] ) ) : null;
+					$widget_name   = isset( $_POST['widget_name'] ) && '' !== $_POST['widget_name'] ? sanitize_text_field( wp_unslash( $_POST['widget_name'] ) ) : __( 'Newsletter Form', 'mailtarget' );
+					$widget_title  = isset( $_POST['widget_title'] ) && '' !== $_POST['widget_title'] ? sanitize_text_field( wp_unslash( $_POST['widget_title'] ) ) : __( 'Newsletter Form', 'mailtarget' );
+					$widget_desc   = isset( $_POST['widget_description'] ) && '' !== $_POST['widget_description'] ? sanitize_textarea_field( wp_unslash( $_POST['widget_description'] ) ) : __( 'Please send me your newsletter', 'mailtarget' );
+					$widget_submit = isset( $_POST['widget_submit_desc'] ) && '' !== $_POST['widget_submit_desc'] ? sanitize_text_field( wp_unslash( $_POST['widget_submit_desc'] ) ) : __( 'Submit', 'mailtarget' );
+					$widget_redir  = isset( $_POST['widget_redir'] ) && '' !== $_POST['widget_redir'] ? sanitize_text_field( wp_unslash( $_POST['widget_redir'] ) ) : null;
 
-				$input = array(
-					'time'    => current_time( 'mysql' ),
-					'form_id' => $formId,
-					'name'    => $widget_name,
-					'type'    => 1,
-					'data'    => json_encode(
-						array(
-							'widget_title'       => $widget_title,
-							'widget_description' => $widget_desc,
-							'widget_submit_desc' => $widget_submit,
-							'widget_redir'       => $widget_redir,
-						)
-					),
-				);
-				$wpdb->insert( $table_name, $input );
-				break;
-			case 'edit_widget':
-				global $wpdb;
-				$table_name = $wpdb->base_prefix . 'mailtarget_forms';
-				require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-
-				$widgetId      = isset( $_POST['widget_id'] ) && '' !== $_POST['widget_id'] ?
-				sanitize_text_field( $_POST['widget_id'] ) : null;
-				$widget_name   = isset( $_POST['widget_name'] ) && '' !== $_POST['widget_name'] ?
-				sanitize_text_field( $_POST['widget_name'] ) : __( 'Newsletter Form', 'mailtarget' );
-				$widget_title  = isset( $_POST['widget_title'] ) && '' !== $_POST['widget_title'] ?
-				sanitize_text_field( $_POST['widget_title'] ) : __( 'Newsletter Form', 'mailtarget' );
-				$widget_desc   = isset( $_POST['widget_description'] ) && '' !== $_POST['widget_description'] ?
-				sanitize_textarea_field( $_POST['widget_description'] ) :
-				__( 'Please send me your newsletter', 'mailtarget' );
-				$widget_submit = isset( $_POST['widget_submit_desc'] ) && '' !== $_POST['widget_submit_desc'] ?
-				sanitize_text_field( $_POST['widget_submit_desc'] ) :
-				__( 'Submit', 'mailtarget' );
-				$widget_redir  = isset( $_POST['widget_redir'] ) && '' !== $_POST['widget_redir'] ?
-				sanitize_text_field( $_POST['widget_redir'] ) : null;
-
-				$input = array(
-					'time' => current_time( 'mysql' ),
-					'name' => $widget_name,
-					'type' => 1,
-					'data' => json_encode(
-						array(
-							'widget_title'       => $widget_title,
-							'widget_description' => $widget_desc,
-							'widget_submit_desc' => $widget_submit,
-							'widget_redir'       => $widget_redir,
-						)
-					),
-				);
-				if ( null !== $widgetId ) {
-					$wpdb->update( $table_name, $input, array( 'id' => $widgetId ) );
-				}
-				break;
-			default:
-				break;
+					$input = array(
+						'time' => current_time( 'mysql' ),
+						'name' => $widget_name,
+						'type' => 1,
+						'data' => wp_json_encode(
+							array(
+								'widget_title'       => $widget_title,
+								'widget_description' => $widget_desc,
+								'widget_submit_desc' => $widget_submit,
+								'widget_redir'       => $widget_redir,
+							)
+						),
+					);
+					if ( null !== $widget_id ) {
+						$wpdb->update( $table_name, $input, array( 'id' => $widget_id ) );// WPCS: db call ok. // WPCS: cache ok.
+					}
+					break;
+				default:
+					break;
+			}
 		}
 	}
 
@@ -398,93 +383,98 @@ class MailtargetFormPlugin {
 			return false;
 		}
 
-		switch ( $action ) {
-			case 'submit_form':
-				$id              = isset( $_POST['mailtarget_form_id'] ) ? sanitize_key( $_POST['mailtarget_form_id'] ) : null;
-				$this->ajax_post = isset( $_POST['mailtarget_ajax_post'] );
-				$api             = $this->get_api();
-				if ( ! $api ) {
-					return;
-				}
-				$form = $api->getFormDetail( $id );
-				if ( is_wp_error( $form ) ) {
-					$this->error_response( 'Failed to get form data' );
-					die();
-				}
-				$input = array();
-				if ( ! isset( $form['component'] ) ) {
-					$this->error_response( 'form data not valid' );
-					die();
-				}
-				foreach ( $form['component'] as $item ) {
-					$setting                   = $item['setting'];
-					$input_val                 = isset( $_POST[ 'mtin__' . $setting['name'] ] ) ?
-					sanitize_text_field( $_POST[ 'mtin__' . $setting['name'] ] ) : null;
-					$input[ $setting['name'] ] = $input_val;
-
-					if ( 'inputMultiple' === $item['type']
-					&& $setting['showOtherOption']
-					&& 'mtiot__' . $setting['name'] === $input_val
-					) {
-						$input_val                 = isset( $_POST[ 'mtino__' . $setting['name'] ] ) ?
-						sanitize_text_field( $_POST[ 'mtino__' . $setting['name'] ] ) : null;
-						$input[ $setting['name'] ] = $input_val;
+		$verify = isset( $_POST['_wpnonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'wpnonce_action' ) : false;
+		if ( $verify ) {
+			switch ( $action ) {
+				case 'submit_form':
+					$id              = isset( $_POST['mailtarget_form_id'] ) ? sanitize_key( $_POST['mailtarget_form_id'] ) : null;
+					$this->ajax_post = isset( $_POST['mailtarget_ajax_post'] );
+					$api             = $this->get_api();
+					if ( ! $api ) {
+						return;
 					}
-
-					if ( 'inputCheckbox' === $item['type'] ) {
-						$in        = isset( $_POST[ 'mtin__' . $setting['name'] ] ) ?
-						(array) $_POST[ 'mtin__' . $setting['name'] ] : array();
-						$in        = array_map( 'sanitize_text_field', $in );
-						$use_other = isset( $_POST[ 'mtiot__' . $setting['name'] ] )
-						&& sanitize_text_field( $_POST[ 'mtiot__' . $setting['name'] ] ) === 'yes' ? true : false;
-						if ( $setting['showOtherOption'] && $use_other ) {
-							$other_input = isset( $_POST[ 'mtino__' . $setting['name'] ] ) ?
-							sanitize_text_field( $_POST[ 'mtino__' . $setting['name'] ] ) : null;
-							if ( null !== $other_input ) {
-								$in[] = $other_input;
-							}
-						}
-						$input[ $setting['name'] ] = join( ', ', $in );
+					$form = $api->getFormDetail( $id );
+					if ( is_wp_error( $form ) ) {
+						$this->error_response( 'Failed to get form data' );
+						die();
 					}
-
-					if ( 'inputPhone' === $item['type'] ) {
+					$input = array();
+					if ( ! isset( $form['component'] ) ) {
+						$this->error_response( 'form data not valid' );
+						die();
+					}
+					foreach ( $form['component'] as $item ) {
+						$setting                   = $item['setting'];
 						$input_val                 = isset( $_POST[ 'mtin__' . $setting['name'] ] ) ?
-						$_POST[ 'mtin__' . $setting['name'] ] : null;
+						sanitize_text_field( wp_unslash( $_POST[ 'mtin__' . $setting['name'] ] ) ) : null;
 						$input[ $setting['name'] ] = $input_val;
+
+						if ( 'inputMultiple' === $item['type']
+						&& $setting['showOtherOption']
+						&& 'mtiot__' . $setting['name'] === $input_val
+						) {
+							$input_val                 = isset( $_POST[ 'mtino__' . $setting['name'] ] ) ?
+							sanitize_text_field( wp_unslash( $_POST[ 'mtino__' . $setting['name'] ] ) ) : null;
+							$input[ $setting['name'] ] = $input_val;
+						}
+
+						if ( 'inputCheckbox' === $item['type'] ) {
+							$in        = isset( $_POST[ 'mtin__' . $setting['name'] ] ) ?
+							(array) sanitize_key( $_POST[ 'mtin__' . $setting['name'] ] ) : array();
+							$in        = array_map( 'sanitize_text_field', $in );
+							$use_other = isset( $_POST[ 'mtiot__' . $setting['name'] ] )
+							&& sanitize_text_field( wp_unslash( $_POST[ 'mtiot__' . $setting['name'] ] ) ) === 'yes' ? true : false;
+							if ( $setting['showOtherOption'] && $use_other ) {
+								$other_input = isset( $_POST[ 'mtino__' . $setting['name'] ] ) ?
+								sanitize_text_field( wp_unslash( $_POST[ 'mtino__' . $setting['name'] ] ) ) : null;
+								if ( null !== $other_input ) {
+									$in[] = $other_input;
+								}
+							}
+							$input[ $setting['name'] ] = join( ', ', $in );
+						}
+
+						if ( 'inputPhone' === $item['type'] ) {
+							$input_val                 = isset( $_POST[ 'mtin__' . $setting['name'] ] ) ?
+							sanitize_text_field( wp_unslash( $_POST[ 'mtin__' . $setting['name'] ] ) ) : null;
+							$input[ $setting['name'] ] = $input_val;
+						}
 					}
-				}
-				$submit_url = $form['url'];
-				$res        = $api->submit( $input, $submit_url );
-				if ( is_wp_error( $res ) ) {
-					$this->error_response( $this->submit_error_process( $res ) );
-					die();
-				}
-				$url       = wp_get_referer();
-				$form_mode = isset( $_POST['mailtarget_form_mode'] ) ?
-				sanitize_text_field( $_POST['mailtarget_form_mode'] ) : null;
-				if ( null !== $form_mode ) {
-					$popup_url = esc_url( get_option( 'mtg_popup_redirect' ) );
-					if ( 'popup' === $form_mode && $popup_url != '' ) {
-						$url = $popup_url;
+					$submit_url = $form['url'];
+					$res        = $api->submit( $input, $submit_url );
+					if ( is_wp_error( $res ) ) {
+						$this->error_response( $this->submit_error_process( $res ) );
+						die();
 					}
-				}
-				if ( isset( $_POST['mailtarget_form_redir'] ) ) {
-					$url = esc_url( $_POST['mailtarget_form_redir'] );
-				}
-				if ( $this->ajax_post ) {
-					echo json_encode(
-						array(
-							'code' => 200,
-							'msg'  => 'ok',
-						)
-					);
-					die();
-				} else {
-					wp_redirect( $url );
-				}
-				break;
-			default:
-				break;
+					$url       = wp_get_referer();
+					$form_mode = isset( $_POST['mailtarget_form_mode'] ) ?
+					sanitize_text_field( wp_unslash( $_POST['mailtarget_form_mode'] ) ) : null;
+					if ( null !== $form_mode ) {
+						$popup_url = esc_url( get_option( 'mtg_popup_redirect' ) );
+						if ( 'popup' === $form_mode && '' !== $popup_url ) {
+							$url = $popup_url;
+						}
+					}
+					if ( isset( $_POST['mailtarget_form_redir'] ) && sanitize_key( $_POST['mailtarget_form_redir'] ) ) {
+						$url = esc_url_raw( wp_unslash( $_POST['mailtarget_form_redir'] ) );
+					}
+					if ( $this->ajax_post ) {
+						echo wp_json_encode(
+							array(
+								'code' => 200,
+								'msg'  => 'ok',
+							)
+						);
+						die();
+					} else {
+						wp_safe_redirect( $url );
+					}
+					break;
+				default:
+					break;
+			}
+		} else {
+			wp_die( esc_html_e( 'Security check', 'mailtarget' ) );
 		}
 	}
 
@@ -496,7 +486,7 @@ class MailtargetFormPlugin {
 	 */
 	public function error_response( $msg, $data = array() ) {
 		if ( $this->ajax_post ) {
-			echo json_encode(
+			echo wp_json_encode(
 				array(
 					'code' => 400,
 					'msg'  => $msg,
@@ -504,7 +494,7 @@ class MailtargetFormPlugin {
 				)
 			);
 		} else {
-			echo $msg;
+			echo esc_attr( $msg );
 		}
 	}
 
@@ -602,7 +592,7 @@ class MailtargetFormPlugin {
 	 */
 	public function list_widget_view() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html_e( 'You do not have sufficient permissions to access this page.', 'mailtarget' ) );
 		}
 		$valid = $this->is_key_valid();
 		if ( true === $valid ) {
@@ -612,7 +602,7 @@ class MailtargetFormPlugin {
 				return false;
 			}
 
-			$widgets = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->base_prefix . 'mailtarget_forms' );
+			$widgets = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->base_prefix . 'mailtarget_forms' );// WPCS: db call ok. // WPCS: cache ok.
 			require_once MAILTARGET_PLUGIN_DIR . '/views/admin/wp-form-list.php';
 		}
 	}
@@ -622,9 +612,11 @@ class MailtargetFormPlugin {
 	 */
 	public function add_widget_view_form() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html_e( 'You do not have sufficient permissions to access this page.', 'mailtarget' ) );
 		}
-		$valid = $this->is_key_valid();
+
+		$verify = isset( $_GET['_wpnonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'admin-menu-widget-form-action' ) : false;
+		$valid  = $this->is_key_valid();
 		if ( true === $valid ) {
 			$api = $this->get_api();
 			if ( ! $api ) {
@@ -646,19 +638,21 @@ class MailtargetFormPlugin {
 	 */
 	public function add_widget_view() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html_e( 'You do not have sufficient permissions to access this page.', 'mailtarget' ) );
 		}
-		$valid = $this->is_key_valid();
+
+		$verify = isset( $_GET['_wpnonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'admin-menu-widget-form-action' ) : false;
+		$valid  = $this->is_key_valid();
 		if ( true === $valid ) {
-			$formId = isset( $_GET['form_id'] ) ? sanitize_text_field( $_GET['form_id'] ) : null;
-			if ( null === $formId ) {
+			$form_id = isset( $_GET['form_id'] ) ? sanitize_text_field( wp_unslash( $_GET['form_id'] ) ) : null;
+			if ( null === $form_id ) {
 				return false;
 			}
 			$api = $this->get_api();
 			if ( ! $api ) {
 				return null;
 			}
-			$form = $api->getFormDetail( $formId );
+			$form = $api->getFormDetail( $form_id );
 			if ( is_wp_error( $form ) ) {
 				$error = $form;
 				require_once MAILTARGET_PLUGIN_DIR . '/views/admin/error.php';
@@ -673,28 +667,37 @@ class MailtargetFormPlugin {
 	 */
 	public function edit_widget_view() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html_e( 'You do not have sufficient permissions to access this page.', 'mailtarget' ) );
 		}
-		$valid = $this->is_key_valid();
-		if ( true === $valid ) {
-			global $wpdb;
-			$widgetId = isset( $_GET['id'] ) ? sanitize_key( $_GET['id'] ) : null;
-			$widget   = $wpdb->get_row( 'SELECT * FROM ' . $wpdb->base_prefix . "mailtarget_forms where id = $widgetId" );
-			if ( ! isset( $widget->form_id ) ) {
-				wp_redirect( 'admin.php?page=mailtarget-form-plugin--admin-menu' );
-				return false;
+
+		$verify = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'edit_action' ) : false;
+		if ( $verify ) {
+			$valid = $this->is_key_valid();
+			if ( true === $valid ) {
+				global $wpdb;
+				$widget_id = isset( $_GET['id'] ) ? sanitize_key( $_GET['id'] ) : null;
+				$widget    = $wpdb->get_row(
+					'SELECT * FROM ' . $wpdb->base_prefix .
+					"mailtarget_forms where id = $widget_id"  //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				); // WPCS: db call ok. // WPCS: cache ok.
+				if ( ! isset( $widget->form_id ) ) {
+					wp_safe_redirect( 'admin.php?page=mailtarget-form-plugin--admin-menu' );
+					return false;
+				}
+				$api = $this->get_api();
+				if ( ! $api ) {
+					return null;
+				}
+				$form = $api->getFormDetail( $widget->form_id );
+				if ( is_wp_error( $form ) ) {
+					$error = $form;
+					require_once MAILTARGET_PLUGIN_DIR . '/views/admin/error.php';
+					return false;
+				}
+				require_once MAILTARGET_PLUGIN_DIR . '/views/admin/wp_form_edit.php';
 			}
-			$api = $this->get_api();
-			if ( ! $api ) {
-				return null;
-			}
-			$form = $api->getFormDetail( $widget->form_id );
-			if ( is_wp_error( $form ) ) {
-				$error = $form;
-				require_once MAILTARGET_PLUGIN_DIR . '/views/admin/error.php';
-				return false;
-			}
-			require_once MAILTARGET_PLUGIN_DIR . '/views/admin/wp_form_edit.php';
+		} else {
+			wp_die( esc_html_e( 'Security check', 'mailtarget' ) );
 		}
 	}
 
@@ -703,7 +706,7 @@ class MailtargetFormPlugin {
 	 */
 	public function admin_config_view() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html_e( 'You do not have sufficient permissions to access this page.', 'mailtarget' ) );
 		}
 		$valid = $this->is_key_valid( true );
 
@@ -717,23 +720,24 @@ class MailtargetFormPlugin {
 	 */
 	public function add_popup_view() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html_e( 'You do not have sufficient permissions to access this page.', 'mailtarget' ) );
 		}
 		$valid = $this->is_key_valid();
-
 		if ( true === $valid ) {
-			$formId    = '';
-			$formName  = '';
-			$getFormId = isset( $_GET['form_id'] ) ? sanitize_text_field( $_GET['form_id'] ) : null;
-			if ( null !== $getFormId ) {
+			$form_id   = '';
+			$form_name = '';
+
+			$verify      = isset( $_REQUEST['_wpnonce'] ) ? wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'edit_action' ) : false;
+			$get_form_id = isset( $_GET['form_id'] ) ? sanitize_text_field( wp_unslash( $_GET['form_id'] ) ) : null;
+			if ( null !== $get_form_id ) {
 				$api = $this->get_api();
 				if ( ! $api ) {
 					return;
 				}
-				$form = $api->getFormDetail( $getFormId );
+				$form = $api->getFormDetail( $get_form_id );
 				if ( ! is_wp_error( $form ) ) {
-					$formId   = $form['formId'];
-					$formName = $form['name'];
+					$form_id   = $form['formId'];
+					$form_name = $form['name'];
 				} else {
 					$error = $form;
 					require_once MAILTARGET_PLUGIN_DIR . '/views/admin/error.php';
@@ -774,8 +778,8 @@ class MailtargetFormPlugin {
 			require_once MAILTARGET_PLUGIN_DIR . '/views/admin/error.php';
 			return false;
 		}
-		$companyId = $this->get_company_id();
-		if ( '' === $companyId ) {
+		$company_id = $this->get_company_id();
+		if ( '' === $company_id ) {
 			$cek = $api->getTeam();
 			if ( is_wp_error( $cek ) ) {
 				if ( $this->get_code_from_error( $valid ) === 32 && $setup ) {
@@ -803,8 +807,8 @@ class MailtargetFormPlugin {
 		if ( ! $key ) {
 			return false;
 		}
-		$companyId = $this->get_company_id();
-		return new MailtargetApi( $key, $companyId );
+		$company_id = $this->get_company_id();
+		return new MailtargetApi( $key, $company_id );
 	}
 
 	/**

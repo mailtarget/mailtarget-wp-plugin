@@ -1,3 +1,12 @@
+<?php
+/**
+ * WP Form List
+ *
+ * @category   WP Form List
+ * @package    Mailtarget Form
+ */
+
+?>
 <div class="mtg-form-plugin">
 	<div class="mtg-banner">
 		<img src="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/image/logo.png' ); ?>" />
@@ -6,11 +15,15 @@
 		<h1 class="wp-heading-inline">List - MTARGET Form</h1>
 		<?php if ( count( $widgets ) < 1 ) { ?>
 			<div class="update-nag">List empty, start by
-				<a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form">creating one</a></div>
+				<?php
+					$create_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form', 'admin-menu-widget-form-action' );
+				?>
+				<a href="<?php echo esc_url( $create_url ); ?>">creating one</a></div>
 				<?php
 		} else {
+				$new_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form', 'admin-menu-widget-form-action' );
 			?>
-			<a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form">new form</a>
+			<a class="page-title-action" href="<?php echo esc_url( $new_url ); ?>">New form</a>
 			<p>Use this form widget as embed to your post or as sidebar widget. Manage your widget so users easily access your form.</p>
 			<hr class="wp-header-end">
 			<table class="wp-list-table widefat fixed striped pages">
@@ -33,8 +46,12 @@
 					<td>[mailtarget_form form_id=<?php echo esc_attr( $item->id ); ?>]</td>
 					<td><?php echo esc_attr( $item->time ); ?></td>
 					<td>
-						<a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-edit&id=<?php echo esc_attr( $item->id ); ?>">Edit</a> |
-						<a href="admin.php?page=mailtarget-form-plugin--admin-menu&action=delete&id=<?php echo esc_attr( $item->id ); ?>">Delete</a>
+						<?php
+							$edit_url   = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-edit&id=' . $item->id, 'edit_action' );
+							$delete_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu&action=delete&id=' . $item->id, 'delete_action' );
+						?>
+						<a href="<?php echo esc_url( $edit_url ); ?>">Edit</a> |
+						<a href="<?php echo esc_url( $delete_url ); ?>">Delete</a>
 					</td>
 				</tr>
 				<?php

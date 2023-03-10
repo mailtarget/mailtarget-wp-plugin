@@ -1,10 +1,32 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
+/**
+ * Mailtarget Form
+ *
+ * Mailtarget Form.
+ *
+ * @category   Mailtarget Form
+ * @package    Mailtarget Form
+ * @subpackage Mailtarget Form
+ */
 
-function load_mailtarget_form( $widgetId ) {
+?>
+<?php
+/**
+ * Define widget id.
+ *
+ * @param string $widget_id is widget id to get.
+ **/
+function mailtarget_load_form( $widget_id ) {
 	global $wpdb;
-	$widgetId = sanitize_key( $widgetId );
-	$sql      = 'SELECT * FROM ' . $wpdb->base_prefix . "mailtarget_forms where id = '$widgetId'";
-	$widget   = $wpdb->get_row( $sql );
+	$widget_id = sanitize_key( $widget_id );
+
+	$table_name = "{$wpdb->base_prefix}mailtarget_forms";
+	$widget     = $wpdb->get_row(
+		$wpdb->prepare(
+			"SELECT * FROM `$table_name` WHERE `id` = %s", //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$widget_id
+		)
+	); // WPCS: db call ok. // WPCS: cache ok.
 	if ( ! isset( $widget->form_id ) ) {
 		echo 'Widget not exist';
 		return;
@@ -12,10 +34,10 @@ function load_mailtarget_form( $widgetId ) {
 	$widget->data = json_decode( $widget->data, true );
 	$widget       = (array) $widget;
 	require_once MAILTARGET_PLUGIN_DIR . '/lib/MailtargetApi.php';
-	$key       = get_option( 'mtg_api_token' );
-	$companyId = get_option( 'mtg_company_id' );
-	$api       = new MailtargetApi( $key, $companyId );
-	$form      = $api->getFormDetail( $widget['form_id'] );
+	$key        = get_option( 'mtg_api_token' );
+	$company_id = get_option( 'mtg_company_id' );
+	$api        = new MailtargetApi( $key, $company_id );
+	$form       = $api->getFormDetail( $widget['form_id'] );
 	if ( is_wp_error( $form ) ) {
 		echo( 'Failed to get form data' );
 		return;
@@ -56,13 +78,18 @@ function load_mailtarget_form( $widgetId ) {
 	include MAILTARGET_PLUGIN_DIR . '/views/render/widget.php';
 }
 
-function load_mailtarget_popup( $formId ) {
-	$formId = sanitize_key( $formId );
+/**
+ * Define mailtarget_load_popup.
+ *
+ * @param string $form_id is form id to get.
+ **/
+function mailtarget_load_popup( $form_id ) {
+	$form_id = sanitize_key( $form_id );
 	require_once MAILTARGET_PLUGIN_DIR . '/lib/MailtargetApi.php';
-	$key       = get_option( 'mtg_api_token' );
-	$companyId = get_option( 'mtg_company_id' );
-	$api       = new MailtargetApi( $key, $companyId );
-	$form      = $api->getFormDetail( $formId );
+	$key        = get_option( 'mtg_api_token' );
+	$company_id = get_option( 'mtg_company_id' );
+	$api        = new MailtargetApi( $key, $company_id );
+	$form       = $api->getFormDetail( $form_id );
 	if ( is_wp_error( $form ) ) {
 		echo( 'Failed to get form data' );
 		return;
@@ -103,6 +130,11 @@ function load_mailtarget_popup( $formId ) {
 	include MAILTARGET_PLUGIN_DIR . '/views/render/popup.php';
 }
 
+/**
+ * Define mtgf_render_text.
+ *
+ * @param string $row is row to get.
+ **/
 function mtgf_render_text( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
@@ -110,6 +142,11 @@ function mtgf_render_text( $row ) {
 	include MAILTARGET_PLUGIN_DIR . '/views/render/input_text.php';
 }
 
+/**
+ * Define mtgf_render_textarea.
+ *
+ * @param string $row is row to get.
+ **/
 function mtgf_render_textarea( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
@@ -117,6 +154,11 @@ function mtgf_render_textarea( $row ) {
 	include MAILTARGET_PLUGIN_DIR . '/views/render/input_textarea.php';
 }
 
+/**
+ * Define mtgf_render_dropdown.
+ *
+ * @param string $row is row to get.
+ **/
 function mtgf_render_dropdown( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
@@ -124,6 +166,11 @@ function mtgf_render_dropdown( $row ) {
 	include MAILTARGET_PLUGIN_DIR . '/views/render/input_dropdown.php';
 }
 
+/**
+ * Define mtgf_render_multiple.
+ *
+ * @param string $row is row to get.
+ **/
 function mtgf_render_multiple( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
@@ -131,6 +178,11 @@ function mtgf_render_multiple( $row ) {
 	include MAILTARGET_PLUGIN_DIR . '/views/render/input_multiple.php';
 }
 
+/**
+ * Define mtgf_render_checkbox.
+ *
+ * @param string $row is row to get.
+ **/
 function mtgf_render_checkbox( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
@@ -138,6 +190,11 @@ function mtgf_render_checkbox( $row ) {
 	include MAILTARGET_PLUGIN_DIR . '/views/render/input_checkbox.php';
 }
 
+/**
+ * Define mtgf_render_upload.
+ *
+ * @param string $row is row to get.
+ **/
 function mtgf_render_upload( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;
@@ -145,6 +202,11 @@ function mtgf_render_upload( $row ) {
 	include MAILTARGET_PLUGIN_DIR . '/views/render/input_upload.php';
 }
 
+/**
+ * Define mtgf_render_phone.
+ *
+ * @param string $row is row to get.
+ **/
 function mtgf_render_phone( $row ) {
 	if ( ! isset( $row['setting'] ) ) {
 		return;

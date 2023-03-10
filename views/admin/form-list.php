@@ -10,12 +10,15 @@
  */
 
 $target_page = 'mailtarget-form-plugin--admin-menu-widget-add';
-$for         = isset( $_GET['for'] ) ? sanitize_text_field( wp_unslash( $_GET['for'] ) ) : '';
+$for         = isset( $_GET['for'] ) //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	?
+	sanitize_text_field( wp_unslash( $_GET['for'] ) ) //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	: '';
 if ( 'popup' === $for ) {
-    $target_page = 'mailtarget-form-plugin--admin-menu-popup-main';
+	$target_page = 'mailtarget-form-plugin--admin-menu-popup-main';
 }
 
-$pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
+$pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 ?>
 <div class="mtg-form-plugin">
 	<div class="mtg-banner">
@@ -26,9 +29,12 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
 		<h1 class="wp-heading-inline">Select Form - MTARGET Form</h1>
 		<p>Below is list of your MTARGET Form, select one of your form to setup.</p>
 
-		<?php if ( count( $forms['data'] ) < 1 ) { ?>
+		<?php
+		if ( count( $forms['data'] ) < 1 ) {
+			$url = wp_nonce_url( $target_page, 'admin-menu-widget-form-action' );
+			?>
 			<div class="update-nag">List empty, start by
-				<a href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-add">creating one</a></div>
+				<a href="<?php echo esc_url( $url ); ?>">creating one</a></div>
 				<?php
 		} else {
 			?>
@@ -83,13 +89,15 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
 			<div class="nav" style="margin-top: 15px;">
 			<?php
 			if ( $pg > 1 ) {
+				$prev_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form' . esc_attr( $for ) . '&pg=' . esc_attr( $pg - 1 ), 'admin-menu-widget-form-action' );
 				?>
-				<a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form<?php echo esc_attr( $for ); ?>&pg=<?php echo esc_attr( $pg - 1 ); ?>">previous</a> 
+				<a class="page-title-action" href="<?php echo esc_url( $prev_url ); ?>">Previous</a> 
 				<?php
 			}
 			if ( count( $forms['data'] ) > 9 ) {
+				$next_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form' . esc_attr( $for ) . '&pg=' . esc_attr( $pg + 1 ), 'admin-menu-widget-form-action' );
 				?>
-				<a class="page-title-action" style="float: right" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form<?php echo esc_attr( $for ); ?>&pg=<?php echo esc_attr( $pg + 1 ); ?>">next</a>
+				<a class="page-title-action" style="float: right" href="<?php echo esc_url( $next_url ); ?>">Next</a>
 				<?php
 			}
 			?>

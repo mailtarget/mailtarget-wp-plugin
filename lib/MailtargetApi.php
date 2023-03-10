@@ -3,18 +3,18 @@
 class MailtargetApi {
 
 	private $apiKey;
-	private $companyId;
+	private $company_id;
 	private $apiUrl;
 
-	public function __construct( $apiKey, $companyId = false ) {
+	public function __construct( $apiKey, $company_id = false ) {
 		$apiKey    = trim( $apiKey );
-		$companyId = trim( $companyId );
+		$companyId = trim( $company_id );
 		if ( ! $apiKey ) {
 			throw new Exception( __( 'Invalid API Key: ' . $apiKey ) );
 		}
 
 		$this->apiKey    = $apiKey;
-		$this->companyId = $companyId;
+		$this->companyId = $company_id;
 		$this->apiUrl    = 'https://apiv2.mtarget.co/v2';
 	}
 
@@ -46,8 +46,8 @@ class MailtargetApi {
 		return $this->get( '/country' );
 	}
 
-	public function getFormDetail( $formId ) {
-		return $this->get( '/forms/public/' . $formId );
+	public function getFormDetail( $form_id ) {
+		return $this->get( '/forms/public/' . $form_id );
 	}
 
 	public function submit( $input, $url ) {

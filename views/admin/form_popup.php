@@ -1,13 +1,24 @@
-<?php
-if ( $formId == '' ) {
-	$formId   = esc_attr( get_option( 'mtg_popup_form_id' ) );
-	$formName = esc_attr( get_option( 'mtg_popup_form_name' ) );
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
+/**
+ * Form Popup
+ *
+ * Form Popup.
+ *
+ * @category Admin view Form Popup
+ * @package  Mailtarget Form
+ */
+
+if ( '' === $form_id ) {
+	$form_id   = esc_attr( get_option( 'mtg_popup_form_id' ) );
+	$form_name = esc_attr( get_option( 'mtg_popup_form_name' ) );
 }
-$popupEnable = esc_attr( get_option( 'mtg_popup_enable' ) ) == '1';
+$popup_enable = esc_attr( get_option( 'mtg_popup_enable' ) ) === '1';
 ?>
 
 <?php
-if ( isset( $_GET['success'] ) ) {
+if (
+	isset( $_GET['success'] ) //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	) {
 	?>
 	<div class="update-nag">MTARGET Form Popup configuration updated successfully !</div>
 	<?php
@@ -22,7 +33,7 @@ if ( isset( $_GET['success'] ) ) {
 	<div class="wrap">
 		<h1 class="wp-heading-inline">Setup New Form - MTARGET Form</h1>
 		<div class="mtg-form-wrapper">
-			<?php if ( $formId != '' ) { ?>
+			<?php if ( '' !== $form_id ) { ?>
 				<form method="post" action="admin.php?page=mailtarget-form-plugin--admin-menu">
 					<?php settings_fields( $this->option_group ); ?>
 					<?php do_settings_sections( $this->option_group ); ?>
@@ -30,10 +41,10 @@ if ( isset( $_GET['success'] ) ) {
 						<tr class="user-rich-editing-wrap">
 							<th>MTARGET Form Name</th>
 							<td>
-								<strong><?php echo esc_attr( $formName ); ?></strong>
-								or <a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form&for=popup">change form</a>
-								<input type="hidden" name="popup_form_id" value="<?php echo esc_attr( $formId ); ?>">
-								<input type="hidden" name="popup_form_name" value="<?php echo esc_attr( $formName ); ?>">
+								<strong><?php echo esc_attr( $form_name ); ?></strong>
+								or <a class="page-title-action" href="admin.php?page=mailtarget-form-plugin--admin-menu-widget-form&for=popup">Change form</a>
+								<input type="hidden" name="popup_form_id" value="<?php echo esc_attr( $form_id ); ?>">
+								<input type="hidden" name="popup_form_name" value="<?php echo esc_attr( $form_name ); ?>">
 							</td>
 						</tr>
 						<tr class="user-rich-editing-wrap">
@@ -69,13 +80,13 @@ if ( isset( $_GET['success'] ) ) {
 								<select name="mtg_popup_enable">
 									<option value="1" 
 									<?php
-									if ( $popupEnable ) {
+									if ( $popup_enable ) {
 										echo esc_attr( 'selected' );}
 									?>
 									>Enable</option>
 									<option value="0" 
 									<?php
-									if ( ! $popupEnable ) {
+									if ( ! $popup_enable ) {
 										echo esc_attr( 'selected' );}
 									?>
 									>Disable</option>
@@ -87,6 +98,7 @@ if ( isset( $_GET['success'] ) ) {
 							<td></td>
 							<td>
 								<input type="hidden" value="popup_config" name="mailtarget_form_action">
+								<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="_wpnonce"/>
 								<?php submit_button( 'Setup Popup' ); ?></td>
 						</tr>
 					</table>

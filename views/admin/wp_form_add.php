@@ -1,3 +1,12 @@
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
+/**
+ * WP Form Add
+ *
+ * @category   WP Form Add
+ * @package    Mailtarget Form
+ */
+
+?>
 <div class="mtg-form-plugin">
 	<div class="mtg-banner">
 		<img src="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/image/logo.png' ); ?>" />
@@ -49,6 +58,7 @@
 					<tr>
 						<td></td>
 						<td>
+							<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="_wpnonce"/>
 							<input type="hidden" value="create_widget" name="mailtarget_form_action">
 							<?php submit_button( 'Create Form' ); ?></td>
 					</tr>
