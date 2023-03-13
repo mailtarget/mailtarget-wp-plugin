@@ -6,14 +6,14 @@
  * @package    Mailtarget Form
  */
 
-$setting = $row['setting'];
+$setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-$options = array();
+$options = array();  //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 if ( in_array( $setting['name'], array( 'country', 'city', 'gender' ), true ) ) {
-	$options = $setting['options'];
+	$options = $setting['options'];  //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 } else {
-	foreach ( $setting['options'] as $item ) {
-		$options[] = $item['name'];
+	foreach ( $setting['options'] as $item ) { //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+		$options[] = $item['name']; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	}
 }
 ?>
@@ -24,7 +24,7 @@ if ( in_array( $setting['name'], array( 'country', 'city', 'gender' ), true ) ) 
 		<?php } ?>
 		<select name="mtin__<?php echo esc_html( $setting['name'] ); ?>">
 			<?php
-			foreach ( $options as $item ) {
+			foreach ( $options as $item ) { //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				?>
 				<option value="<?php echo esc_html( $item ); ?>"><?php echo $item; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></option>
 				<?php

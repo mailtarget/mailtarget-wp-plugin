@@ -6,7 +6,7 @@
  * @package    Mailtarget Form
  */
 
-$setting = $row['setting'];
+$setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 <div class="mt-c-form__wrap">
 	<div div class="mt-c-form__checkbox">
@@ -15,7 +15,7 @@ $setting = $row['setting'];
 		<?php } ?>
 		<div class="<?php echo ( $setting['showImage'] && 'grid' === $setting['styleOption'] ) ? 'mt-c-checkbox__wrap--grid' : 'mt-c-checkbox__wrap'; ?>">
 			<?php
-			foreach ( $setting['options'] as $item ) {
+			foreach ( $setting['options'] as $item ) { //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				?>
 				<label class="mt-c-checkbox">
 					<input type="checkbox" class="mt-o-checkbox" name="mtin__<?php echo $setting['name']; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>[]" value="<?php echo esc_html( $item['name'] ); ?>">
