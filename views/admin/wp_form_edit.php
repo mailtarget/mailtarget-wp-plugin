@@ -6,23 +6,23 @@
  * @package    Mailtarget Form
  */
 
-$data               = json_decode( $widget->data );
-$widget_title       = '';
-$widget_description = '';
-$widget_submit_desc = '';
-$widget_redir       = '';
+$data               = json_decode( $widget->data ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$widget_title       = ''; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$widget_description = ''; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$widget_submit_desc = ''; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$widget_redir       = ''; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 if ( isset( $data->widget_title ) ) {
-	$widget_title = $data->widget_title;
+	$widget_title = $data->widget_title; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 }
 if ( isset( $data->widget_description ) ) {
-	$widget_description = $data->widget_description;
+	$widget_description = $data->widget_description; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 }
 if ( isset( $data->widget_submit_desc ) ) {
-	$widget_submit_desc = $data->widget_submit_desc;
+	$widget_submit_desc = $data->widget_submit_desc; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 }
 if ( isset( $data->widget_redir ) ) {
-	$widget_redir = $data->widget_redir;
+	$widget_redir = $data->widget_redir; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 }
 ?>
 <div class="mtg-form-plugin">

@@ -31,25 +31,25 @@ $hash = substr( md5( wp_rand() ), 0, 7 );
 			foreach ( $form['component'] as $item ) {
 				switch ( $item['type'] ) {
 					case 'inputText':
-						mtgf_render_text( $item );
+						mailtarget_render_text( $item );
 						break;
 					case 'inputTextarea':
-						mtgf_render_textarea( $item );
+						mailtarget_render_textarea( $item );
 						break;
 					case 'inputMultiple':
-						mtgf_render_multiple( $item );
+						mailtarget_render_multiple( $item );
 						break;
 					case 'inputDropdown':
-						mtgf_render_dropdown( $item );
+						mailtarget_render_dropdown( $item );
 						break;
 					case 'inputCheckbox':
-						mtgf_render_checkbox( $item );
+						mailtarget_render_checkbox( $item );
 						break;
 					case 'uploadFile':
-						mtgf_render_upload( $item );
+						mailtarget_render_upload( $item );
 						break;
 					case 'inputPhone':
-						mtgf_render_phone( $item );
+						mailtarget_render_phone( $item );
 						break;
 					default:
 						break;

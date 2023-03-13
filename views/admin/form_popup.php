@@ -9,10 +9,10 @@
  */
 
 if ( '' === $form_id ) {
-	$form_id   = esc_attr( get_option( 'mtg_popup_form_id' ) );
-	$form_name = esc_attr( get_option( 'mtg_popup_form_name' ) );
+	$form_id   = esc_attr( get_option( 'mtg_popup_form_id' ) ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$form_name = esc_attr( get_option( 'mtg_popup_form_name' ) ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 }
-$popup_enable = esc_attr( get_option( 'mtg_popup_enable' ) ) === '1';
+$popup_enable = esc_attr( get_option( 'mtg_popup_enable' ) ) === '1'; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 
 <?php
