@@ -9,32 +9,32 @@
  * @link      {{author_url}}
  */
 
-$err     = (array) $error;
-$message = '';
-$code    = '';
-$data    = '';
+$mailtarget_err     = (array) $error;
+$mailtarget_message = '';
+$mailtarget_code    = '';
+$mailtarget_data    = '';
 
-if ( isset( $err['errors'] ) ) {
-	$err = $err['errors'];
+if ( isset( $mailtarget_err['errors'] ) ) {
+	$mailtarget_err = $mailtarget_err['errors']; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 }
-if ( isset( $err['mailtarget-error'] ) ) {
-	$err = $err['mailtarget-error'];
+if ( isset( $mailtarget_err['mailtarget-error'] ) ) {
+	$mailtarget_err = $mailtarget_err['mailtarget-error'];
 }
-if ( isset( $err[0] ) ) {
-	$err = $err[0];
+if ( isset( $mailtarget_err[0] ) ) {
+	$mailtarget_err = $mailtarget_err[0];
 }
-if ( isset( $err['data'] ) ) {
-	$err = $err['data'];
+if ( isset( $mailtarget_err['data'] ) ) {
+	$mailtarget_err = $mailtarget_err['data'];
 }
 
-if ( isset( $err['code'] ) ) {
-	$code = $err['code'];
+if ( isset( $mailtarget_err['code'] ) ) {
+	$mailtarget_code = $mailtarget_err['code'];
 }
-if ( isset( $err['message'] ) ) {
-	$message = $err['message'];
+if ( isset( $mailtarget_err['message'] ) ) {
+	$mailtarget_message = $mailtarget_err['message'];
 }
-if ( isset( $err['data'] ) ) {
-	$data = $err['data'];
+if ( isset( $mailtarget_err['data'] ) ) {
+	$mailtarget_data = $mailtarget_err['data'];
 }
 
 
@@ -47,7 +47,7 @@ if ( isset( $err['data'] ) ) {
 	<div class="wrap">
 		<h1 class="">Error - MTARGET Form</h1>
 		<?php
-		switch ( $code ) {
+		switch ( $mailtarget_code ) {
 			case 101:
 				?>
 				<div class="update-nag">Apikey not set, please update your apikey at

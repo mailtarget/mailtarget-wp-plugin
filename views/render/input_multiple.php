@@ -6,7 +6,7 @@
  * @package    Mailtarget Form
  */
 
-$setting = $row['setting'];
+$setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 ?>
 <div class="mt-c-form__wrap">
@@ -16,7 +16,7 @@ $setting = $row['setting'];
 		<?php } ?>
 		<div class="<?php echo ( $setting['showImage'] && 'grid' === $setting['styleOption'] ) ? 'mt-c-radio__wrap--grid' : 'mt-c-radio__wrap'; ?>">
 			<?php
-			foreach ( $setting['options'] as $item ) {
+			foreach ( $setting['options'] as $item ) { //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				?>
 				<label class="mt-c-radio">
 					<input type="radio" class="mt-o-checkbox"

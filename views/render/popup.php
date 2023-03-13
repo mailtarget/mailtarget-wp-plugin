@@ -6,14 +6,14 @@
  * @package    Mailtarget Form
  */
 
-$mt_title     = esc_attr( get_option( 'mtg_popup_title' ) );
-$description  = get_option( 'mtg_popup_description' );
-$redir_ulr    = get_option( 'mtg_popup_redirect' );
-$submit_title = esc_attr( get_option( 'mtg_popup_submit' ) );
+$mt_title     = esc_attr( get_option( 'mtg_popup_title' ) ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$description  = get_option( 'mtg_popup_description' ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$redir_ulr    = get_option( 'mtg_popup_redirect' ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$submit_title = esc_attr( get_option( 'mtg_popup_submit' ) ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 if ( '' === $submit_title ) {
-	$submit_title = 'Submit';
+	$submit_title = 'Submit'; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 }
-$hash = substr( md5( wp_rand() ), 0, 7 );
+$hash = substr( md5( wp_rand() ), 0, 7 ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 <div>
 	<?php
@@ -28,28 +28,28 @@ $hash = substr( md5( wp_rand() ), 0, 7 );
 		<p class="mt-c-form__success success-<?php echo esc_html( $hash ); ?>" style="display: none;"></p>
 		<form method="post" id="form-<?php echo esc_html( $hash ); ?>" enctype="multipart/form-data">
 			<?php
-			foreach ( $form['component'] as $item ) {
+			foreach ( $form['component'] as $item ) { //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				switch ( $item['type'] ) {
 					case 'inputText':
-						mtgf_render_text( $item );
+						mailtarget_render_text( $item );
 						break;
 					case 'inputTextarea':
-						mtgf_render_textarea( $item );
+						mailtarget_render_textarea( $item );
 						break;
 					case 'inputMultiple':
-						mtgf_render_multiple( $item );
+						mailtarget_render_multiple( $item );
 						break;
 					case 'inputDropdown':
-						mtgf_render_dropdown( $item );
+						mailtarget_render_dropdown( $item );
 						break;
 					case 'inputCheckbox':
-						mtgf_render_checkbox( $item );
+						mailtarget_render_checkbox( $item );
 						break;
 					case 'uploadFile':
-						mtgf_render_upload( $item );
+						mailtarget_render_upload( $item );
 						break;
 					case 'inputPhone':
-						mtgf_render_phone( $item );
+						mailtarget_render_phone( $item );
 						break;
 					default:
 						break;

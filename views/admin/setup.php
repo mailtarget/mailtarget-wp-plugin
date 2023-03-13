@@ -6,11 +6,13 @@
  * @author    {{author_name}} <{{author_email}}>
  */
 
-$popup_enable = esc_attr( get_option( 'mtg_popup_enable' ) ) === '1';
+$popup_enable = esc_attr( get_option( 'mtg_popup_enable' ) ) === '1'; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 
 <?php
-$condition = isset( $_GET['success'] ); //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$condition = isset(  //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$_GET['success'] //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+);
 if ( $condition ) {
 	?>
 	<div class="update-nag">MTARGET Form configuration updated successfully !</div>

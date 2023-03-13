@@ -9,16 +9,16 @@
  * @link      {{author_url}}
  */
 
-$target_page = 'mailtarget-form-plugin--admin-menu-widget-add';
-$for         = isset( $_GET['for'] ) //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$mailtarget_target_page = 'mailtarget-form-plugin--admin-menu-widget-add'; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$mailtarget_for         = isset( $_GET['for'] ) //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	?
 	sanitize_text_field( wp_unslash( $_GET['for'] ) ) //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	: '';
-if ( 'popup' === $for ) {
-	$target_page = 'mailtarget-form-plugin--admin-menu-popup-main';
+if ( 'popup' === $mailtarget_for ) {
+	$mailtarget_target_page = 'mailtarget-form-plugin--admin-menu-popup-main';
 }
 
-$pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$mailtarget_pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 ?>
 <div class="mtg-form-plugin">
 	<div class="mtg-banner">
@@ -31,10 +31,10 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; //phpcs:ignore WordPress
 
 		<?php
 		if ( count( $forms['data'] ) < 1 ) {
-			$url = wp_nonce_url( $target_page, 'admin-menu-widget-form-action' );
+			$mailtarget_url = wp_nonce_url( $mailtarget_target_page, 'admin-menu-widget-form-action' );
 			?>
 			<div class="update-nag">List empty, start by
-				<a href="<?php echo esc_url( $url ); ?>">creating one</a></div>
+				<a href="<?php echo esc_url( $mailtarget_url ); ?>">creating one</a></div>
 				<?php
 		} else {
 			?>
@@ -49,8 +49,8 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; //phpcs:ignore WordPress
 				</tr>
 				</thead>
 				<?php
-				$no = ( 10 * ( $pg - 1 ) );
-				foreach ( $forms['data'] as $item ) {
+				$no = ( 10 * ( $mailtarget_pg - 1 ) ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+				foreach ( $forms['data'] as $item ) { //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 					$no++;
 					?>
 					<tr>
@@ -59,9 +59,9 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; //phpcs:ignore WordPress
 						<td><?php echo esc_attr( $item['name'] ); ?></td>
 						<td>
 						<?php
-							$statuse = ( $item['published'] ) ? 'published' : 'not published';
+							$statuse = ( $item['published'] ) ? 'published' : 'not published'; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 						if ( $item['setting']['captcha'] ) {
-							$statuse .= ', captcha enabled';
+							$statuse .= ', captcha enabled'; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 						}
 							echo esc_attr( $statuse );
 						?>
@@ -70,7 +70,7 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; //phpcs:ignore WordPress
 							<?php
 							if ( $item['published'] ) {
 								?>
-								<a href="admin.php?page=<?php echo esc_attr( $target_page ); ?>&form_id=<?php echo esc_attr( $item['formId'] ); ?>">Select</a>
+								<a href="admin.php?page=<?php echo esc_attr( $mailtarget_target_page ); ?>&form_id=<?php echo esc_attr( $item['formId'] ); ?>">Select</a>
 								<?php
 							} else {
 								?>
@@ -88,14 +88,14 @@ $pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; //phpcs:ignore WordPress
 				</table>
 			<div class="nav" style="margin-top: 15px;">
 			<?php
-			if ( $pg > 1 ) {
-				$prev_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form' . esc_attr( $for ) . '&pg=' . esc_attr( $pg - 1 ), 'admin-menu-widget-form-action' );
+			if ( $mailtarget_pg > 1 ) {
+				$prev_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form' . esc_attr( $mailtarget_for ) . '&pg=' . esc_attr( $mailtarget_pg - 1 ), 'admin-menu-widget-form-action' ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				?>
 				<a class="page-title-action" href="<?php echo esc_url( $prev_url ); ?>">Previous</a> 
 				<?php
 			}
 			if ( count( $forms['data'] ) > 9 ) {
-				$next_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form' . esc_attr( $for ) . '&pg=' . esc_attr( $pg + 1 ), 'admin-menu-widget-form-action' );
+				$next_url = wp_nonce_url( 'admin.php?page=mailtarget-form-plugin--admin-menu-widget-form' . esc_attr( $mailtarget_for ) . '&pg=' . esc_attr( $mailtarget_pg + 1 ), 'admin-menu-widget-form-action' ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				?>
 				<a class="page-title-action" style="float: right" href="<?php echo esc_url( $next_url ); ?>">Next</a>
 				<?php

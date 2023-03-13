@@ -6,7 +6,7 @@
  * @package    Mailtarget Form
  */
 
-$setting = $row['setting'];
+$setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 ?>
 <div class="mt-c-form__wrap">
