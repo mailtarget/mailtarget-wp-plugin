@@ -4,6 +4,7 @@
  *
  * @category   Widget
  * @package    Mailtarget Form
+ * @TODO support CKEditor tag, adjust esc_html to support CKEditor tag //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
  */
 
 $mailtarget_title        = '';
@@ -40,8 +41,8 @@ if ( '' === $mailtarget_submit_title ) {
 		?>
 		<p><?php echo esc_html( $mailtarget_description ); ?></p><?php } ?>
 	<div class="mt-c-form">
-		<p class="mt-c-form__success success-<?php echo esc_html( $hash ); ?>" style="display: none;"></p>
-		<form method="post" id="form-<?php echo esc_html( $hash ); ?>" enctype="multipart/form-data">
+		<p class="mt-c-form__success success-<?php echo esc_html( $mailtarget_hash ); ?>" style="display: none;"></p>
+		<form  method="post" id="form-<?php echo esc_html( $mailtarget_hash ); ?>" enctype="multipart/form-data">
 			<?php
 			foreach ( $form['component'] as $item ) { //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				switch ( $item['type'] ) {
@@ -73,12 +74,12 @@ if ( '' === $mailtarget_submit_title ) {
 			?>
 			<div class="mt-c-form__wrap">
 				<div class="mt-c-form__btn-action">
-					<p class="mt-c-form__error error-<?php echo esc_html( $hash ); ?>" style="display: none;"></p>
+					<p class="mt-c-form__error error-<?php echo esc_html( $mailtarget_hash ); ?>" style="display: none;"></p>
 					<input type="hidden" value="submit_form" name="mailtarget_form_action">
 					<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="_wpnonce"/>
 					<input type="hidden" value="<?php echo esc_html( $mailtarget_redir_ulr ); ?>" name="mailtarget_form_redir">
 					<input type="hidden" value="<?php echo esc_html( $form['formId'] ); ?>" name="mailtarget_form_id">
-					<input type="submit" class="mt-o-btn mt-btn-submit" data-target="<?php echo esc_html( $hash ); ?>" value="<?php echo esc_html( $mailtarget_submit_title ); ?>">
+					<input type="submit" class="mt-o-btn mt-btn-submit" data-target="<?php echo esc_html( $mailtarget_hash ); ?>" value="<?php echo esc_html( $mailtarget_submit_title ); ?>">
 				</div>
 			</div>
 

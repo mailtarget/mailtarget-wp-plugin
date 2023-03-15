@@ -4,6 +4,7 @@
  *
  * @category   Input multiple
  * @package    Mailtarget Form
+ * @TODO support CKEditor tag, adjust esc_html to support CKEditor tag //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
  */
 
 $setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
@@ -12,7 +13,7 @@ $setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAll
 <div class="mt-c-form__wrap">
 	<div div class="mt-c-form__radio">
 		<?php if ( $setting['showTitle'] ) { ?>
-		<label class="mt-o-label" v-if="setting.showTitle"><?php echo $setting['title']; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
+		<label class="mt-o-label" v-if="setting.showTitle"><?php echo esc_html( $setting['title'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 		<?php } ?>
 		<div class="<?php echo ( $setting['showImage'] && 'grid' === $setting['styleOption'] ) ? 'mt-c-radio__wrap--grid' : 'mt-c-radio__wrap'; ?>">
 			<?php
@@ -25,7 +26,7 @@ $setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAll
 											<?php
 											if ( false === $setting['showImage'] ) {
 												?>
-						<div class="mt-c-checkbox__text"><p><?php echo $item['name']; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p></div>
+						<div class="mt-c-checkbox__text"><p><?php echo esc_html( $item['name'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p></div>
 													<?php
 											} else {
 												?>
@@ -44,7 +45,7 @@ $setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAll
 													<?php
 													if ( $setting['showImage'] ) {
 														?>
-								<p style="font-weight: normal;"><?php echo $item['name']; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+								<p style="font-weight: normal;"><?php echo esc_html( $item['name'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 														<?php
 													}
 													?>
