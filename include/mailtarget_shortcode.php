@@ -75,24 +75,6 @@ class MailTarget_Shortcode {
 	}
 
 	/**
-	 * Mailtarget_tinymce_window.
-	 */
-	public static function mailtarget_tinymce_window() {
-		global $wpdb, $forms;
-
-		if ( ! current_user_can( 'edit_posts' ) ) {
-			return;
-		}
-
-		$forms = $wpdb->//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-		get_results(
-			'SELECT * FROM ' . $wpdb->base_prefix . 'mailtarget_forms'
-		); // WPCS: db call ok. // WPCS: cache ok.
-		include MAILTARGET_PLUGIN_DIR . 'views/admin/tiny_mce.php';
-		exit;
-	}
-
-	/**
 	 *
 	 * Converts shortcode into html
 	 *
