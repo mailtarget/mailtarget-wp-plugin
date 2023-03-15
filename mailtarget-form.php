@@ -148,69 +148,23 @@ class MailtargetFormPlugin {
 	 * Enqueue and register JavaScript files here.
 	 */
 	public function register_scripts() {
-		?>
-	<script type="application/javascript" src="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.js' ); ?>"></script><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
-	<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
-	<script type="text/javascript">
-	$(document).ready(function($) {
-
-		$('input[type=submit].mt-btn-submit').on('click', function(e) {
-			e.preventDefault();
-			var _this = $(this);
-			var target = _this.attr('data-target');
-			var data = $('#form-' + target).serializeArray();
-			var errorTarget = $('.error-' + target);
-			var successTarget = $('.success-' + target);
-			var submitUrl = '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>';
-			var formData = new FormData($('#form-' + target)[0]);
-			formData.append('mailtarget_ajax_post', true)
-			errorTarget.hide();
-			successTarget.hide();
-			_this.attr('disabled', 'disabled');
-
-			$.ajax({
-			url: submitUrl,
-			type: 'POST',
-			dataType: "JSON",
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function(response) {
-				_this.removeAttr('disabled');
-				if (response.code !== undefined) {
-				switch (response.code) {
-					case 400:
-					errorTarget.text(response.msg);
-					errorTarget.show();
-					break;
-					case 200:
-					successTarget.text('Form submitted successfully.');
-					successTarget.show();
-					$('#form-' + target).hide();
-					setTimeout(function() {
-						if (submitData.mailtarget_form_redir !== undefined) {
-						document.location.href = submitData.mailtarget_form_redir
-						}
-					}, 2000)
-					break;
-				}
-				}
-			}
-			});
-		})
-	});
-	</script>
-		<?php
+		wp_register_script( 'mailtarget-jquery', esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/jquery.min.js' ) );
+		wp_register_script( 'mailtarget-action', esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/main.js' ), array( 'mailtarget-jquery' ), '1.1.2', true );
+		wp_register_script( 'mailtarget-tingle', esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.js' ), array( 'mailtarget-jquery' ), '1.1.2' );
+		wp_enqueue_script( 'mailtarget-jquery' );
+		wp_enqueue_script( 'mailtarget-action' );
+		wp_enqueue_script( 'mailtarget-tingle' );
+		wp_localize_script( 'mailtarget-action', 'WPURLS', array( 'siteurl' => get_option( 'siteurl' ) ) );
 	}
 
 	/**
 	 * Enqueue and register CSS files here.
 	 */
 	public function register_styles() {
-		?>
-	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/style.css' ); ?>" type="text/css" media="all" /><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
-	<link rel="stylesheet" href="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.css' ); ?>" type="text/css" media="all" /><?php //phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
-		<?php
+		wp_register_style( 'mailtarget_style', esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/style.css' ) );
+		wp_register_style( 'mailtarget_tingle_style', esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.css' ) );
+		wp_enqueue_style( 'mailtarget_style' );
+		wp_enqueue_style( 'mailtarget_tingle_style' );
 	}
 
 	/**
