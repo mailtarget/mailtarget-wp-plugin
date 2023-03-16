@@ -229,7 +229,7 @@ class MailtargetFormPlugin {
 					if ( ! $api ) {
 						return false;
 					}
-					$team     = $api->getTeam();
+					$team     = $api->get_team();
 					$redirect = 'admin.php?page=mailtarget-form-plugin--admin-menu-config';
 					if ( ! is_wp_error( $team ) ) {
 						$redirect .= '&success=1';
@@ -347,7 +347,7 @@ class MailtargetFormPlugin {
 					if ( ! $api ) {
 						return;
 					}
-					$form = $api->getFormDetail( $id );
+					$form = $api->get_form_detail( $id );
 					if ( is_wp_error( $form ) ) {
 						$this->error_response( 'Failed to get form data' );
 						die();
@@ -577,7 +577,7 @@ class MailtargetFormPlugin {
 				return null;
 			}
 			$pg    = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1;
-			$forms = $api->getFormList( $pg );
+			$forms = $api->get_form_list( $pg );
 			if ( is_wp_error( $forms ) ) {
 				$error = $forms;
 				require_once MAILTARGET_PLUGIN_DIR . '/views/admin/error.php';
@@ -606,7 +606,7 @@ class MailtargetFormPlugin {
 			if ( ! $api ) {
 				return null;
 			}
-			$form = $api->getFormDetail( $form_id );
+			$form = $api->get_form_detail( $form_id );
 			if ( is_wp_error( $form ) ) {
 				$error = $form;
 				require_once MAILTARGET_PLUGIN_DIR . '/views/admin/error.php';
@@ -642,7 +642,7 @@ class MailtargetFormPlugin {
 				if ( ! $api ) {
 					return null;
 				}
-				$form = $api->getFormDetail( $widget->form_id );
+				$form = $api->get_form_detail( $widget->form_id );
 				if ( is_wp_error( $form ) ) {
 					$error = $form;
 					require_once MAILTARGET_PLUGIN_DIR . '/views/admin/error.php';
@@ -688,7 +688,7 @@ class MailtargetFormPlugin {
 				if ( ! $api ) {
 					return;
 				}
-				$form = $api->getFormDetail( $get_form_id );
+				$form = $api->get_form_detail( $get_form_id );
 				if ( ! is_wp_error( $form ) ) {
 					$form_id   = $form['formId'];
 					$form_name = $form['name'];
@@ -734,7 +734,7 @@ class MailtargetFormPlugin {
 		}
 		$company_id = $this->get_company_id();
 		if ( '' === $company_id ) {
-			$cek = $api->getTeam();
+			$cek = $api->get_team();
 			if ( is_wp_error( $cek ) ) {
 				if ( $this->get_code_from_error( $valid ) === 32 && $setup ) {
 					return null;

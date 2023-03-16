@@ -37,7 +37,7 @@ function mailtarget_load_form( $widget_id ) {
 	$key        = get_option( 'mtg_api_token' );
 	$company_id = get_option( 'mtg_company_id' );
 	$api        = new MailtargetApi( $key, $company_id );
-	$form       = $api->getFormDetail( $widget['form_id'] );
+	$form       = $api->get_form_detail( $widget['form_id'] );
 	if ( is_wp_error( $form ) ) {
 		echo( 'Failed to get form data' );
 		return;
@@ -57,13 +57,13 @@ function mailtarget_load_form( $widget_id ) {
 		switch ( $setting['name'] ) {
 			case 'country':
 				if ( count( $country ) < 1 ) {
-					$country = $api->getCountry();
+					$country = $api->get_country();
 				}
 				$form['component'][ $key ]['setting']['options'] = $country;
 				break;
 			case 'city':
 				if ( count( $city ) < 1 ) {
-					$city = $api->getCity();
+					$city = $api->get_city();
 				}
 				$form['component'][ $key ]['setting']['options'] = $city;
 				break;
@@ -89,7 +89,7 @@ function mailtarget_load_popup( $form_id ) {
 	$key        = get_option( 'mtg_api_token' );
 	$company_id = get_option( 'mtg_company_id' );
 	$api        = new MailtargetApi( $key, $company_id );
-	$form       = $api->getFormDetail( $form_id );
+	$form       = $api->get_form_detail( $form_id );
 	if ( is_wp_error( $form ) ) {
 		echo( 'Failed to get form data' );
 		return;
@@ -109,13 +109,13 @@ function mailtarget_load_popup( $form_id ) {
 		switch ( $setting['name'] ) {
 			case 'country':
 				if ( count( $country ) < 1 ) {
-					$country = $api->getCountry();
+					$country = $api->get_country();
 				}
 				$form['component'][ $key ]['setting']['options'] = $country;
 				break;
 			case 'city':
 				if ( count( $city ) < 1 ) {
-					$city = $api->getCity();
+					$city = $api->get_city();
 				}
 				$form['component'][ $key ]['setting']['options'] = $city;
 				break;
