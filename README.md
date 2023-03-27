@@ -28,3 +28,6 @@ Changes:
 Changes:
 - Fixing support for wordpress version 4, 5 & 6
 
+## v2.1.2
+Changes:
+- Updating code writing base on wordpress code guideline & security fix
