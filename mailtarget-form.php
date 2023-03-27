@@ -490,7 +490,7 @@ class MailtargetFormPlugin {
 			'manage_options',
 			'mailtarget-form-plugin--admin-menu',
 			null,
-			MAILTARGET_PLUGIN_URL . '/assets/image/mt-icon.svg'
+			MAILTARGET_PLUGIN_URL . '/assets/image/mt-icon-20x20.png'
 		);
 		add_submenu_page(
 			'mailtarget-form-plugin--admin-menu',
