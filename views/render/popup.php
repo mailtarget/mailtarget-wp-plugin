@@ -4,7 +4,7 @@
  *
  * @category   Popup
  * @package    Mailtarget Form
- * @TODO support CKEditor tag, adjust esc_html to support CKEditor tag //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+ * @NeedTODO support CKEditor tag, adjust esc_html to support CKEditor tag //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
  */
 
 $mt_title     = esc_attr( get_option( 'mtg_popup_title' ) ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

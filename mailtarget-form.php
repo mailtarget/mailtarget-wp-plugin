@@ -148,9 +148,9 @@ class MailtargetFormPlugin {
 	 * Enqueue and register JavaScript files here.
 	 */
 	public function register_scripts() {
-		wp_register_script( 'mailtarget-jquery', esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/jquery.min.js' ) );
+		wp_register_script( 'mailtarget-jquery', esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/jquery.min.js' ), array( 'jquery' ), '3.3.1' ); //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
 		wp_register_script( 'mailtarget-action', esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/main.js' ), array( 'mailtarget-jquery' ), '1.1.2', true );
-		wp_register_script( 'mailtarget-tingle', esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.js' ), array( 'mailtarget-jquery' ), '1.1.2' );
+		wp_register_script( 'mailtarget-tingle', esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.js' ), array( 'mailtarget-jquery' ), '1.1.2' ); //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
 		wp_enqueue_script( 'mailtarget-jquery' );
 		wp_enqueue_script( 'mailtarget-action' );
 		wp_enqueue_script( 'mailtarget-tingle' );
@@ -161,8 +161,8 @@ class MailtargetFormPlugin {
 	 * Enqueue and register CSS files here.
 	 */
 	public function register_styles() {
-		wp_register_style( 'mailtarget_style', esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/style.css' ) );
-		wp_register_style( 'mailtarget_tingle_style', esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.css' ) );
+		wp_register_style( 'mailtarget_style', esc_url( MAILTARGET_PLUGIN_URL . '/assets/css/style.css' ), '2.2.1' ); //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		wp_register_style( 'mailtarget_tingle_style', esc_url( MAILTARGET_PLUGIN_URL . '/assets/js/tingle/tingle.min.css' ), '2.2.1' ); //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 		wp_enqueue_style( 'mailtarget_style' );
 		wp_enqueue_style( 'mailtarget_tingle_style' );
 	}
@@ -490,7 +490,7 @@ class MailtargetFormPlugin {
 			'manage_options',
 			'mailtarget-form-plugin--admin-menu',
 			null,
-			MAILTARGET_PLUGIN_URL . '/assets/image/wp-icon-compose.png'
+			MAILTARGET_PLUGIN_URL . '/assets/image/mt-icon.svg'
 		);
 		add_submenu_page(
 			'mailtarget-form-plugin--admin-menu',

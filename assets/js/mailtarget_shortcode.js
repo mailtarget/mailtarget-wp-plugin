@@ -15,7 +15,7 @@
             );
             ed.addButton('mailtarget_shortcode', {
                     title : 'Add a MailTarget sign-up form',
-                    image : url+'/../image/wp-icon.png',
+                    image : url+'/../image/mt-icon.svg',
                     cmd :  'mailtarget_shortcode_popup'
                 }
             );
