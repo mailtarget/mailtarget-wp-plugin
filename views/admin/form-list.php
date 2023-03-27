@@ -22,7 +22,7 @@ $mailtarget_pg = isset( $_GET['pg'] ) ? intval( $_GET['pg'] ) : 1; //phpcs:ignor
 ?>
 <div class="mtg-form-plugin">
 	<div class="mtg-banner">
-		<img src="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/image/logo.png' ); ?>" />
+		<img src="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/image/logo.svg' ); ?>" />
 	</div>
 
 	<div class="wrap">
