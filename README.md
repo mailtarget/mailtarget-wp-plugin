@@ -31,3 +31,7 @@ Changes:
 ## v2.1.2
 Changes:
 - Updating code writing base on wordpress code guideline & security fix
+
+## 2.1.3
+- Plugin now using libraries that provided by wordpress
+- Removing loading files/assets remotely

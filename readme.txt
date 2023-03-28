@@ -4,7 +4,7 @@ Donate link: https://mtarget.co/
 Tags: mtarget, mailtarget, form, webform, newsletter, subscribe, email, marketing
 Requires at least: 4.0.0
 Tested up to: 6.1.1
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 
 
 == Description ==
@@ -58,3 +58,7 @@ This section describes how to install the plugin and how to using it.
 
 = 2.1.2 =
 * Updating code writing base on wordpress code guideline & security fix
+
+= 2.1.3 =
+* Plugin now using libraries that provided by wordpress
+* Removing loading files/assets remotely
