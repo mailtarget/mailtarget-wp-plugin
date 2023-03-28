@@ -1,4 +1,4 @@
-jQuery(function() { 
+jQuery(function( $ ) {
   $('input[type=submit].mt-btn-submit').on('click', function(e) {
     e.preventDefault();
     var wpurl = WPURLS.siteurl;
