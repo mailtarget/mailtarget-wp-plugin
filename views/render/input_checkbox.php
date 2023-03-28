@@ -35,7 +35,7 @@ $setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAll
 																									<?php
 																								} else {
 																									?>
-								<img src="https://mailtarget.co/static/assets/images/image-placeholder.svg" alt="">
+										<img src="<?php echo esc_url( MAILTARGET_PLUGIN_URL . '/assets/image/image-placeholder.svg' ); ?>" alt="" />
 																									<?php
 																								}
 																								?>

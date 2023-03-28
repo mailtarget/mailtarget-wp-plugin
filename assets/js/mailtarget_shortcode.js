@@ -15,7 +15,7 @@
             );
             ed.addButton('mailtarget_shortcode', {
                     title : 'Add a MailTarget sign-up form',
-                    image : url+'/../image/mt-icon.svg',
+                    image : url+'/../image/mt-icon-20x20.png',
                     cmd :  'mailtarget_shortcode_popup'
                 }
             );
