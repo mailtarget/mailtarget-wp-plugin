@@ -26,7 +26,7 @@ if ( $condition ) {
 	</div>
 
 	<div class="wrap">
-		<h1 class="wp-heading-inline">Setup - MTARGET Form</h1>
+		<h1 class="wp-heading-inline">Setting - MTARGET Form</h1>
 		<div class="mtg-form-wrapper">
 			<p>Use this plugin to show your MTARGET Form in your WordPress Application as embed to your post, as widget or as popup form. You may choose MTARGET Form directly from your WordPress Application.</p>
 			<p>But you must set API token via form below, you can find the API token at integration page of MTARGET Application.</p>
