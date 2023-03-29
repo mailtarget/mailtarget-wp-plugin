@@ -54,7 +54,6 @@ switch ( $mailtarget_page ) {
 		break;
 }
 
-
 ?>
 <div class="mtg-form-plugin">
 	<div class="mtg-banner">
