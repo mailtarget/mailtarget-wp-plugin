@@ -1,10 +1,10 @@
-=== Plugin Name ===
-Contributors: timenz
+=== MTARGET Form ===
+Contributors: timenz,mtargetwp
 Donate link: https://mtarget.co/
 Tags: mtarget, mailtarget, form, webform, newsletter, subscribe, email, marketing
 Requires at least: 4.0.0
 Tested up to: 6.1.1
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 
 
 == Description ==
@@ -35,30 +35,34 @@ This section describes how to install the plugin and how to using it.
 
 == Changelog ==
 
-= 1.0.0 =
-* First release
-
-= 1.0.6 =
-* Minor bugfix on submit popup
-
-= 1.0.7 =
-* Bugfix warning
-
-= 1.0.8 =
-* Bugfix typo
-
-= 2.0.0 =
-* Migrate to mtarget api-v2, no need migration steps from user
-
-= 2.0.1 =
-* Bugfix error message
-
-= 2.1.1 =
-* Fixing support for wordpress version 4, 5 & 6
-
-= 2.1.2 =
-* Updating code writing base on wordpress code guideline & security fix
+= 2.1.4 =
+* Update the plugin contributors
+* Update changelog order (newest on top)
 
 = 2.1.3 =
 * Plugin now using libraries that provided by wordpress
 * Removing loading files/assets remotely
+
+= 2.1.2 =
+* Updating code writing base on wordpress code guideline & security fix
+
+= 2.1.1 =
+* Fixing support for wordpress version 4, 5 & 6
+
+= 2.0.1 =
+* Bugfix error message
+
+= 2.0.0 =
+* Migrate to mtarget api-v2, no need migration steps from user
+
+= 1.0.8 =
+* Bugfix typo
+
+= 1.0.7 =
+* Bugfix warning
+
+= 1.0.6 =
+* Minor bugfix on submit popup
+
+= 1.0.0 =
+* First release
