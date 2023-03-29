@@ -77,7 +77,7 @@ if ( '' === $mailtarget_submit_title ) {
 					<p class="mt-c-form__error error-<?php echo esc_html( $mailtarget_hash ); ?>" style="display: none;"></p>
 					<input type="hidden" value="submit_form" name="mailtarget_form_action">
 					<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="_wpnonce"/>
-					<input type="hidden" value="<?php echo esc_html( $mailtarget_redir_ulr ); ?>" name="mailtarget_form_redir">
+					<input type="hidden" value="<?php echo esc_html( $mailtarget_redir_ulr ); ?>" name="mailtarget_form_redir-<?php echo esc_html( $mailtarget_hash ); ?>">
 					<input type="hidden" value="<?php echo esc_html( $form['formId'] ); ?>" name="mailtarget_form_id">
 					<input type="submit" class="mt-o-btn mt-btn-submit" data-target="<?php echo esc_html( $mailtarget_hash ); ?>" value="<?php echo esc_html( $mailtarget_submit_title ); ?>">
 				</div>

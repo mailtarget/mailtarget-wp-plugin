@@ -7,7 +7,7 @@ jQuery(function( $ ) {
     var data = $('#form-' + target).serializeArray();
     var errorTarget = $('.error-' + target);
     var successTarget = $('.success-' + target);
-    var url_redir = $( "input[name='mailtarget_form_redir']" ).val();
+    var url_redir = $( "input[name='mailtarget_form_redir-"+ target +"']" ).val();
     var formData = new FormData($('#form-' + target)[0]);
     formData.append('mailtarget_ajax_post', true)
     errorTarget.hide();
@@ -31,11 +31,11 @@ jQuery(function( $ ) {
         successTarget.text('Form submitted successfully.');
         successTarget.show();
         $('#form-' + target).hide();
-        setTimeout(function() {
-          if (undefined !== url_redir) {
-          document.location.href = wpurl + url_redir
-          }
-        }, 2000)
+        if ('' !== url_redir) {
+          setTimeout(function() {
+            document.location.href = url_redir
+          }, 2000)
+        }
         break;
       }
       }
