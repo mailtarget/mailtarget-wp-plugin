@@ -64,9 +64,9 @@ if (
 								</td>
 							</tr>
 							<tr class="user-rich-editing-wrap">
-								<th>Delay</th>
+								<th>Delay (On Second)</th>
 								<td>
-									<input type="number" class="regular-text" name="popup_delay" value="<?php echo esc_attr( get_option( 'mtg_popup_delay' ) ); ?>">
+									<input type="number" class="regular-text" name="popup_delay" value="<?php echo esc_attr( get_option( 'mtg_popup_delay' ) ); ?>" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
 								</td>
 							</tr>
 							<tr class="user-rich-editing-wrap">

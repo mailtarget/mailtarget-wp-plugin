@@ -13,7 +13,7 @@ $setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAll
 <div class="mt-c-form__wrap">
 	<div div class="mt-c-form__textarea">
 		<?php if ( $setting['showTitle'] ) { ?>
-			<label class="mt-o-label" v-if="setting.showTitle"><?php echo esc_html( $setting['title'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
+			<label class="mt-o-label" v-if="setting.showTitle"><?php echo wp_kses_post( $setting['title'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 		<?php } ?>
 		<textarea class="mt-o-textarea"
 				name="mtin__<?php echo esc_html( $setting['name'] ); ?>"
