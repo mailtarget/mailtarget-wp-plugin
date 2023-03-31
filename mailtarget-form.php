@@ -246,7 +246,7 @@ class MailtargetFormPlugin {
 					$popup_form_delay = isset( $_POST['popup_delay'] ) && intval( $_POST['popup_delay'] ) > 0 ? intval( $_POST['popup_delay'] ) : 10;
 					$popup_title      = isset( $_POST['popup_title'] ) && '' !== $_POST['popup_title'] ? sanitize_text_field( wp_unslash( $_POST['popup_title'] ) ) : __( 'Join form', 'mailtarget' );
 					$popup_desc       = isset( $_POST['popup_description'] ) && '' !== $_POST['popup_description'] ? sanitize_textarea_field( wp_unslash( $_POST['popup_description'] ) ) : __( 'Please send me your newsletter', 'mailtarget' );
-					$popup_redirect   = isset( $_POST['popup_redirect'] ) && '' !== $_POST['popup_redirect'] ? esc_url_raw( wp_unslash( $_POST['popup_redirect'] ) ) : null;
+					$popup_redirect   = isset( $_POST['popup_redirect'] ) && '' !== $_POST['popup_redirect'] ? sanitize_text_field( wp_unslash( $_POST['popup_redirect'] ) ) : null;
 					$popup_enable     = isset( $_POST['mtg_popup_enable'] ) && intval( $_POST['mtg_popup_enable'] ) === 1 ? 1 : 0;
 
 					update_option( 'mtg_popup_form_id', $popup_form_id );

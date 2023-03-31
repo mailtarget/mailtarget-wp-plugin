@@ -63,7 +63,7 @@ $hash = substr( md5( wp_rand() ), 0, 7 ); //phpcs:ignore WordPress.NamingConvent
 					<input type="hidden" value="submit_form" name="mailtarget_form_action">
 					<input type="hidden" value="<?php echo wp_create_nonce( 'wpnonce_action' );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="_wpnonce"/> 
 					<input type="hidden" value="popup" name="mailtarget_form_mode">
-					<input type="hidden" value="<?php echo esc_html( $redir_ulr ); ?>" name="mailtarget_form_redir">
+					<input type="hidden" value="<?php echo esc_html( $redir_ulr ); ?>" name="mailtarget_form_redir-<?php echo esc_html( $hash ); ?>">
 					<input type="hidden" value="<?php echo esc_html( $form['formId'] ); ?>" name="mailtarget_form_id">
 					<input type="submit" class="mt-o-btn mt-btn-submit" data-target="<?php echo esc_html( $hash ); ?>" value="<?php echo esc_html( $submit_title ); ?>">
 				</div>

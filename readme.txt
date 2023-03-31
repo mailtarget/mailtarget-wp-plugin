@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: timenz
+Contributors: timenz, bagasghufronalfaiz
 Donate link: https://mtarget.co/
 Tags: mtarget, mailtarget, form, webform, newsletter, subscribe, email, marketing
 Requires at least: 4.0.0
