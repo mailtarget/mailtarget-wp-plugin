@@ -26,11 +26,11 @@ This section describes how to install the plugin and how to using it.
 
 == Screenshots ==
 
-1. screenshot-1.png
-2. screenshot-2.png
-3. screenshot-3.png
-4. screenshot-4.png
-5. screenshot-5.png
+1. screenshot-1.jpg
+2. screenshot-2.jpg
+3. screenshot-3.jpg
+4. screenshot-4.jpg
+5. screenshot-5.jpg
 
 
 == Changelog ==
