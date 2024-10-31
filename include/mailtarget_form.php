@@ -213,3 +213,17 @@ function mailtarget_render_phone( $row ) {
 	}
 	include MAILTARGET_PLUGIN_DIR . '/views/render/input_phone.php';
 }
+
+function strip_html_tags($string) {
+    // Remove HTML tags and replace them with a space
+    $stripped = preg_replace('/<[^>]*>/', ' ', $string);
+    
+    // Remove any remaining HTML entities
+    $stripped = preg_replace('/&nbsp;/', ' ', $stripped);
+    $stripped = preg_replace('/&amp;/', '&', $stripped);
+    
+    // Trim any leading or trailing whitespace
+    $stripped = trim($stripped);
+    
+    return $stripped;
+}

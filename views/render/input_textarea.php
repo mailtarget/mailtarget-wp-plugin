@@ -13,14 +13,18 @@ $setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAll
 <div class="mt-c-form__wrap">
 	<div div class="mt-c-form__textarea">
 		<?php if ( $setting['showTitle'] ) { ?>
-			<label class="mt-o-label" v-if="setting.showTitle"><?php echo esc_html( $setting['title'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
+			<div>
+				<label class="mt-o-label" v-if="setting.showTitle"><?php echo esc_html( strip_html_tags( $setting['title'] ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
+			</div>
 		<?php } ?>
-		<textarea class="mt-o-textarea"
-				name="mtin__<?php echo esc_html( $setting['name'] ); ?>"
-			<?php
-			if ( $setting['required'] ) {
-				?>
-				required="required" <?php } ?>
-				placeholder="<?php echo esc_html( $setting['description'] ); ?>"></textarea>
+		<div>
+			<textarea class="mt-o-textarea"
+					name="mtin__<?php echo esc_html( $setting['name'] ); ?>"
+				<?php
+				if ( $setting['required'] ) {
+					?>
+					required="required" <?php } ?>
+					placeholder="<?php echo esc_html( $setting['description'] ); ?>"></textarea>
+		</div>
 	</div>
 </div>

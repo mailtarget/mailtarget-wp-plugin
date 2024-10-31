@@ -12,8 +12,11 @@ $setting = $row['setting']; //phpcs:ignore WordPress.NamingConventions.PrefixAll
 <div class="mt-c-form__wrap">
 	<div div class="mt-c-form__checkbox">
 		<?php if ( $setting['showTitle'] ) { ?>
-			<label class="mt-o-label" v-if="setting.showTitle"><?php echo esc_html( $setting['title'] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
+			<div>
+				<label class="mt-o-label" v-if="setting.showTitle"><?php echo esc_html( strip_html_tags( $setting['title'] ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
+			</div>
 		<?php } ?>
+
 		<div class="<?php echo ( $setting['showImage'] && 'grid' === $setting['styleOption'] ) ? 'mt-c-checkbox__wrap--grid' : 'mt-c-checkbox__wrap'; ?>">
 			<?php
 			foreach ( $setting['options'] as $item ) { //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

@@ -848,7 +848,7 @@
   margin: 4px;
 }
 .mt-c-form {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.48px;
   color: #4A4A4A;
 }
@@ -961,6 +961,7 @@
 }
 .mt-btn-submit {
   padding: 8px 20px;
+  font-size: 16px;
 }
 .mt-c-html {
   text-align: left;
@@ -998,4 +999,20 @@
 }
 .tingle-modal-box {
   max-width: 600px;
+}
+
+.mt-o-label {
+  font-weight: bold;
+}
+
+.mt-widget input[type="text"] {
+  width: 100%;
+  font-size: 16px;
+  padding: 6px 4px;
+}
+
+.mt-widget textarea {
+  width: 100%;
+  font-size: 16px;
+  padding: 6px 4px;
 }

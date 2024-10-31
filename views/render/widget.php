@@ -40,7 +40,7 @@ if ( '' === $mailtarget_submit_title ) {
 	if ( '' !== $mailtarget_description ) {
 		?>
 		<p><?php echo esc_html( $mailtarget_description ); ?></p><?php } ?>
-	<div class="mt-c-form">
+	<div class="mt-c-form mt-widget">
 		<p class="mt-c-form__success success-<?php echo esc_html( $mailtarget_hash ); ?>" style="display: none;"></p>
 		<form  method="post" id="form-<?php echo esc_html( $mailtarget_hash ); ?>" enctype="multipart/form-data">
 			<?php
