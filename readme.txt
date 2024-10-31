@@ -3,7 +3,7 @@ Contributors: timenz,mtargetwp
 Donate link: https://mtarget.co/
 Tags: mtarget, mailtarget, newsletter, subscribe, email
 Requires at least: 4.0.0
-Tested up to: 6.1.1
+Tested up to: 6.6.2
 Stable tag: 2.1.6
 License: GPL V3
 MTARGET Form Plugin to add MTARGET Form to your website
