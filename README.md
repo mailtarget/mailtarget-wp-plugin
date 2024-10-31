@@ -5,6 +5,11 @@ This is a plugin for embedding mtarget form into wordpress application
 
 # History
 
+## 2.1.6
+- Tested stable until up to wordpress v6.6.2
+- Improvement on label display
+- Improve default styling
+
 ## 2.1.5
 - Support styling in form label
 
