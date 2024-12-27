@@ -36,6 +36,9 @@ This section describes how to install the plugin and how to using it.
 
 == Changelog ==
 
+= 2.1.7 =
+* Update comments on main file
+
 = 2.1.6 =
 * Tested stable until up to wordpress v6.6.2
 * Improvement on label display

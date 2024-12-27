@@ -6,6 +6,8 @@
  * Author: MTARGET Teams
  * Author URI: https://mtarget.co/
  * License: GPL V3
+ * Requires at least: 4.0.0
+ * Tested up to: 6.6.2
  *
  * @package  MailtargetForm
  * @author    {{author_name}} <{{author_email}}>
